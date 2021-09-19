@@ -27,7 +27,7 @@ def display_RegisterMenu():
     if len(accounts.keys()) < 6:
         username = input("Enter username: ")
         password = input("Enter password: ")
-        if not username in accounts or password_check(password):
+        if not username in accounts and password_check(password):
             accounts[username] = password
             print("Successfully created an account\n")
     else:
@@ -119,9 +119,10 @@ def password_check(passwd):
         print('Password should have at least one of the symbols $@#')
         val = False
 
-    # checks if inputs are valid
-    if val:
-        return val
+    # # checks if inputs are valid
+    # if val:
+    #     return val
+    return val
 
 
 # Main method
