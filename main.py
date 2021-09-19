@@ -12,6 +12,8 @@ def display_LoginMenu():
         # get input from the user
         username = input("Enter username: ")
         password = input("Enter password: ")
+
+        # check if username and password are valid
         found = find_account(username, password)
         if not found:
             print("Incorrect username/password, please try again\n")
@@ -22,19 +24,25 @@ def display_LoginMenu():
 # This function displays the screen that allows a user to create an account
 def display_RegisterMenu():
     print("\nCreate a New Account\n")
-    accounts = pd.read_csv('accounts.csv', index_col=0, squeeze=True).to_dict()
+
+    # read CSV file containing all account information
+    accounts = pd.read_csv('accounts.csv', index_col=0, squeeze=True, header=None).to_dict()
+
     # TODO: looping while user inputs invalid values
-    if len(accounts.keys()) < 6:
+    if len(accounts.keys()) < 5:
         username = input("Enter username: ")
         password = input("Enter password: ")
+
+        # check if username is unique and password is valid
         if not username in accounts and password_check(password):
-            accounts[username] = password
+            accounts[username] = password  # add <username, password> pair into dict
             print("Successfully created an account\n")
     else:
         print("All permitted accounts have been created, please come back later\n")
 
+    # save accounts dict into CSV file
     df = pd.DataFrame(accounts.items())
-    df.to_csv('accounts.csv', index=False)
+    df.to_csv('accounts.csv', index=False, header=False)
 
 # This function displays the Main Menu after the user has logged in
 def display_MainMenu():
@@ -43,40 +51,43 @@ def display_MainMenu():
           "(2) Find someone you know\n"
           "(3) Learn a new skill\n"
           "(0) Logout\n")
+
     opt = input("Enter command: ")
 
-    if int(opt) == 1 or int(opt) == 2:
-        print("Under construction\n")
+    if int(opt) == 1 or int(opt) == 2:  # search for a job and find someone you know
+        print("\nUnder construction\n")
         display_MainMenu()
-    elif int(opt) == 3:
-        print("Skill list: ")
+    elif int(opt) == 3:  # learn a new skill
+        print("Skill list: ")  # tentative skill list
         print("(1) Python Programming\n"
               "(2) Java Programming\n"
               "(3) C++ Programming\n"
               "(4) Time Management\n"
               "(5) Effective communication\n"
-              "(0) Return to Main Menu")
+              "(0) Return to Main Menu\n")
         skill = input("Select a skill: ")
         if skill != 0:
-            print("Under construction\n")
+            print("\nUnder construction\n")
         display_MainMenu()
     else:
         logged_in = False
-        main()
+        print("You have sucessfully logged out!\n")
 
 # This function looks for the given username and password in the CSV file
 def find_account(findUsername, findPassword):
     # get all the accounts from the csv file
-    accounts = pd.read_csv('accounts.csv', index_col=0, squeeze=True).to_dict()
+    accounts = pd.read_csv('accounts.csv', index_col=0, squeeze=True, header=None).to_dict()
 
     # initialize temp values to False
     un = False
     pw = False
 
+    # look for username in accounts dict
     for u in accounts.keys():
         if u == findUsername:
             un = True  # change value of un to True if found
 
+    # look for password in accounts dict
     for p in accounts.values():
         if p == findPassword:
             pw = True  # change value of pw to True if found
@@ -135,6 +146,7 @@ def main():
         print("(1) Login\n"
               "(2) Register\n"
               "(0) Exit\n")
+
         opt = int(input("Enter command: "))
 
         if opt == 1:
