@@ -1,4 +1,6 @@
+#imports all functions from messages.py
 from messages import *
+#imports all functions from verify_acc.py
 from verify_acc import *
 
 global logged_in
@@ -7,16 +9,19 @@ global logged_in
 def homeMenu():
     
     print("Welcome to InCollege.")
-
+    #prints the student success story found on messages.py
     printStudentSuccess()
     
     while True:   
+        #prints the home menu
         printHomeMenu()
+        #gets user input
         select = input("Enter command: ")
 
         if(select == "1" or select == "2" or select == "3" or select == "0"):
             break
         else:
+            #if user inputs an incorrect value an this function prints an error message
             printInvalidEntry()
             continue
 
@@ -88,11 +93,13 @@ def createAccountMenu():
 def mainMenu():
     
     while True:
+        #prints the main menu
         printMainMenu()
-    
+        #gets user input
         opt = input("Enter command: ")
 
         if int(opt) == 1: #search for job
+            #prints an under construction message
             printUnderConstruction()
         elif int(opt) == 2:  
             searchPeople()
@@ -111,11 +118,13 @@ def mainMenu():
 def skillMenu():
     
     while True:
+        #prints the list of skills
         printSkillList()
-
+        #gets user input
         skill = input("Select a skill: ")
     
         if skill != "0":
+            #prints an under construction message
             printUnderConstruction()
         else:
             break
