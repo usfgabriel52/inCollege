@@ -1,7 +1,15 @@
+def printStudentSuccess():
+    print("\nInCollege is an amazing way to learn skills and search for a job.\n" 
+          "Being a college student, I struggled to find a job in my field that I was interested in and worked well with my school schedule.\n"
+          "However, after signing up with InCollege I was able to find the job of my dreams and learn some very valuable skills along the way.\n"
+          "I highly recommend InCollege to anyone who is searching for a job, wants to learn new skills, or meet some amazing people.\n"
+          "\n - John Smith.\n")
+    return 0
+
 def printHomeMenu():
     print("(1) Login\n"
           "(2) Register\n"
-          "(3) Student Success Story\n"
+          "(3) View Video\n"
           "(0) Exit\n")
     return 0
 
@@ -38,14 +46,3 @@ def printSkillList():
           "(0) Return to Main Menu\n")
     return 0
 
-
-
-
-
-def printStudentSuccess():
-    
-    print("\nStudent Success Stories\n")
-    
-    print("(1) View Video\n"
-          "(0) Return to Home Menu")
-    return 0
