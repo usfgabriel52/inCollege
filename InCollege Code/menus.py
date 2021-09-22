@@ -7,6 +7,8 @@ global logged_in
 def homeMenu():
     
     print("Welcome to InCollege.")
+
+    printStudentSuccess()
     
     while True:   
         printHomeMenu()
@@ -23,7 +25,7 @@ def homeMenu():
     elif(select == "2"):
         createAccountMenu()
     elif(select == "3"):
-        studentSuccess()
+        print("\nVideo is now playing...\n")
     elif(select == "0"):
         print("Thank you for using InCollege!")
         quit()
@@ -122,22 +124,15 @@ def skillMenu():
 
 
 
-def studentSuccess():
-    while True:
-        printStudentSuccess()
-    
-        select = input("Enter command: ")
-
-        if(select == "1"):
-            print("\nVideo is now playing...\n")
-        elif(select == "0"):
-            print("\nReturning to Home menu...\n")
-            break
-    return 0
-
-
-
-
 
 def searchPeople():
+    print("\nSearch For A Person.\n")
+
+    print("Please enter the first and last name of the person you wish to search for.\n")
+
+    firstName = input("Enter first name: ")
+    lastName = input("Enter last name: ")
+
+    print(firstName, lastName)
+
     return
