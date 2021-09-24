@@ -3,7 +3,7 @@ import io
 from typing import NoReturn
 import pytest
 from pytest_mock import mocker
-sys.path.insert(0,'InCollegeCode')
+sys.path.insert(0,'InCollege Code')
 import menus
 import messages
 import verify_acc
@@ -33,8 +33,8 @@ def test_studentSuccessStory():
     assert messages.printStudentSuccess() == 0
 
 def test_viewVideo():
-    sys.stdin = io.StringIO('1\n0')
-    assert menus.studentSuccess() == 0
+    sys.stdin = io.StringIO('3\n0')
+    assert menus.homeMenu() == None
 
 
 
