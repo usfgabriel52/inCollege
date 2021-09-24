@@ -2,33 +2,39 @@ import sys
 import io
 from typing import NoReturn
 import pytest
-
 from pytest_mock import mocker
-import main
-#tests for stories 4,5,6
+sys.path.insert(0,'InCollegeCode')
+import menus
+import messages
+import verify_acc
+
+
+#tests for stories 4,5,6 on epic 1
 
 def test_Main_Menu():
     sys.stdin = io.StringIO('0')
-    assert main.display_MainMenu() == None
+    assert menus.mainMenu() == 0
 
 def test_findJob():
     sys.stdin = io.StringIO('1 \n 0\n')
-    
-    
-    assert main.display_MainMenu() == None
-
-def test_findSomeone():
-    sys.stdin = io.StringIO('1 \n 0\n')
-    
-    
-    assert main.display_MainMenu() == None
+    assert menus.mainMenu() == 0
+#Test Depricated
+# def test_findSomeone():
+#     sys.stdin = io.StringIO('1 \n 0\n')
+#     assert menus.mainMenu() == 0
 
 def test_skillsMenu():
     sys.stdin = io.StringIO('3 \n 1\n2\n3\n4\n5\n0\n0\n')
-    
-    assert main.display_MainMenu() == None    
+    assert menus.mainMenu() == 0   
 
+#test for new stoies  1, , on Epic 2
 
+def test_studentSuccessStory():
+    assert messages.printStudentSuccess() == 0
+
+def test_viewVideo():
+    sys.stdin = io.StringIO('1\n0')
+    assert menus.studentSuccess() == 0
 
 
 
