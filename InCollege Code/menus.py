@@ -18,10 +18,12 @@ def homeMenu():
     while True:   
         #prints the home menu
         printHomeMenu()
+        print("(5) Useful Links Menu\n"
+              "(6) InCollege Important Links Menu\n")
         #gets user input
         select = input("Enter command: ")
 
-        if(select == "1" or select == "2" or select == "3" or select == "4" or select == "0"):
+        if(select == "1" or select == "2" or select == "3" or select == "4" or select == "0"or select == "5"or select == "6"):
             break
         else:
             #if user inputs an incorrect value an this function prints an error message
@@ -36,6 +38,10 @@ def homeMenu():
         searchPeople()
     elif(select == "4"):
         print("\nVideo is now playing...\n")
+    elif (select == "5"):
+        usefulLinksMenu()
+    elif (select == "6"):
+        impLinksMenu()
     elif(select == "0"):
         print("Thank you for using InCollege!")
         quit()
