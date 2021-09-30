@@ -109,6 +109,10 @@ def mainMenu():
             searchPeople()
         elif int(opt) == 3:  # learn a new skill
             skillMenu()
+        elif int(opt) == 4:
+            usefulLinksMenu()
+        elif int(opt) == 5:
+            impLinksMenu()
         elif int(opt) == 0:
             global logged_in
             logged_in = []
@@ -158,5 +162,109 @@ def jobMenu():
             printInvalidEntry()
 
     return
+
+
+# /////////////////////////////////////////////////////////////////////////     USEFUL LINKS MENU     /////////////////////////////////////////////////////////////////////////
+
+def usefulLinksMenu():
+    print("Useful Links Menu\n"
+          "(1) General\n"
+          "(2) Browse InCollege\n"
+          "(3) Business Solutions\n"
+          "(4) Directories\n")
+
+    # gets user input
+    opt = input("Enter command: ")
+
+    if int(opt) == 1:
+        usefulGenralGroup()
+    elif int(opt) == 2:
+        printUnderConstruction()
+    elif int(opt) == 3:
+        printUnderConstruction()
+    elif int(opt) == 4:
+        printUnderConstruction()
+    else:
+        printInvalidEntry()
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     IMPORTANT LINKS MENU     /////////////////////////////////////////////////////////////////////////
+
+def impLinksMenu():
+
+    print("InCollege Important Links Menu\n"
+          "(1) A Copyright Notice\n"
+          "(2) About\n"
+          "(3) Accessibility\n"
+          "(4) User Agreement\n"
+          "(5) Privacy Policy\n"
+          "(6) Cookie Policy\n"
+          "(7) Copyright Policy\n"
+          "(8) Brand Policy\n"
+          "(9) Guest Controls\n"
+          "(10) Languages\n")
+
+    # gets user input
+    opt = input("Enter command: ")
+
+    if int(opt) == 1:
+        usefulGenralGroup()
+    elif int(opt) == 2:
+        printUnderConstruction()
+    elif int(opt) == 3:
+        printUnderConstruction()
+    elif int(opt) == 4:
+        printUnderConstruction()
+    elif int(opt) == 5:
+        printUnderConstruction() #change to call Guest Controls function
+    elif int(opt) == 6:
+        printUnderConstruction()
+    elif int(opt) == 7:
+        printUnderConstruction()
+    elif int(opt) == 8:
+        printUnderConstruction()
+    elif int(opt) == 9:
+        printUnderConstruction() #change to call Guest Controls function
+    elif int(opt) == 10:
+        printUnderConstruction() #change to call Languages function
+    else:
+        printInvalidEntry()
+
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     USEFUL GENERAL GROUP MENU     /////////////////////////////////////////////////////////////////////////
+
+def usefulGenralGroup():
+    print("Useful Links Menu\n"
+          "(1) Sign Up\n"
+          "(2) Help Center\n"
+          "(3) About\n"
+          "(4) Press\n"
+          "(5) Blog\n"
+          "(6) Careers\n"
+          "(7) Developers\n")
+
+    # gets user input
+    opt = input("Enter command: ")
+
+    if int(opt) == 1:
+        createAccountMenu()
+    elif int(opt) == 2:
+        print("We're here to help")
+    elif int(opt) == 3:
+        print("In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide")
+    elif int(opt) == 4:
+        print( "In College Pressroom: Stay on top of the latest news, updates, and reports")
+    elif int(opt) == 5:
+        printUnderConstruction()
+    elif int(opt) == 6:
+        printUnderConstruction()
+    elif int(opt) == 7:
+        printUnderConstruction()
+    else:
+        printInvalidEntry()
+
+    return 0
+
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
