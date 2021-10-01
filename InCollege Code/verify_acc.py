@@ -9,19 +9,19 @@ c = conn.cursor()
 #table creation for Username table ?
 def create_table():
     #SQL
-    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT)"""
+    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT)"""
     c.execute(query)
     conn.commit()
 
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
-def data_entry(username, password,firstname,lastname):
+def data_entry(username, password,firstname,lastname,email,sms,ads,language):
     #SQL
-    query = """INSERT INTO Accounts (username, password,firstname,lastname) VALUES(?, ?,?,?);"""
+    query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language) VALUES(?, ?,?,?,?,?,?,?);"""
     
     #Stores username, password , firstname , lastname 
-    data = (username, password,firstname,lastname)
+    data = (username, password,firstname,lastname,email,sms,ads,language)
     c.execute(query, data)
     conn.commit()
 

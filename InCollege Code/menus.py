@@ -93,7 +93,7 @@ def createAccountMenu():
 
         # check if username is unique and password is valid
         if not unique_user(username) and password_check(password):
-            data_entry(username, password,firstname,lastname)
+            data_entry(username, password,firstname,lastname,1,1,1,"English")
             print("Successfully created an account\n")
     else:
         print("All permitted accounts have been created, please come back later\n")
@@ -161,7 +161,7 @@ def jobMenu():
         select = input("Enter Command: ")
 
         if select == "1":
-            postJob(logged_in[0], logged_in[1])
+            postJob(logged_in[2], logged_in[3])
         elif select == "0":
             break
         else:
