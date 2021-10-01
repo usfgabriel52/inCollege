@@ -16,6 +16,8 @@ def printHomeMenu():
           "(2) Register\n"
           "(3) Find A Person\n"
           "(4) View Video\n"
+          "(5) Useful Links Menu\n"
+          "(6) InCollege Important Links Menu\n"
           "(0) Exit\n")
     return 0
 
@@ -37,6 +39,8 @@ def printMainMenu():
           "(1) Job search / internship\n"
           "(2) Find someone you know\n"
           "(3) Learn a new skill\n"
+          "(4) Useful Links\n"
+          "(5) Important Links\n"
           "(0) Logout\n")
     return 0
 
@@ -51,14 +55,60 @@ def printSkillList():
           "(3) C++ Programming\n"
           "(4) Time Management\n"
           "(5) Effective communication\n"
-          "(0) Return to Main Menu\n")
+          "(0) Return to Previous Menu\n")
     return 0
 
 #/////////////////////////////////////////////////////////////////////////     PRINT JOB MENU     /////////////////////////////////////////////////////////////////////////////
 
 def printJobMenu():
+    
     print("(1) Post a job.\n"
-          "(0) Return to Main Menu.\n"  )
+          "(0) Return to Previous Menu.\n"  )
     return 0
 
+#/////////////////////////////////////////////////////////////////////////     PRINT IMPORTANT LINKS MENU     ///////////////////////////////////////////////////////////////////
+
+def printImpLinksMenu():
+
+    print("InCollege Important Links Menu\n"
+          "(1) A Copyright Notice\n"
+          "(2) About\n"
+          "(3) Accessibility\n"
+          "(4) User Agreement\n"
+          "(5) Privacy Policy\n"
+          "(6) Cookie Policy\n"
+          "(7) Copyright Policy\n"
+          "(8) Brand Policy\n"
+          "(9) Guest Controls\n"
+          "(10) Languages\n"
+          "(0) Return to Previous Menu\n")
+    return
+
+#/////////////////////////////////////////////////////////////////////////     PRINT USEFUL LINKS MENU     ///////////////////////////////////////////////////////////////////
+
+def printUsefulLinksMenu():
+    
+    print("Useful Links Menu\n"
+          "(1) General\n"
+          "(2) Browse InCollege\n"
+          "(3) Business Solutions\n"
+          "(4) Directories\n"
+          "(0) Return to Previous Menu\n")
+
+    return
+
+#/////////////////////////////////////////////////////////////////////////     PRINT USEFUL GENERAL MENU     ///////////////////////////////////////////////////////////////////
+
+def printUsefulGeneralGroup():
+    
+    print("Useful Links Menu\n"
+          "(1) Sign Up\n"
+          "(2) Help Center\n"
+          "(3) About\n"
+          "(4) Press\n"
+          "(5) Blog\n"
+          "(6) Careers\n"
+          "(7) Developers\n"
+          "(0) Return to Previous Menu\n")
+    return
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
