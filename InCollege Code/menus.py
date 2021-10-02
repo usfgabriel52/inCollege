@@ -208,7 +208,7 @@ def impLinksMenu():
         if int(opt) == 1:
             usefulGeneralGroup()
         elif int(opt) == 2:
-            printUnderConstruction()
+            print("In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide")
         elif int(opt) == 3:
             printUnderConstruction()
         elif int(opt) == 4:
@@ -224,7 +224,7 @@ def impLinksMenu():
         elif int(opt) == 9:
             guestControlMenu()
         elif int(opt) == 10:
-            printUnderConstruction() #languages menu
+            languageMenu() 
         elif int(opt) == 0:
             break
         else:
@@ -302,7 +302,7 @@ def guestControlMenu():
             elif int(opt) == 3:
                 update_ad_option(logged_in[0], logged_in[1])
             elif int(opt) == 4:
-                update_lang_option(logged_in[0], logged_in[1])
+                languageMenu()
             elif int(opt) == 0:
                 break
             else:
@@ -312,16 +312,23 @@ def guestControlMenu():
 # /////////////////////////////////////////////////////////////////////////     LANGUAGE MENU     //////////////////////////////////////////////////////////////////////////
 
 def languageMenu():
-    while True:
-        printLanguageMenu()
+    if logged_in == []:
+        print("\n Please login to change settings.\n") 
+    else:
+        while True:
+            printLanguageMenu()
 
-        # gets user input
-        opt = input("Enter command: ")
+            # gets user input
+            opt = input("Enter command: ")
 
-        if int(opt) == 1:
-            update_lang_option(logged_in[0], logged_in[1])
-        elif int(opt) == 2:
-            break
+            if int(opt) == 1:
+                update_lang_option(logged_in[0], logged_in[1], "English")
+            elif int(opt) == 2:
+                update_lang_option(logged_in[0], logged_in[1], "Spanish")
+            elif int(opt) == 0:
+                break
+            else:
+                printInvalidEntry()
     return
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
