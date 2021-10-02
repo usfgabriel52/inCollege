@@ -4,6 +4,8 @@ from messages import *
 from search import *
 #imports all functions from jobs.py
 from jobs import *
+#imports all functions from update_acc.py
+from update_acc import *
 
 logged_in = []
 
@@ -263,19 +265,63 @@ def usefulGeneralGroup():
 
 # /////////////////////////////////////////////////////////////////////////     PRIVACY POLICY MENU     /////////////////////////////////////////////////////////////////////////
 def privacyPolicyMenu():
+    
     while True:
-        if logged_in == []:
-            print("PRIVACY POLICY !!!!!!!!!!") #add privacy policy here
+        printPrivacyPolicyMenu()
+
+        # gets user input
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            printUnderConstruction()
+        elif int(opt) == 2:
+            guestControlMenu()
+        elif int(opt) == 0:
+            break
         else:
-            print("PRIVACY POLICY !!!!!!!!!!") #add privacy policy here
-        break
+            printInvalidEntry()
     return
 
 # /////////////////////////////////////////////////////////////////////////     GUEST CONTROL MENU     //////////////////////////////////////////////////////////////////////////
 
 def guestControlMenu():
+       
+    if logged_in == []:
+        print("\n Please login to change settings.\n") 
+    else:
+        while True:
+            printGuestControlMenu()
+
+            # gets user input
+            opt = input("Enter command: ")
+
+            if int(opt) == 1:
+                update_email_option(logged_in[0], logged_in[1])
+            elif int(opt) == 2:
+                update_sms_option(logged_in[0], logged_in[1])
+            elif int(opt) == 3:
+                update_ad_option(logged_in[0], logged_in[1])
+            elif int(opt) == 4:
+                update_lang_option(logged_in[0], logged_in[1])
+            elif int(opt) == 0:
+                break
+            else:
+                printInvalidEntry()
+    return
+
+# /////////////////////////////////////////////////////////////////////////     LANGUAGE MENU     //////////////////////////////////////////////////////////////////////////
+
+def languageMenu():
     while True:
-        break
+        printLanguageMenu()
+
+        # gets user input
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            update_lang_option(logged_in[0], logged_in[1])
+        elif int(opt) == 2:
+            break
     return
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
