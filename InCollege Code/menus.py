@@ -208,19 +208,19 @@ def impLinksMenu():
         if int(opt) == 1:
             usefulGeneralGroup()
         elif int(opt) == 2:
-            print("In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide")
+            print("In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide\n")
         elif int(opt) == 3:
-            printUnderConstruction()
+            print("The assessibiliy of our app is not limited\n")
         elif int(opt) == 4:
-            printUnderConstruction()
+            print("User need to agree terms to join in this application\n")
         elif int(opt) == 5:
             privacyPolicyMenu()
         elif int(opt) == 6:
-            printUnderConstruction()
+            print("User need to accept the cookie policy\n")
         elif int(opt) == 7:
-            printUnderConstruction()
+            print("User will need to acknowledge the copyright policy\n")
         elif int(opt) == 8:
-            printUnderConstruction()
+            print("User will need to acknowledge the brand policy\n")
         elif int(opt) == 9:
             guestControlMenu()
         elif int(opt) == 10:
@@ -249,7 +249,7 @@ def usefulGeneralGroup():
         elif int(opt) == 3:
             print("In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide")
         elif int(opt) == 4:
-            print( "In College Pressroom: Stay on top of the latest news, updates, and reports")
+            print("In College Pressroom: Stay on top of the latest news, updates, and reports")
         elif int(opt) == 5:
             printUnderConstruction()
         elif int(opt) == 6:
