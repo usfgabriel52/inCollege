@@ -4,6 +4,7 @@ from getpass import getpass
 conn = sqlite3.connect('PersonalProfile.db')
 c = conn.cursor()
 
+#Creates the Job DataBase with Tables if it does not exist
 def create_job_table():
     #SQL
     query = """CREATE TABLE IF NOT EXISTS PersonalProfile(userName TEXT,title TEXT, major TEXT, universityName TEXT, about TEXT)"""
@@ -15,12 +16,17 @@ def create_job_table():
     query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
     c.execute(query)
     conn.commit() 
+
+
+#Returns True if User is in Personal Profile Database
 def hasProfile(userName):
     for row in c.execute("""SELECT * FROM PersonalProfile"""):
         if(userName == row[0]):
             return True
     return False
 
+
+#Allows a field in the personal profile table to be updated given username and section
 def update_profile(userName,section, newValue):
     if(section == "title"):
         query = """UPDATE PersonalProfile SET title = ? WHERE userName = ?"""
@@ -38,6 +44,8 @@ def update_profile(userName,section, newValue):
     conn.commit()
     return 0
 
+
+#Allows a field in the job table to be changed given a username and jobId and section
 def update_job(userName,jobId,section,newValue):
     if(section == "title"):
             query = """UPDATE expierience SET title = ? WHERE userName = ? AND jobId = ?"""
@@ -59,6 +67,8 @@ def update_job(userName,jobId,section,newValue):
     conn.commit()
     return 0
 
+
+#allows school table to be updated given username and section 
 def update_school(userName,section,newValue):
     if(section == "schoolName"):
             query = """UPDATE education SET schoolName = ? WHERE userName = ?"""
@@ -74,6 +84,7 @@ def update_school(userName,section,newValue):
     conn.commit()
     return 0
 
+#Formats strings to have the first letter in uppercase of each word and the rest lowercase
 def formatCaps(str):
     str = str.split(' ')
     result = ''
@@ -85,26 +96,28 @@ def formatCaps(str):
     result = result[:-1]
     return result
 
+#inserts username into job table, jobId should be labeled 1-3
 def create_job(userName,jobId):
     query = """INSERT INTO expierience(userName , jobId , title , employer , dateStart , dateEnd , location , description ) VALUES(?,?,?,?,?,?,?,?)"""
     data = (userName,jobId,None,None,None,None,None,None) 
     c.execute(query,data)
     conn.commit() 
 
-    
+
+#Adds user to school table    
 def create_school(userName):
     query = """INSERT INTO education(userName, schoolName, Degree , yearsAttended) VALUES(?,?,?,?)"""
     data = (userName,None,None,None) 
     c.execute(query,data)
     conn.commit()
     
-
+#Adds user to Personal Profile Table
 def create_profile(userName):
     query = """INSERT INTO PersonalProfile(userName,title,major,universityName,about) VALUES(?,?,?,?,?)"""
     data = (userName,None,None,None,None) 
     c.execute(query,data)
     conn.commit()
-    
+
 
 
     
