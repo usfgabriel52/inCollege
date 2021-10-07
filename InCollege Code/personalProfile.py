@@ -20,11 +20,55 @@ def create_job_table():
 
 #Returns True if User is in Personal Profile Database
 def hasProfile(userName):
-    for row in c.execute("""SELECT * FROM PersonalProfile"""):
-        if(userName == row[0]):
-            return True
+    query = """SELECT * FROM PersonalProfile Where userName = ?"""
+    data = (userName)
+    c.execute(query,data)
+    x = c.fetchall()
+    if x != []:
+        return True
+
     return False
 
+def getProfile(userName):
+    query = """SELECT * FROM PersonalProfile Where userName = ?"""
+    data = (userName)
+    c.execute(query,data)
+    profile = c.fetchall()
+    return profile
+
+def hasJob(userName,jobId):
+    query = """SELECT * FROM expierience Where userName = ? AND jobId = ?"""
+    data = (userName,jobId)
+    c.execute(query,data)
+    x = c.fetchall()
+    if x != []:
+        return True
+
+    return False
+
+def getJob(userName, jobId):
+    query = """SELECT * FROM expierience Where userName = ? AND jobId = ?"""
+    data = (userName,jobId)
+    c.execute(query,data)
+    job = c.fetchall()
+    return job
+
+def hasSchool(userName):
+    query = """SELECT * FROM education Where userName = ?"""
+    data = (userName)
+    c.execute(query,data)
+    x = c.fetchall()
+    if x != []:
+        return True
+
+    return False
+
+def getSchool(userName):
+    query = """SELECT * FROM education Where userName = ?"""
+    data = (userName)
+    c.execute(query,data)
+    school = c.fetchall()
+    return school
 
 #Allows a field in the personal profile table to be updated given username and section
 def update_profile(userName,section, newValue):
