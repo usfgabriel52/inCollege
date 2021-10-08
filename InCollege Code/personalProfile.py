@@ -5,7 +5,7 @@ conn = sqlite3.connect('PersonalProfile.db')
 c = conn.cursor()
 
 #Creates the Job DataBase with Tables if it does not exist
-def create_job_table():
+def create_profile_table():
     #SQL
     query = """CREATE TABLE IF NOT EXISTS PersonalProfile(userName TEXT,title TEXT, major TEXT, universityName TEXT, about TEXT)"""
     c.execute(query)
