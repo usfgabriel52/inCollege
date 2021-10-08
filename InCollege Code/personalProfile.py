@@ -20,9 +20,9 @@ def create_profile_table():
 
 #Returns True if User is in Personal Profile Database
 def hasProfile(userName):
-    query = """SELECT * FROM PersonalProfile Where userName = ?"""
+    query = """SELECT * FROM PersonalProfile WHERE userName = ?"""
     data = (userName)
-    c.execute(query,data)
+    c.execute(query, [data])
     x = c.fetchall()
     if x != []:
         return True
@@ -30,14 +30,14 @@ def hasProfile(userName):
     return False
 
 def getProfile(userName):
-    query = """SELECT * FROM PersonalProfile Where userName = ?"""
+    query = """SELECT * FROM PersonalProfile WHERE userName = ?"""
     data = (userName)
-    c.execute(query,data)
+    c.execute(query,[data])
     profile = c.fetchall()
     return profile
 
 def hasJob(userName,jobId):
-    query = """SELECT * FROM expierience Where userName = ? AND jobId = ?"""
+    query = """SELECT * FROM expierience WHERE userName = ? AND jobId = ?"""
     data = (userName,jobId)
     c.execute(query,data)
     x = c.fetchall()
@@ -47,16 +47,16 @@ def hasJob(userName,jobId):
     return False
 
 def getJob(userName, jobId):
-    query = """SELECT * FROM expierience Where userName = ? AND jobId = ?"""
+    query = """SELECT * FROM expierience WHERE userName = ? AND jobId = ?"""
     data = (userName,jobId)
     c.execute(query,data)
     job = c.fetchall()
     return job
 
 def hasSchool(userName):
-    query = """SELECT * FROM education Where userName = ?"""
+    query = """SELECT * FROM education WHERE userName = ?"""
     data = (userName)
-    c.execute(query,data)
+    c.execute(query,[data])
     x = c.fetchall()
     if x != []:
         return True
@@ -64,9 +64,9 @@ def hasSchool(userName):
     return False
 
 def getSchool(userName):
-    query = """SELECT * FROM education Where userName = ?"""
+    query = """SELECT * FROM education WHERE userName = ?"""
     data = (userName)
-    c.execute(query,data)
+    c.execute(query,[data])
     school = c.fetchall()
     return school
 
@@ -161,9 +161,3 @@ def create_profile(userName):
     data = (userName,None,None,None,None) 
     c.execute(query,data)
     conn.commit()
-
-
-
-    
-    
-
