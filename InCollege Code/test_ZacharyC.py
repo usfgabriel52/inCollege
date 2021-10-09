@@ -13,5 +13,5 @@ def test_update_profile():
 
 
 def test_formatCaps():
-    assert personalProfile("hEllO WoRLD!!!") == "Hello World!!!"
+    assert personalProfile.formatCaps("hEllO WoRLD!!!") == "Hello World!!!"
     return
