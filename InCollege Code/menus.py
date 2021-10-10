@@ -350,7 +350,7 @@ def languageMenu():
 #/////////////////////////////////////////////////////////////////////////////     Create Job Menu     //////////////////////////////////////////////////////////////////
 
 def createJobMenu(jobId):
-    create_job(logged_in,jobId)
+    create_job(logged_in[0],jobId)
 
     title = input("enter Title for profile or 0 to quit: ")
     if title == '0':
