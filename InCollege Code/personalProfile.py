@@ -142,9 +142,9 @@ def formatCaps(str):
 
 #inserts username into job table, jobId should be labeled 1-3
 def create_job(userName,jobId):
-    query = """INSERT INTO expierience(userName , jobId , title , employer , dateStart , dateEnd , location , description ) VALUES(?,?,?,?,?,?,?,?)"""
+    query = """INSERT INTO expierience(userName , jobId , title , employer , dateStart , dateEnd , location , description ) VALUES(? , ? , ? , ? , ? , ? , ? , ? )"""
     data = (userName,jobId,None,None,None,None,None,None) 
-    c.execute(query,data)
+    c.execute(query, data)
     conn.commit() 
 
 
