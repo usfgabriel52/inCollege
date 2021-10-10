@@ -161,3 +161,35 @@ def create_profile(userName):
     data = (userName,None,None,None,None) 
     c.execute(query,data)
     conn.commit()
+
+def checkTitle(userName):
+    for row in c.execute("""SELECT * FROM personalProfile"""):
+        if userName == row[0] and row[1] != None:
+            return True
+    return False
+def checkMajor(userName):
+    for row in c.execute("""SELECT * FROM personalProfile"""):
+        if userName == row[0] and row[2] != None:
+            return True
+    return False
+def checkUniversityName(userName):
+    for row in c.execute("""SELECT * FROM personalProfile"""):
+        if userName == row[0] and row[3] != None:
+            return True
+    return False
+def checkAbout(userName):
+    for row in c.execute("""SELECT * FROM personalProfile"""):
+        if userName == row[0] and row[4] != None:
+            return True
+    return False
+def checkJob(userName):
+    numjob = 0
+    for row in c.execute("""SELECT * FROM experience"""):
+        if userName == row[0] and row[1] != None:
+            numjob +=1
+    return numjob
+def checkSchool(userName):
+    for row in c.execute("""SELECT * FROM education"""):
+        if userName == row[0]and row[1] != None:
+            return True
+    return False
