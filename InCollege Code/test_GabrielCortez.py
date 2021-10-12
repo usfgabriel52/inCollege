@@ -39,7 +39,7 @@ def test_viewVideo():
     assert menus.homeMenu() == None
 
 def test_CreateAccount():
-    conn = sqlite3.connect('Accounts.db')
+    conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()   
     for row in c.execute("""SELECT * FROM Accounts"""):
         assert(search.find_user(row[2],row[3])) == True

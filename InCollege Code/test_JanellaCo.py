@@ -37,7 +37,7 @@ def test_usefulGeneralGroup(monkeypatch):
 # When a user signs up, Email, SMS, and Targeted are all set 1 or True, Language is set to "English", and Stored in DB
 def test_createAccount(monkeypatch):
 
-    conn = sqlite3.connect('Accounts.db')
+    conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
     # display contents of db before signing up
     for r in c.execute("SELECT * FROM Accounts"):

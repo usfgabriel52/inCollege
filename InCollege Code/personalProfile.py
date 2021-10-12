@@ -1,7 +1,7 @@
 import sqlite3
 from getpass import getpass
 
-conn = sqlite3.connect('PersonalProfile.db')
+conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
 #Creates the Job DataBase with Tables if it does not exist
