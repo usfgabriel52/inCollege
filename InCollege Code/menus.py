@@ -94,7 +94,7 @@ def createAccountMenu():
 
     create_table()
 
-    if number_rows() < 5:
+    if number_rows() < 10:
         username = input("Enter username: ")
         password = input("Enter password: ")
         firstname = input("Enter First Name: ")
