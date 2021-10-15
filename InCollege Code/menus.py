@@ -118,12 +118,15 @@ def mainMenu():
     
     while True:
         global logged_in
-        if findRequests(logged_in[0]).fetchall() != []:
-            printHasRequest()
         
         #prints the main menu
         printMainMenu(logged_in[0])
         #gets user input
+
+        if findRequests(logged_in[0]).fetchall() != []:
+            printHasRequest()
+
+            
         opt = input("Enter command: ")
 
         if int(opt) == 1: #search for job
@@ -766,6 +769,17 @@ def viewProfile():
     return
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+def friendsMenu():
+    printFriendsMenu()
+    opt = input("Enter Command: ")
+    if(int(opt) == 3):
+        print("Friends are :")
+        for friend in findFriends(logged_in[0]):
+            print(friend)
+        removedFriend = input("Enter Which friend you would like to remove: ")
+        removeFriend(logged_in[0],removedFriend)
+    
+    
+    return 1
 
 
