@@ -43,8 +43,9 @@ def printMainMenu(userName):
             "(3) Learn a new skill\n"
             "(4) Useful Links\n"
             "(5) Important Links\n"
-            "(6) Edit Personal Profile\n"
-            "(7) View Personal Profile\n"
+            "(6) My Network\n"
+            "(7) Edit Personal Profile\n"
+            "(8) View Personal Profile\n"
             "(0) Logout\n")
     else:
         print("InCollege Main Menu\n"
@@ -53,7 +54,8 @@ def printMainMenu(userName):
             "(3) Learn a new skill\n"
             "(4) Useful Links\n"
             "(5) Important Links\n"
-            "(6) Create Personal Profile\n"
+            "(6) My Network\n"
+            "(7) Create Personal Profile\n"
             "(0) Logout\n")
     return 0
 
@@ -157,4 +159,15 @@ def printPrivacyPolicyMenu():
           "(2) Guest Controls\n"
           "(0) Return to Previous Menu\n")
     return
+#//////////////////////////////////////////////////////////////////////////     HAS REQUEST     /////////////////////////////////////////////////////////////////
+
+def printHasRequest():
+    print("you have a new friend request")
+
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+def printFriendsMenu():
+    print("Friends Menu \n"
+            "(1) Add a friend\n"
+            "(2) View friend requests\n"
+            "(3) Remove a friend\n"
+            "(4) Find Friends\n")

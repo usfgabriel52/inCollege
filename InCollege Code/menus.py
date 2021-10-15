@@ -8,6 +8,9 @@ from jobs import *
 from update_acc import *
 #imports all functions from personalProfile.py
 from personalProfile import *
+#imports all functions from friends.py
+from friends import * 
+
 
 logged_in = []
 
@@ -54,6 +57,7 @@ def homeMenu():
     create_profile_table()
     
     while True:   
+
         #prints the home menu
         printHomeMenu()
         
@@ -114,6 +118,9 @@ def mainMenu():
     
     while True:
         global logged_in
+        if findRequests(logged_in[0]).fetchall() != []:
+            printHasRequest()
+        
         #prints the main menu
         printMainMenu(logged_in[0])
         #gets user input
@@ -130,13 +137,15 @@ def mainMenu():
         elif int(opt) == 5:
             impLinksMenu()
         elif int(opt) == 6:
+            friendsMenu()
+        elif int(opt) == 7:
             if hasProfile(logged_in[0]):
                 #update/edit profile Function goes here
                 editProfile() # temp value for code to work
             else:
                 #Creates profile if one does not exist.
                 createProfileMenu()
-        elif int(opt) == 7:
+        elif int(opt) == 8:
             if hasProfile(logged_in[0]):
                 viewProfile()
             else:
