@@ -766,22 +766,25 @@ def viewProfile(username):
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 def friendsMenu():
-    printFriendsMenu()
+    while True:
+        printFriendsMenu()
 
-    opt = input("Enter Command: ")
+        opt = input("Enter Command: ")
 
-    if int(opt) == 1:  # view friends list
-        displayAllFriends(logged_in[0])
-    elif int(opt) == 2:  # view pending friends requests
-        print("Pending friend requests:\n")
-        displayAllFriendRequests(logged_in[0])
-        print("\n")
-    elif int(opt) == 3:  # add a friend
-        addFriendMenu(logged_in[0])
-    elif int(opt) == 4: # remove a friend
-        removeFriendMenu(logged_in[0])
-    elif int(opt) == 5:  # view a friend's profile
-        displayFriendsWithProfile(logged_in[0])
+        if int(opt) == 1:  # view friends list
+            displayAllFriends(logged_in[0])
+        elif int(opt) == 2:  # view pending friends requests
+            print("Pending friend requests:\n")
+            displayAllFriendRequests(logged_in[0])
+            print("\n")
+        elif int(opt) == 3:  # add a friend
+            addFriendMenu(logged_in[0])
+        elif int(opt) == 4: # remove a friend
+            removeFriendMenu(logged_in[0])
+        elif int(opt) == 5:  # view a friend's profile
+            displayFriendsWithProfile(logged_in[0])
+        elif int(opt) == 0:
+            break
     return 1
 
 # displays all the friends of the current user (even those without profiles)
