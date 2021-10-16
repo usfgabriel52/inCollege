@@ -70,7 +70,14 @@ def test_formatCaps():
 
 
 
-def test_searchPeople():
+def test_searchPeople(monkeypatch):
+    
+    input = 'Chenoweth\n'
+
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    
+    assert search.searchPeople("kingofpop1") == True
+
     return
 
 def test_show_my_network(monkeypatch):
