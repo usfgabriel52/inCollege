@@ -73,6 +73,14 @@ def test_formatCaps():
 def test_searchPeople():
     return
 
+def test_show_my_network(monkeypatch):
+    
+    input = '6\n0\n0'
+
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+
+    assert menus.mainMenu() == 0
+    return
 
 #test_maximum_num_accounts()    
 #test_create_profile()
