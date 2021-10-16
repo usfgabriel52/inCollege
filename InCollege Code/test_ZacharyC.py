@@ -6,7 +6,7 @@ import personalProfile
 #This function tests if a profile database is created and if a Student can create a profile and add it to the database
 def test_create_profile():
 
-    conn = sqlite3.connect('personalProfile.db')
+    conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
     #create the database if it doesnt already exist

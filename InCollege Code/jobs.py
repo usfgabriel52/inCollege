@@ -5,14 +5,6 @@ from sqlite3.dbapi2 import Error
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
-#/////////////////////////////////////////////////////////////////////////     CREATE DB     //////////////////////////////////////////////////////////////////////////////
-
-#table creation for Username table ?
-def create_job_table():
-    #SQL
-    query = """CREATE TABLE IF NOT EXISTS Jobs(title TEXT, description TEXT, employer TEXT, location TEXT, salary TEXT, posterfirst TEXT, posterlast TEXT)"""
-    c.execute(query)
-    conn.commit()
 
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 

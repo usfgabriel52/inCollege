@@ -20,8 +20,6 @@ def loginMenu():
     
     print("\nLog In to InCollege\n")
     
-    create_table()
-    
     if number_rows() == 0:
         print("No users in the system. Please create an account.")
         return
@@ -50,10 +48,11 @@ def loginMenu():
 def homeMenu():
     
     print("Welcome to InCollege.")
-    printStudentSuccess() #prints the student success story found on messages.py
-
-    create_profile_table() #Creates a database for the profiles if one doesn't exist
-    create_friends_tables() #Creates a database for the friends and friends request if one doesn't exist
+    #prints the student success story found on messages.py
+    printStudentSuccess()
+    
+    #Creates a database for the profiles if one doesnt exisit
+    create_tables()
     
     while True:   
 
@@ -95,8 +94,6 @@ def homeMenu():
 def createAccountMenu():
     
     print("\nCreate a New Account\n")
-
-    create_table()
 
     if number_rows() < 10:
         username = input("Enter username: ")
@@ -189,9 +186,7 @@ def jobMenu():
         print("\nJob search/internship.\n")
 
         printJobMenu()
-        #creates a database for jobs if one doesnt exist.
-        create_job_table()
-
+ 
         select = input("Enter Command: ")
 
         if select == "1":
@@ -771,7 +766,6 @@ def viewProfile(username):
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 def friendsMenu():
-
     printFriendsMenu()
 
     opt = input("Enter Command: ")
