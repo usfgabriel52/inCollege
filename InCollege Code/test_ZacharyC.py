@@ -70,25 +70,42 @@ def test_formatCaps():
 
 
 
+# this function test the search for a person functionality
 def test_searchPeople(monkeypatch):
-    
+    #search by last name
     input = 'Chenoweth\n'
-
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    
     assert search.searchPeople("kingofpop1") == True
 
-    return
-
-def test_show_my_network(monkeypatch):
-    
-    input = '6\n0\n0'
-
+    #search by major
+    input = 'Computer Engineering\n'
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    assert search.searchPeople("kingofpop1") == True
 
-    assert menus.mainMenu() == 0
+    #search by university
+    input = 'University of South Florida\n'
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    assert search.searchPeople("kingofpop1") == True
+
+    #no matching result
+    input = 'Computer Science\n'
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    assert search.searchPeople("kingofpop1") == False
+
     return
+
+
+
+# this function tests to see if the show my network menu appears properly
+def test_show_my_network(monkeypatch):
+    input = '0\n'
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    assert menus.friendsMenu() == 1
+    return
+
 
 #test_maximum_num_accounts()    
+test_show_my_network()
+#test_searchPeople()
 #test_create_profile()
 #test_formatCaps()
