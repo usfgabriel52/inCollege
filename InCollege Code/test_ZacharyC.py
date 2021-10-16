@@ -52,7 +52,7 @@ def test_create_profile():
         print(r)
 
     #creates a new profile and stores it in the database
-    personalProfile.create_profile("zchenoweth")
+    personalProfile.create_profile("metalhead123")
     print("\n")
     # display contents of db after signing up
     for r in c.execute("SELECT * FROM personalProfile"):
@@ -102,10 +102,3 @@ def test_show_my_network(monkeypatch):
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
     assert menus.friendsMenu() == 1
     return
-
-
-#test_maximum_num_accounts()    
-test_show_my_network()
-#test_searchPeople()
-#test_create_profile()
-#test_formatCaps()
