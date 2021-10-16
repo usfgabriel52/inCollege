@@ -38,6 +38,8 @@ def test_formatCaps():
     return
 
 
+
+#this function tests if you can create up to and no more than 10 accounts
 def test_maximum_num_accounts(monkeypatch):
     
     conn = sqlite3.connect('InCollege.db')
@@ -92,6 +94,6 @@ def test_maximum_num_accounts(monkeypatch):
 
     return
 
-test_maximum_num_accounts()    
+#test_maximum_num_accounts()    
 #test_create_profile()
 #test_formatCaps()
