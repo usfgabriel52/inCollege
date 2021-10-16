@@ -4,20 +4,6 @@ from getpass import getpass
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
-#Creates the Job DataBase with Tables if it does not exist
-def create_profile_table():
-    #SQL
-    query = """CREATE TABLE IF NOT EXISTS PersonalProfile(userName TEXT,title TEXT, major TEXT, universityName TEXT, about TEXT)"""
-    c.execute(query)
-    conn.commit()
-    query = """CREATE TABLE IF NOT EXISTS expierience(userName TEXT, jobId INT, title TEXT, employer TEXT, dateStart TEXT, dateEnd TEXT, location TEXT, description TEXT)"""
-    c.execute(query)
-    conn.commit()
-    query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
-    c.execute(query)
-    conn.commit() 
-
-
 #Returns True if User is in Personal Profile Database
 def hasProfile(userName):
     query = """SELECT * FROM PersonalProfile WHERE userName = ?"""
