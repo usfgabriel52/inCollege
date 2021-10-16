@@ -50,11 +50,10 @@ def loginMenu():
 def homeMenu():
     
     print("Welcome to InCollege.")
-    #prints the student success story found on messages.py
-    printStudentSuccess()
-    
-    #Creates a database for the profiles if one doesnt exisit
-    create_profile_table()
+    printStudentSuccess() #prints the student success story found on messages.py
+
+    create_profile_table() #Creates a database for the profiles if one doesn't exist
+    create_friends_tables() #Creates a database for the friends and friends request if one doesn't exist
     
     while True:   
 
@@ -72,11 +71,12 @@ def homeMenu():
             continue
 
     if(select == "1"):
-        loginMenu()
+        loginMenu() # redirect the user to log in menu
     elif(select == "2"):
-        createAccountMenu()
+        createAccountMenu() # redirect the user to register menu
     elif(select == "3"):
-        searchPeople()
+        if searchPeople(''):
+            print("Please login to add people as a friend. Thank you.\n")
     elif(select == "4"):
         print("\nVideo is now playing...\n")
     elif (select == "5"):
@@ -125,14 +125,14 @@ def mainMenu():
 
         if findRequests(logged_in[0]).fetchall() != []:
             printHasRequest()
-
             
         opt = input("Enter command: ")
 
-        if int(opt) == 1: #search for job
+        if int(opt) == 1: # search for job
             jobMenu()
-        elif int(opt) == 2:  
-            searchPeople()
+        elif int(opt) == 2: # search for a user
+            if searchPeople(logged_in[0]):
+                addFriendMenu(logged_in[0])
         elif int(opt) == 3:  # learn a new skill
             skillMenu()
         elif int(opt) == 4:
@@ -150,7 +150,7 @@ def mainMenu():
                 createProfileMenu()
         elif int(opt) == 8:
             if hasProfile(logged_in[0]):
-                viewProfile()
+                viewProfile(logged_in[0])
             else:
                 print("You have not created a profile. Please create one first.\n")
         elif int(opt) == 0:
@@ -737,20 +737,21 @@ def editProfile():
     return 0
 
 # displays the profile of the currently logged in user
-def viewProfile():
-    profileData = getProfileInfo(logged_in[0]).fetchall()[0]
-    accountData = getAccountInfo(logged_in[0]).fetchall()[0]
-    jobData = getExperienceInfo(logged_in[0]).fetchall()
-    educData = getEducationInfo(logged_in[0]).fetchall()
+def viewProfile(username):
+    profileData = getProfileInfo(username).fetchall()[0]
+    accountData = getAccountInfo(username).fetchall()[0]
+    jobData = getExperienceInfo(username).fetchall()
+    educData = getEducationInfo(username).fetchall()
+    numFriends = getNumFriends(username).fetchall()[0]
 
-    print("\n\t\t" + accountData[2] + " " + accountData[3] + "\n") # display the full name
-    print(profileData[1] + "\nMajor: " + profileData[2]) # display title and major
-    print("School: " + profileData[3] + "\nAbout: " + profileData[4] + "\n") # display school and about
-
+    print("\n\t\t" + accountData[2] + " " + accountData[3] + "\n")  # display the full name
+    print(profileData[1] + "\nMajor: " + profileData[2])  # display title and major
+    print("School: " + profileData[3] + "\nAbout: " + profileData[4] + "\n")  # display school and about
+    print("Total Friends: " + str(numFriends[0]) + "\n")
     # if there is job experience, display job experience
     if(len(jobData) > 0):
         print("Experience:\n")
-        for d in jobData: # iterate through all the jobs from the database
+        for d in jobData:  # iterate through all the jobs from the database
             print("\t" + d[2] +
                   "\n\t" + d[3] +
                   "\n\tStart: " + d[4] +
@@ -764,23 +765,96 @@ def viewProfile():
             print("Education:\n" +
                   "\tSchool Name: " + d[1] +
                   "\n\tDegree: " + d[2] +
-                  "\n\tYears attended:" + str(d[3]) + "\n")
+                  "\n\tYears attended: " + str(d[3]) + "\n")
 
     return
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 def friendsMenu():
-    create_friends_tables()
+
     printFriendsMenu()
+
     opt = input("Enter Command: ")
-    if(int(opt) == 3):
-        print("Friends are :")
-        for friend in findFriends(logged_in[0]):
-            print(friend)
-        removedFriend = input("Enter Which friend you would like to remove: ")
-        removeFriend(logged_in[0],removedFriend)
-    
-    
+
+    if int(opt) == 1:  # view friends list
+        displayAllFriends(logged_in[0])
+    elif int(opt) == 2:  # view pending friends requests
+        print("Pending friend requests:\n")
+        displayAllFriendRequests(logged_in[0])
+        print("\n")
+    elif int(opt) == 3:  # add a friend
+        addFriendMenu(logged_in[0])
+    elif int(opt) == 4: # remove a friend
+        removeFriendMenu(logged_in[0])
+    elif int(opt) == 5:  # view a friend's profile
+        displayFriendsWithProfile(logged_in[0])
     return 1
 
+# displays all the friends of the current user (even those without profiles)
+def displayAllFriends(currUser):
+    print("\nFriends list:")
+    friends = findFriends(currUser)
+    if len(friends) > 0:
+        i = 1
+        for f in findFriends(currUser):
+            print(str(i) + ". " + f[1] + " " + f[2] + " (" + f[0] + ")")
+            i+=1
+        print("\n")
+        return 1
+    else:
+        print("You don't have any friends!\n")
+    return None
 
+# displays all the friends of the current user (does not include those without profiles)
+def displayFriendsWithProfile(username):
+    print("\nFriends with profiles: ")
+    for r in getFriendsWithProfile(username):
+        print(r[1] + " " + r[2] + " (" + r[0] + ")\n")
+    toView = input("Enter the username of the friend whose profile you want to view: ")
+    viewProfile(toView)  # view the profile of the entered username
+    return None
+
+# menu to display when the user wants to add a friend
+def addFriendMenu(username):
+    toAdd = input("Enter username of friend to add: ")
+
+    # rowcount == -1 means empty cursor, query did not return anything
+    if len(findSpecificFriend(username, toAdd).fetchall()) == 0:
+        displayUserInfo(toAdd)  # displays basic info (name, username, major, university) of the user to be added
+        if input("Would you like to send a friend request to " + toAdd + "? (Y/N) ") == 'Y':
+            if requestFriend(toAdd, logged_in[0]) == 3:
+                print("You succesfully sent a friend request to " + toAdd + ".\n")
+                return True
+            else:
+                print("You already sent a friend request to " + toAdd + ".\n")
+                return False
+        else:
+            return False
+    else:
+        print("\nYou and " + toAdd + " are already friends!\n")
+    return None
+
+# displays all the pending friend request for the specified username
+def displayAllFriendRequests(username):
+
+    requests = getAllFriendRequests(username) # gets all pending friend request of the current user
+
+    for r in requests: # iterate through friend requests and ask user if they want to accept, reject, or cancel
+        print(r[2] + " " + r[3] + " (" + r[1] + ") wants to be your friend! ")
+        opt = input("Enter A to Accept, R to Reject, or C to Cancel: ")
+        if opt == 'A' or opt == 'a':  # user accepts a friend request
+            if acceptRequest(username,r[1]) != 0:
+                print("\nYou have accepted " + r[1] + "'s friend request!")
+        elif opt == 'R' or opt == 'r':  # user rejects a friend request
+            if rejectRequest(username,r[1]) != 0:
+                print("\nYou have rejected " + r[1] + "'s friend request!")
+        else:  # cancel to stop accepting friend requests
+            break
+    return None
+
+# menu for removing a friend
+def removeFriendMenu(username):
+    displayAllFriends(username)
+    removedFriend = input("Enter the username of the friend you would like to remove: ")
+    if removeFriend(username, removedFriend) == 1:
+        print("Succesfully removed " + removedFriend + " from your friends list.\n")

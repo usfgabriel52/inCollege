@@ -54,7 +54,7 @@ def printMainMenu(userName):
             "(3) Learn a new skill\n"
             "(4) Useful Links\n"
             "(5) Important Links\n"
-            "(6) My Network\n"
+            "(6) Show My Network\n"
             "(7) Create Personal Profile\n"
             "(0) Logout\n")
     return 0
@@ -162,12 +162,16 @@ def printPrivacyPolicyMenu():
 #//////////////////////////////////////////////////////////////////////////     HAS REQUEST     /////////////////////////////////////////////////////////////////
 
 def printHasRequest():
-    print("you have a new friend request")
+    print("You have a new friend request!\n")
+    return
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 def printFriendsMenu():
     print("Friends Menu \n"
-            "(1) Add a friend\n"
-            "(2) View friend requests\n"
-            "(3) Remove a friend\n"
-            "(4) Find Friends\n")
+          "(1) View friends list\n"
+          "(2) View pending friend requests\n"
+          "(3) Add a friend\n"
+          "(4) Remove a friend\n"
+          "(5) View a friend's profile\n"
+          "(0) Return to previous menu\n")
+    return
