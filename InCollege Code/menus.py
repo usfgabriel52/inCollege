@@ -744,8 +744,8 @@ def viewProfile(username):
     numFriends = getNumFriends(username).fetchall()[0]
 
     print("\n\t\t" + accountData[2] + " " + accountData[3] + "\n")  # display the full name
-    print(profileData[1] + "\nMajor: " + profileData[2])  # display title and major
-    print("School: " + profileData[3] + "\nAbout: " + profileData[4] + "\n")  # display school and about
+    print(str(profileData[1]) + "\nMajor: " + str(profileData[2]))  # display title and major
+    print("School: " + str(profileData[3]) + "\nAbout: " + str(profileData[4]) + "\n")  # display school and about
     print("Total Friends: " + str(numFriends[0]) + "\n")
     # if there is job experience, display job experience
     if (len(jobData) > 0):
@@ -782,7 +782,6 @@ def friendsMenu():
         elif int(opt) == 2:  # view pending friends requests
             print("Pending friend requests:\n")
             displayAllFriendRequests(logged_in[0])
-            print("\n")
         elif int(opt) == 3:  # add a friend
             addFriendMenu(logged_in[0])
         elif int(opt) == 4:  # remove a friend
@@ -813,15 +812,15 @@ def displayAllFriends(currUser):
 # displays all the friends of the current user (does not include those without profiles)
 def displayFriendsWithProfile(username):
     print("\nFriends with profiles: ")
-    friends = getFriendsWithProfile(username)
-    if friends.rowcount != -1:
+    friends = getFriendsWithProfile(username).fetchall()
+    if len(friends) > 0:
         for r in getFriendsWithProfile(username):
-            print(r[1] + " " + r[2] + " (" + r[0] + ")\n")
+             print(r[1] + " " + r[2] + " (" + r[0] + ")\n")
         toView = input("Enter the username of the friend whose profile you want to view: ")
         viewProfile(toView)  # view the profile of the entered username
         return 1
     else:
-        print("You don't have any friends!\n")
+        print("None of your friends have a profile!\n")
     return None
 
 
@@ -849,19 +848,21 @@ def addFriendMenu(username):
 
 # displays all the pending friend request for the specified username
 def displayAllFriendRequests(username):
-    requests = getAllFriendRequests(username)  # gets all pending friend request of the current user
-
-    for r in requests:  # iterate through friend requests and ask user if they want to accept, reject, or cancel
-        print(r[2] + " " + r[3] + " (" + r[1] + ") wants to be your friend! ")
-        opt = input("Enter A to Accept, R to Reject, or C to Cancel: ")
-        if opt == 'A' or opt == 'a':  # user accepts a friend request
-            if acceptRequest(username, r[1]) != 0:
-                print("\nYou have accepted " + r[1] + "'s friend request!")
-        elif opt == 'R' or opt == 'r':  # user rejects a friend request
-            if rejectRequest(username, r[1]) != 0:
-                print("\nYou have rejected " + r[1] + "'s friend request!")
-        else:  # cancel to stop accepting friend requests
-            break
+    requests = getAllFriendRequests(username).fetchall()  # gets all pending friend request of the current user
+    if len(requests) > 0:
+        for r in requests:  # iterate through friend requests and ask user if they want to accept, reject, or cancel
+            print(r[2] + " " + r[3] + " (" + r[1] + ") wants to be your friend! ")
+            opt = input("Enter A to Accept, R to Reject, or C to Cancel: ")
+            if opt == 'A' or opt == 'a':  # user accepts a friend request
+                if acceptRequest(username, r[1]) != 0:
+                    print("\nYou have accepted " + r[1] + "'s friend request!")
+            elif opt == 'R' or opt == 'r':  # user rejects a friend request
+                if rejectRequest(username, r[1]) != 0:
+                    print("\nYou have rejected " + r[1] + "'s friend request!")
+            else:  # cancel to stop accepting friend requests
+                break
+    else:
+        print("You don't have any friend requests.\n")
     return None
 
 # menu for removing a friend
