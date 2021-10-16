@@ -21,19 +21,6 @@ def requestFriend(userName,requestee):
 
 #finds all friends of user, returns array containing username + name of friend for display
 def findFriends(userName):
-    #query = """SELECT * FROM friends WHERE userName = ?"""
-    #data = (userName)
-    #f = []
-    #friendArr = c.execute(query, [data])
-    #for friend in friendArr:
-    #   f.append(friend[1])
-    #query = """SELECT * FROM friends WHERE friend = ?"""
-    #data = (userName)
-    #friendArr = c.execute(query, [data])
-    #for friend in friendArr:
-    #    f.append(friend[0])
-    #return f
-
     query="""SELECT friend, firstname, lastname FROM friends f INNER JOIN Accounts a ON a.username = f.friend WHERE f.username = ?"""
     data = [userName]
 
@@ -41,17 +28,7 @@ def findFriends(userName):
 
 #checks if a specific friend is in the table
 def findSpecificFriend(userName,friend):
-    #query = """SELECT * FROM friends WHERE userName = ? AND friend = ?"""
-    #data = (userName,friend)
-    #checkFriend  = c.execute(query, data)
-    #if checkFriend.fetchall() == []:
-    #    query = """SELECT * FROM friends WHERE userName = ? AND friend = ?"""
-    #    data = (friend,userName)
-    #    return c.execute(query, data)
-    #else:
-    #    return checkFriend
-
-    query = """SELECT * FROM friends WHERE username = ? AND friend = ?"""
+    query = """SELECT friend FROM friends WHERE username = ? AND friend = ?"""
     data = [userName, friend]
 
     return c.execute(query, data)
