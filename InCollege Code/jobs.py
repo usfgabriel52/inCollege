@@ -60,10 +60,10 @@ def postJob(posterfirst, posterlast):
 
 #username shows job selected, or returns "0" to go back
 def list_jobs(username):
-    c = sqlite3.connect('InCollege.db')
-    conn = c.cursor()
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
 
-    jobs = conn.execute("SELECT * FROM jobs").fetchall()
+    jobs = c.execute("SELECT * FROM jobs").fetchall()
     store_list = []
     count = 1
     print("0. Back")
@@ -75,7 +75,7 @@ def list_jobs(username):
         print(str(count) + ". " +  "Title: " + str(i[1]) + "\t Employer: " + str(i[3]) + "\t Location: " + str(i[4]) + "\t Salary: " + str(i[5]) + "\t Description: " + str(i[2]) + "\t Status:"+ tmp)
         count += 1
     
-    c.close()
+    conn.close()
 
     selection = job_selection(count-1)
     if(selection == 0):
@@ -86,18 +86,18 @@ def list_jobs(username):
 #//////////
 
 def check_job_status(username, title, posted):
-    c = sqlite3.connect('InCollege.db')
-    conn = c.cursor()
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
     
     
-    pnt = conn.execute("SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(username, title, posted))
+    pnt = c.execute("SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(username, title, posted))
     check = str(pnt.fetchone())
     if check == "None":
         c.close()
         return "None"
     else:
         tmp = conn.execute("SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(username, title, posted)).fetchall()
-        c.close()
+        conn.close()
         #returns the status
         return str(tmp[0][3])
 
@@ -105,8 +105,8 @@ def check_job_status(username, title, posted):
 
 def apply_job(job, current_user):
     print("Apply for Jobs:")
-    c = sqlite3.connect('InCollege.db')
-    conn = c.cursor()    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()    
 
     #checks poster
     if(str(job[0]) == str(current_user)):
@@ -119,10 +119,10 @@ def apply_job(job, current_user):
         print("Already applied")
         return
     elif status == "saved":
-        conn.execute("UPDATE app_status SET status = 'applied' WHERE username = '{}' AND title = '{}' AND status = 'saved'".format(current_user, job[1]))
+        c.execute("UPDATE app_status SET status = 'applied' WHERE username = '{}' AND title = '{}' AND status = 'saved'".format(current_user, job[1]))
    
     else:
-        conn.execute("INSERT INTO app_status VALUES ('{}', '{}', '{}', 'applied')".format(current_user, job[1], job[0]))
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', '{}', 'applied')".format(current_user, job[1], job[0]))
 
     #inputs 
     grad_date = input("Graduation date (mm/dd/yyyy)\n")
@@ -130,21 +130,21 @@ def apply_job(job, current_user):
     story = input("Why should you get this position.\n")
     
     #insert app
-    conn.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3], grad_date, start_date, story))
-    c.commit()
+    c.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3], grad_date, start_date, story))
+    conn.commit()
 
     #/////////
  
 #for deletion 
  def job_deleted(username):
-     c = sqlite3.connect('InCollege.db')
-     conn = c.cursor()
-     tmp = conn.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
+     conn = sqlite3.connect('InCollege.db')
+     c = conn.cursor()
+     tmp = c.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
      if str(tmp.fetchone()) == "None":
-         c.close()
+         conn.close()
          return False
      else:
-         conn.execute("DELETE FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
-         c.commit()
-         c.close()
+         c.execute("DELETE FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
+         conn.commit()
+         conn.close()
      return True
