@@ -95,7 +95,7 @@ def apply_job(job, current_user):
         print("Posted job, cannot apply.")
         return
 
-    #checking if applied, if not it will 
+    #checking if applied
     status = str(check_job_status(current_user, job[1], job[0]))
     if status == "applied":
         print("Already applied")
@@ -111,6 +111,6 @@ def apply_job(job, current_user):
     start_date = input("Start date you can begin work (mm/dd/yyyy)\n")
     story = input("Why should you get this position.\n")
     
-    #insert application to table
+    #insert app
     conn.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3], grad_date, start_date, story))
     c.commit()
