@@ -83,6 +83,24 @@ def list_jobs(username):
 
     return store_list[selection-1]
 
+#//////////
+
+def check_job_status(username, title, posted):
+    c = sqlite3.connect('InCollege.db')
+    conn = c.cursor()
+    
+    
+    pnt = conn.execute("SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(username, title, posted))
+    check = str(pnt.fetchone())
+    if check == "None":
+        c.close()
+        return "None"
+    else:
+        tmp = conn.execute("SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(username, title, posted)).fetchall()
+        c.close()
+        #returns the status
+        return str(tmp[0][3])
+
 #/////////////
 
 def apply_job(job, current_user):
