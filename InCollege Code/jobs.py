@@ -132,3 +132,19 @@ def apply_job(job, current_user):
     #insert app
     conn.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3], grad_date, start_date, story))
     c.commit()
+
+    #/////////
+ 
+#for deletion 
+ def job_deleted(username):
+     c = sqlite3.connect('InCollege.db')
+     conn = c.cursor()
+     tmp = conn.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
+     if str(tmp.fetchone()) == "None":
+         c.close()
+         return False
+     else:
+         conn.execute("DELETE FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
+         c.commit()
+         c.close()
+     return True
