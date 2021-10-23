@@ -11,6 +11,7 @@ from personalProfile import *
 # imports all functions from friends.py
 from friends import *
 
+# username, password, first name, last name
 logged_in = []
 
 
@@ -190,6 +191,8 @@ def jobMenu():
             postJob(logged_in[2], logged_in[3])
         elif select == "2":   # view all job titles
             viewJobTitles()
+        elif select == "3":  # delete a job
+            deleteJobMenu()
         elif select == "0":
             break
         else:
@@ -877,16 +880,42 @@ def removeFriendMenu(username):
                 return 1
     return None
 
+# view all the job titles in the system
 def viewJobTitles():
-    print("\nAll job titles: ")
+    print("\nAll job titles currently in InCollege: ")
     jobs = getAllJobTitles()
-    for j in jobs:
-        print(str(j[0]) + ". " + j[1])
+    for t in jobs:
+        print(str(t[0]) + ". " + t[1])
 
     toView = input("\nEnter the number of the job you want to view (0 to cancel): ")
     if toView == "0":
         return None
     else:
         job = getJobDetails(toView)
-        print("Title: " + job[1] + "\nEmployer: " + job[3] + "\nLocation: " + job[4] + "\nSalary: " + job[5] + "\nDescription: " + job[2])
+        print("Title: " + j[1] + "\nEmployer: " + j[3] + "\nLocation: " + j[4] + "\nSalary: " + j[5] + "\nDescription: " + j[2])
+        return True
+
+# delete a job the user posted
+def deleteJobMenu():
+    print("\nJobs you have posted:")
+
+    jobs = getJobsByPoster(logged_in[2], logged_in[3])  # get all the jobs posted by the currently logged in user
+
+    if(len(jobs) == 0):
+        print("\nYou haven't posted any jobs!")
+        return None
+
+    count = 1
+    # display all the jobs posted by currently logged in user
+    for j in jobs:
+        print(str(count) + ".  Title: " + j[1] + "\n\tEmployer: " + j[3] + "\n\tLocation: " + j[4] + "\n\tSalary: " + j[5] + "\n\tDescription: " + j[2] + "\n")
+        count+=1
+
+    toDelete = input("\nEnter the number of the job you want to delete (0 to cancel): ")
+
+    if toDelete == "0":
+        return None
+    else:
+        deleteJob(jobs[int(toDelete)-1][0])
+        print("Successfully deleted job!\n")
         return True

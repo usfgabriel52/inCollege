@@ -166,3 +166,11 @@ def getAllJobTitles():
 
 def getJobDetails(id):
     return c.execute("SELECT * FROM Jobs WHERE id = ?", [id]).fetchone()
+
+def getJobsByPoster(pFname, pLname):
+    return c.execute("SELECT * FROM Jobs WHERE posterfirst = ? AND posterlast = ?", [pFname, pLname]).fetchall()
+
+def deleteJob(jobID):
+    c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
+    conn.commit()
+    return True
