@@ -191,10 +191,13 @@ def jobMenu():
             postJob(logged_in[2], logged_in[3])
         elif select == "2":   # view all job titles
             viewJobTitles()
-        elif select == "3":  # delete a job
-            deleteJobMenu()
-        elif select == "4":  # view currently logged in user's saved jobs
-            viewSavedJobs(logged_in[0])
+        elif select == "3":  # view all the jobs the currently logged in user has posted
+            viewAllPostedJobs(logged_in[2], logged_in[3])
+        elif select == "4":   # delete a job
+            viewAllPostedJobs(logged_in[2], logged_in[3])
+            deleteJobMenu(logged_in[2], logged_in[3])
+        elif select == "5":
+            viewSavedJobs(logged_in[0])  # view currently logged in user's saved jobs
         elif select == "0":
             break
         else:
@@ -371,7 +374,7 @@ def languageMenu():
 def createJobMenu(jobId):
     create_job(logged_in[0], jobId)
 
-    title = input("enter Title for profile or 0 to quit: ")
+    title = input("Enter Title for profile or 0 to quit: ")
     if title == '0':
         return 0
     update_job(logged_in[0], jobId, 'title', title)
@@ -424,7 +427,6 @@ def createSchoolMenu():
     update_school(logged_in[0], "yearsAttended", int(yearsAttended))
 
     return 3
-
 
 # ///////////////////////////////////////////////////////////////////////////////////////    Create Profile Menu    ///////////////////////////////////////////////////////
 
@@ -872,6 +874,7 @@ def displayAllFriendRequests(username):
         print("You don't have any friend requests.\n")
     return None
 
+
 # menu for removing a friend
 def removeFriendMenu(username):
     if displayAllFriends(username) != None:
@@ -884,7 +887,7 @@ def removeFriendMenu(username):
 
 # view all the job titles in the system
 def viewJobTitles():
-    print("\nAll job titles currently in InCollege: ")
+    print("\nAll job titles currently in InCollege:\n")
     jobs = getAllJobTitles() # retrieve all the existing job titles in the system
 
     # display the jobs
@@ -893,13 +896,14 @@ def viewJobTitles():
         print(str(count) + ". " + t[1])
         count+=1
 
-    toView = input("Enter the number of the job you want to view (0 to cancel): ")
+    toView = input("\nEnter the number of the job you want to view (0 to cancel): ")
     if toView == "0":
         return None
     else:
         printJobDetails(jobs[int(toView)-1][0])   # print job details for the user
         jobOptions(logged_in[0], jobs[int(toView)-1][0])  # ask the user what to do
         return True
+
 
 # function to print the details of the specified job
 def printJobDetails(jobID):
@@ -910,12 +914,14 @@ def printJobDetails(jobID):
 
     return None
 
-# function to print a menu
+
+# asks the user what they want to do with a selected job
 def jobOptions(user, jobID):
     printJobOptionsMenu()
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
+        # TODO: job application
         print("DO SOMETHING")
     elif option == "2":  # user wants to save the job
         if saveJob(user, jobID):
@@ -927,11 +933,11 @@ def jobOptions(user, jobID):
     else:
         return None
 
-# delete a job the user posted
-def deleteJobMenu():
-    print("\nJobs you have posted:")
+# displays all the jobs posted by the given first name and last name
+def viewAllPostedJobs(firstname, lastname):
+    print("\nJobs you have posted:\n")
 
-    jobs = getJobsByPoster(logged_in[2], logged_in[3])  # get all the jobs posted by the currently logged in user
+    jobs = getJobsByPoster(firstname, lastname)  # get all the jobs posted by the currently logged in user
 
     if len(jobs) == 0:
         print("\nYou haven't posted any jobs!")
@@ -941,8 +947,14 @@ def deleteJobMenu():
 
     # display all the jobs posted by currently logged in user
     for j in jobs:
-        print(str(count) + ".  Title: " + j[1] + "\n\tEmployer: " + j[3] + "\n\tLocation: " + j[4] + "\n\tSalary: " + j[5] + "\n\tDescription: " + j[2] + "\n")
-        count+=1
+        print(str(count) + ".  Title: " + j[1] + "\n\tEmployer: " + j[3] + "\n\tLocation: " + j[4] + "\n\tSalary: " + j[
+            5] + "\n\tDescription: " + j[2] + "\n")
+        count += 1
+
+
+# delete a job the user posted
+def deleteJobMenu(firstname, lastname):
+    jobs = getJobsByPoster(firstname, lastname)  # get all the jobs posted by the currently logged in user
 
     toDelete = input("Enter the number of the job you want to delete (0 to cancel): ")
 
@@ -950,8 +962,9 @@ def deleteJobMenu():
         return None
     else:
         deleteJob(jobs[int(toDelete)-1][0])
-        print("Successfully deleted job!\n")
+        print("\nSuccessfully deleted job!\n")
         return True
+
 
 # prints all the saved jobs of the current user
 def viewSavedJobs(user):
@@ -971,7 +984,8 @@ def viewSavedJobs(user):
               "\n\tDescription: " + j[2] + "\n")
         count += 1
 
-    toModify = input("\nEnter the number of the job you want to modify (0 to cancel): ")
+    toModify = input("Enter the number of the job you want to modify (0 to cancel): ")
+
     if toModify == "0":
         return None
     else:
@@ -979,12 +993,14 @@ def viewSavedJobs(user):
         savedJobOptions(user, jobs[int(toModify)-1][0])
         return True
 
+
 # options when a user views a job in his saved jobs list
 def savedJobOptions(user, jobID):
     printSavedJobOptionsMenu()
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
+        # TODO: job application
         print("DO SOMETHING")
     elif option == "2":  # user wants to remove the job from their saved list
         if removeFromSavedJobs(user, jobID):
