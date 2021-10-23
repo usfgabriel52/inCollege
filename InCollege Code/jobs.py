@@ -43,7 +43,7 @@ def postJob(posterfirst, posterlast):
 
     ExistingJobs = 0
 
-    if job_created() < 5:
+    if job_created() < 10:
         title = input("Enter Job Title: ")
         description = input("Enter Job Description: ")
         employer = input("Enter Employer Name: ")
@@ -148,7 +148,6 @@ def apply_job(job, current_user):
 
     # for deletion
 
-
 def job_deleted(username):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
@@ -161,3 +160,9 @@ def job_deleted(username):
         conn.commit()
         conn.close()
     return True
+
+def getAllJobTitles():
+    return c.execute("SELECT id, title FROM Jobs").fetchall()
+
+def getJobDetails(id):
+    return c.execute("SELECT * FROM Jobs WHERE id = ?", [id]).fetchone()

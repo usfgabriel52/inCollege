@@ -186,8 +186,10 @@ def jobMenu():
 
         select = input("Enter Command: ")
 
-        if select == "1":
+        if select == "1":  # post a job
             postJob(logged_in[2], logged_in[3])
+        elif select == "2":   # view all job titles
+            viewJobTitles()
         elif select == "0":
             break
         else:
@@ -874,3 +876,17 @@ def removeFriendMenu(username):
                 print("Succesfully removed " + removedFriend + " from your friends list.\n")
                 return 1
     return None
+
+def viewJobTitles():
+    print("\nAll job titles: ")
+    jobs = getAllJobTitles()
+    for j in jobs:
+        print(str(j[0]) + ". " + j[1])
+
+    toView = input("\nEnter the number of the job you want to view (0 to cancel): ")
+    if toView == "0":
+        return None
+    else:
+        job = getJobDetails(toView)
+        print("Title: " + job[1] + "\nEmployer: " + job[3] + "\nLocation: " + job[4] + "\nSalary: " + job[5] + "\nDescription: " + job[2])
+        return True

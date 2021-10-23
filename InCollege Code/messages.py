@@ -78,6 +78,7 @@ def printSkillList():
 def printJobMenu():
     
     print("(1) Post a job.\n"
+          "(2) View all job titles\n"
           "(0) Return to Previous Menu.\n"  )
     return 0
 
