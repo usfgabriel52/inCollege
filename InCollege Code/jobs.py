@@ -161,16 +161,38 @@ def job_deleted(username):
         conn.close()
     return True
 
+# get all the job titles in the database
 def getAllJobTitles():
     return c.execute("SELECT id, title FROM Jobs").fetchall()
 
+# get the details of the specified job ID
 def getJobDetails(id):
     return c.execute("SELECT * FROM Jobs WHERE id = ?", [id]).fetchone()
 
+# get all the jobs posted by the given first name and last name
 def getJobsByPoster(pFname, pLname):
     return c.execute("SELECT * FROM Jobs WHERE posterfirst = ? AND posterlast = ?", [pFname, pLname]).fetchall()
 
+# delete a job in the database
 def deleteJob(jobID):
     c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
     conn.commit()
     return True
+
+# add a job in the SavedJobs table
+def saveJob(username, jobID):
+    try:
+        c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
+        conn.commit()
+        return True
+    except:
+        return False
+
+def removeFromSavedJobs(username, jobID):
+    c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
+    conn.commit()
+    return True
+
+def getAllSavedJobs(username):
+    return c.execute("SELECT j.id, j.title, j.description, j.employer, j.location, j.salary, j.posterfirst, j.posterlast FROM SavedJobs s INNER JOIN Jobs j ON s.jobID = j.id "
+                     "WHERE username = ?", [username]).fetchall()

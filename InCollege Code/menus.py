@@ -193,6 +193,8 @@ def jobMenu():
             viewJobTitles()
         elif select == "3":  # delete a job
             deleteJobMenu()
+        elif select == "4":  # view currently logged in user's saved jobs
+            viewSavedJobs(logged_in[0])
         elif select == "0":
             break
         else:
@@ -883,17 +885,47 @@ def removeFriendMenu(username):
 # view all the job titles in the system
 def viewJobTitles():
     print("\nAll job titles currently in InCollege: ")
-    jobs = getAllJobTitles()
-    for t in jobs:
-        print(str(t[0]) + ". " + t[1])
+    jobs = getAllJobTitles() # retrieve all the existing job titles in the system
 
-    toView = input("\nEnter the number of the job you want to view (0 to cancel): ")
+    # display the jobs
+    count = 1
+    for t in jobs:
+        print(str(count) + ". " + t[1])
+        count+=1
+
+    toView = input("Enter the number of the job you want to view (0 to cancel): ")
     if toView == "0":
         return None
     else:
-        job = getJobDetails(toView)
-        print("Title: " + j[1] + "\nEmployer: " + j[3] + "\nLocation: " + j[4] + "\nSalary: " + j[5] + "\nDescription: " + j[2])
+        printJobDetails(jobs[int(toView)-1][0])   # print job details for the user
+        jobOptions(logged_in[0], jobs[int(toView)-1][0])  # ask the user what to do
         return True
+
+# function to print the details of the specified job
+def printJobDetails(jobID):
+    j = getJobDetails(jobID)  # retrive details from database
+
+    print("\nTitle: " + j[1] + "\nEmployer: " + j[3] + "\nLocation: " + j[4] + "\nSalary: " + j[5] + "\nDescription: " +
+          j[2] + "\n")
+
+    return None
+
+# function to print a menu
+def jobOptions(user, jobID):
+    printJobOptionsMenu()
+    option = input("Enter command: ")
+
+    if option == "1":  # user wants to apply for the job
+        print("DO SOMETHING")
+    elif option == "2":  # user wants to save the job
+        if saveJob(user, jobID):
+            print("\nSuccessfully saved job!")
+            return True
+        else:
+            print("\nYou have already saved this job!")
+            return False
+    else:
+        return None
 
 # delete a job the user posted
 def deleteJobMenu():
@@ -901,17 +933,18 @@ def deleteJobMenu():
 
     jobs = getJobsByPoster(logged_in[2], logged_in[3])  # get all the jobs posted by the currently logged in user
 
-    if(len(jobs) == 0):
+    if len(jobs) == 0:
         print("\nYou haven't posted any jobs!")
         return None
 
     count = 1
+
     # display all the jobs posted by currently logged in user
     for j in jobs:
         print(str(count) + ".  Title: " + j[1] + "\n\tEmployer: " + j[3] + "\n\tLocation: " + j[4] + "\n\tSalary: " + j[5] + "\n\tDescription: " + j[2] + "\n")
         count+=1
 
-    toDelete = input("\nEnter the number of the job you want to delete (0 to cancel): ")
+    toDelete = input("Enter the number of the job you want to delete (0 to cancel): ")
 
     if toDelete == "0":
         return None
@@ -919,3 +952,43 @@ def deleteJobMenu():
         deleteJob(jobs[int(toDelete)-1][0])
         print("Successfully deleted job!\n")
         return True
+
+# prints all the saved jobs of the current user
+def viewSavedJobs(user):
+    print("\nYour saved jobs: \n")
+
+    jobs = getAllSavedJobs(user)
+    if(len(jobs) == 0):
+        print("You don't have any jobs saved!\n")
+        return None
+
+    count = 1
+    for j in jobs:
+        print(str(count) + ".  Title: " + j[1] +
+              "\n\tEmployer: " + j[3] +
+              "\n\tLocation: " + j[4] +
+              "\n\tSalary: " + j[5] +
+              "\n\tDescription: " + j[2] + "\n")
+        count += 1
+
+    toModify = input("\nEnter the number of the job you want to modify (0 to cancel): ")
+    if toModify == "0":
+        return None
+    else:
+        printJobDetails(jobs[int(toModify) - 1][0])
+        savedJobOptions(user, jobs[int(toModify)-1][0])
+        return True
+
+# options when a user views a job in his saved jobs list
+def savedJobOptions(user, jobID):
+    printSavedJobOptionsMenu()
+    option = input("Enter command: ")
+
+    if option == "1":  # user wants to apply for the job
+        print("DO SOMETHING")
+    elif option == "2":  # user wants to remove the job from their saved list
+        if removeFromSavedJobs(user, jobID):
+            print("\nSuccessfully removed job!")
+            return True
+    else:
+        return None

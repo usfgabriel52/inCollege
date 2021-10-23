@@ -29,7 +29,10 @@ def create_tables():
     conn.commit()
     query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
     c.execute(query)
-    conn.commit() 
+    conn.commit()
+    query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
+    c.execute(query)
+    conn.commit()
 
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 

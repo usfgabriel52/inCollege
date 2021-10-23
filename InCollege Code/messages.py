@@ -77,10 +77,11 @@ def printSkillList():
 
 def printJobMenu():
     
-    print("(1) Post a job.\n"
+    print("(1) Post a job\n"
           "(2) View all job titles\n"
           "(3) Delete a job\n"
-          "(0) Return to Previous Menu.\n"  )
+          "(4) View all saved jobs\n"
+          "(0) Return to Previous Menu.\n")
     return 0
 
 #/////////////////////////////////////////////////////////////////////////     PRINT IMPORTANT LINKS MENU     ///////////////////////////////////////////////////////////////////
@@ -177,3 +178,15 @@ def printFriendsMenu():
           "(5) View a friend's profile\n"
           "(0) Return to previous menu\n")
     return
+
+def printJobOptionsMenu():
+    print("What would you like to do?\n"
+          "\t(1) Apply for job\n"
+          "\t(2) Save job for later\n"
+          "\t(0) Cancel\n")
+
+def printSavedJobOptionsMenu():
+    print("What would you like to do?\n"
+          "\t(1) Apply for job\n"
+          "\t(2) Remove job from list\n"
+          "\t(0) Cancel\n")
