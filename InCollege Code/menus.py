@@ -121,6 +121,9 @@ def mainMenu():
         if findRequests(logged_in[0]).fetchall() != []:
             printHasRequest()
 
+        if checkDeletedApplications(logged_in[0]):
+            print("\nOne or more of the jobs you have applied for has been deleted.")
+
         opt = input("Enter command: ")
 
         if int(opt) == 1:  # search for job
@@ -888,7 +891,7 @@ def removeFriendMenu(username):
 # view all the job titles in the system
 def viewJobTitles():
     print("\nAll job titles currently in InCollege:\n")
-    jobs = getAllJobTitles() # retrieve all the existing job titles in the system
+    jobs = getAllJobTitles()  # retrieve all the existing job titles in the system
 
     # display the jobs
     count = 1
@@ -921,8 +924,9 @@ def jobOptions(user, jobID):
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
-        # TODO: job application
-        print("DO SOMETHING")
+        j = getAllJobTitles()
+        apply_job(j[jobID-1], user, logged_in[2], logged_in[3])
+        removeFromSavedJobs(user, jobID)
     elif option == "2":  # user wants to save the job
         if saveJob(user, jobID):
             print("\nSuccessfully saved job!")
@@ -958,10 +962,10 @@ def deleteJobMenu(firstname, lastname):
 
     toDelete = input("Enter the number of the job you want to delete (0 to cancel): ")
 
-    if toDelete == "0":
+    if toDelete == "0":  # user cancels
         return None
     else:
-        deleteJob(jobs[int(toDelete)-1][0])
+        deleteJob(jobs[int(toDelete)-1][0])  # delete the jobs + set the applications associated to it as deleted + delete items from
         print("\nSuccessfully deleted job!\n")
         return True
 
@@ -970,11 +974,13 @@ def deleteJobMenu(firstname, lastname):
 def viewSavedJobs(user):
     print("\nYour saved jobs: \n")
 
-    jobs = getAllSavedJobs(user)
+    jobs = getAllSavedJobs(user)  # retrieve all the jobs saved by the user from the database
+
     if(len(jobs) == 0):
         print("You don't have any jobs saved!\n")
         return None
 
+    # display all the jobs saved by the user
     count = 1
     for j in jobs:
         print(str(count) + ".  Title: " + j[1] +
@@ -989,7 +995,7 @@ def viewSavedJobs(user):
     if toModify == "0":
         return None
     else:
-        printJobDetails(jobs[int(toModify) - 1][0])
+        printJobDetails(jobs[int(toModify) - 1][0])  # print the details of the job they want to modify
         savedJobOptions(user, jobs[int(toModify)-1][0])
         return True
 
@@ -1000,11 +1006,19 @@ def savedJobOptions(user, jobID):
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
-        # TODO: job application
-        print("DO SOMETHING")
+        j = getAllJobTitles()
+        apply_job(j[jobID - 1], user, logged_in[2], logged_in[3])
+        removeFromSavedJobs(user, jobID)
     elif option == "2":  # user wants to remove the job from their saved list
         if removeFromSavedJobs(user, jobID):
             print("\nSuccessfully removed job!")
             return True
     else:
         return None
+
+# checks if any of the applications the user submitted has been deleted.
+def checkDeletedApplications(user):
+    a = getDeletedApplications(user)
+    if len(a) != 0:
+        return True
+    return False

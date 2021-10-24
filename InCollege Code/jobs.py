@@ -87,69 +87,68 @@ def list_jobs(username):
 
 # //////////
 
-def check_job_status(username, title, posted):
+def check_job_status(username, jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
     pnt = c.execute(
-        "SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(
-            username, title, posted))
+        "SELECT * FROM app_status WHERE (username = '{}' AND jobID = '{}' COLLATE NOCASE)".format(username, jobID)
+    )
     check = str(pnt.fetchone())
     if check == "None":
         c.close()
-        return "None"
+        return None
     else:
         tmp = conn.execute(
-            "SELECT * FROM app_status WHERE (username = '{}' AND title = '{}' AND posted = '{}' COLLATE NOCASE)".format(
-                username, title, posted)).fetchall()
+            "SELECT * FROM app_status WHERE (username = '{}' AND jobID = '{}' COLLATE NOCASE)".format(
+                username, jobID)
+        ).fetchall()
         conn.close()
         # returns the status
-        return str(tmp[0][3])
-
+        return str(tmp[0][2])
 
 # /////////////
 
-def apply_job(job, current_user):
+def apply_job(job, current_user, firstname, lastname):
     print("Apply for Jobs:")
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
     # checks poster
-    if (str(job[0]) == str(current_user)):
-        print("Posted job, cannot apply.")
-        return
+    poster = getPoster(job[0])
+    if poster[1] == firstname and poster[2] == lastname:
+        print("You cannot apply for a job you posted!\n")
+        return False
 
     # checking if applied
-    status = str(check_job_status(current_user, job[1], job[0]))
+    status = str(check_job_status(current_user, job[0]))
     if status == "applied":
-        print("Already applied")
-        return
-    elif status == "saved":
+        print("You already applied for this job!\n")
+        return False
+    elif status == "saved": # update the status of the job to applied
         c.execute(
-            "UPDATE app_status SET status = 'applied' WHERE username = '{}' AND title = '{}' AND status = 'saved'".format(
-                current_user, job[1]))
-
-    else:
-        c.execute("INSERT INTO app_status VALUES ('{}', '{}', '{}', 'applied')".format(current_user, job[1], job[0]))
+            "UPDATE app_status SET status = 'applied' WHERE username = '{}' AND jobID = '{}'".format(current_user, job[0])
+        )
+    else: # applied for a job
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied')".format(current_user, job[0]))
 
     # inputs
-    grad_date = input("Graduation date (mm/dd/yyyy)\n")
-    start_date = input("Start date you can begin work (mm/dd/yyyy)\n")
-    story = input("Why should you get this position.\n")
+    grad_date = input("Enter your graduation date (mm/dd/yyyy): ")
+    start_date = input("Start date you can begin work (mm/dd/yyyy): ")
+    story = input("Why should you get this position: ")
 
-    # insert app
-    c.execute(
-        "INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3],
-                                                                                      grad_date, start_date, story))
+    # insert a row into applications table
+    #c.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(current_user, job[1], job[3], grad_date, start_date, story))
+    c.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}')".format(current_user, job[0], grad_date, start_date, story))
     conn.commit()
+    conn.close()
+    return True
 
-    # /////////
-
-    # for deletion
-
+# checking if a job is deleted
 def job_deleted(username):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
+
     tmp = c.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
     if str(tmp.fetchone()) == "None":
         conn.close()
@@ -174,11 +173,19 @@ def getJobDetails(id):
 def getJobsByPoster(pFname, pLname):
     return c.execute("SELECT * FROM Jobs WHERE posterfirst = ? AND posterlast = ?", [pFname, pLname]).fetchall()
 
-# TODO: delete associated applications when a job is deleted
 
-# delete a job in the database
+# delete a job in the database, including all the applications and remove the job from a user's saved list
 def deleteJob(jobID):
     c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
+    c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
+    c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
+    conn.commit()
+    return True
+
+
+# look for a job by its title and delete that job
+def deleteJobByTitle(title):
+    c.execute("DELETE FROM Jobs WHERE title = ?", [title])
     conn.commit()
     return True
 
@@ -187,6 +194,7 @@ def deleteJob(jobID):
 def saveJob(username, jobID):
     try:
         c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
         conn.commit()
         return True
     except:
@@ -204,3 +212,13 @@ def removeFromSavedJobs(username, jobID):
 def getAllSavedJobs(username):
     return c.execute("SELECT j.id, j.title, j.description, j.employer, j.location, j.salary, j.posterfirst, j.posterlast FROM SavedJobs s INNER JOIN Jobs j ON s.jobID = j.id "
                      "WHERE username = ?", [username]).fetchall()
+
+
+# get the poster of the given job ID
+def getPoster(jobID):
+    return c.execute("SELECT id, posterfirst, posterlast FROM Jobs WHERE id = ?", [jobID]).fetchone()
+
+
+# get the rows associated with the username given from the app_status table
+def getDeletedApplications(username):
+    return c.execute("SELECT * FROM app_status WHERE username = ? AND status = 'deleted'", [username]).fetchall()
