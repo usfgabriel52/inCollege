@@ -33,7 +33,8 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
     c.execute(query)
     conn.commit()
-
+    c.execute('''CREATE TABLE IF NOT EXISTS app_status(username TEXT, title TEXT, posted TEXT, status TEXT)''')
+    conn.commit()
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
