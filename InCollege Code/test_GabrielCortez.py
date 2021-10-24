@@ -10,7 +10,8 @@ import messages
 import verify_acc
 import search
 import jobs
-
+conn = sqlite3.connect('InCollege.db')
+c = conn.cursor()
 #tests for stories 4,5,6 on epic 1
 
 # def test_Main_Menu():
@@ -58,6 +59,25 @@ def test_markOrUnMarkJobs():
     assert list_contains_1
     assert jobs.removeFromSavedJobs("tester123",1) == True
 
-print()
 
+def test_jobsTablesExist():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    assert c.execute("SELECT * FROM Jobs").fetchall() != None
+    assert c.execute("SELECT * FROM app_status").fetchall() != None
+    assert c.execute("SELECT * FROM SavedJobs").fetchall() != None
+    
 
+def test_job_view():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    assert jobs.getAllJobTitles() == c.execute("SELECT id, title FROM Jobs").fetchall()
+    assert jobs.getJobDetails(1) == c.execute("SELECT * FROM Jobs WHERE id = ?", [1]).fetchone()
+
+def test_canDeleteJob():
+    sys.stdin = io.StringIO("a \n b\n c\n d\n e\n1\n")
+    jobs.postJob("test1","test2")
+
+    assert menus.deleteJobMenu("test1","test2")
+
+# jobs.postJob("test1","test2")
