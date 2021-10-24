@@ -18,6 +18,16 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     c.execute(query, data)
     conn.commit()
 
+    
+    
+#////////////////
+
+#status 
+c.execute('''CREATE TABLE IF NOT EXISTS app_status
+                 (username, title, posted, status)''')
+
+
+
 
 # /////////////////////////////////////////////////////////////////////////     NUMBER OF JOBS    /////////////////////////////////////////////////////////////////////////
 
