@@ -121,9 +121,6 @@ def mainMenu():
         if findRequests(logged_in[0]).fetchall() != []:
             printHasRequest()
 
-        if checkDeletedApplications(logged_in[0]):
-            print("\nOne or more of the jobs you have applied for has been deleted.")
-
         opt = input("Enter command: ")
 
         if int(opt) == 1:  # search for job
@@ -187,6 +184,9 @@ def jobMenu():
         print("\nJob search/internship.\n")
 
         printJobMenu()
+
+        if checkDeletedApplications(logged_in[0]):
+            print("One or more of the jobs you have applied for has been deleted.")
 
         select = input("Enter Command: ")
 
