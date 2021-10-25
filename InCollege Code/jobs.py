@@ -67,23 +67,18 @@ def list_jobs(username):
     jobs = c.execute("SELECT * FROM jobs").fetchall()
     store_list = []
     count = 1
-    print("0. Back")
+    print("\n0. Back\n")
     for i in jobs:
-        # sends  title posted
+        # sends title posted
         store_list.append(i)
-        tmp = check_job_status(username, i[1], i[0])
-        print(str(count) + ". " + "Title: " + str(i[1]) + "\t Employer: " + str(i[3]) + "\t Location: " + str(
-            i[4]) + "\t Salary: " + str(i[5]) + "\t Description: " + str(i[2]) + "\t Status:" + tmp)
+        tmp = check_job_status(username, i[0])
+        print(str(count) + ". " + "Title: " + str(i[1]) + "\n\tEmployer: " + str(i[3]) + "\n\tLocation: " + str(
+            i[4]) + "\n\tSalary: " + str(i[5]) + "\n\tDescription: " + str(i[2]) + "\n\tStatus: " + str(tmp) + "\n")
         count += 1
 
     conn.close()
 
-    selection = job_selection(count - 1)
-    if (selection == 0):
-        return 0
-
-    return store_list[selection - 1]
-
+    return None
 
 # //////////
 
@@ -129,8 +124,9 @@ def apply_job(job, current_user, firstname, lastname):
         c.execute(
             "UPDATE app_status SET status = 'applied' WHERE username = '{}' AND jobID = '{}'".format(current_user, job[0])
         )
-    else: # applied for a job
+    else:  # applied for a job
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied')".format(current_user, job[0]))
+        conn.commit()
 
     # inputs
     grad_date = input("Enter your graduation date (mm/dd/yyyy): ")
@@ -158,6 +154,7 @@ def job_deleted(username):
         conn.commit()
         conn.close()
     return True
+
 
 # get all the job titles in the database
 def getAllJobTitles():
@@ -203,6 +200,7 @@ def saveJob(username, jobID):
 
 # remove a row from the SavedJobs table
 def removeFromSavedJobs(username, jobID):
+    c.execute("DELETE FROM app_status WHERE username = ? AND jobID = ?", [username, jobID])
     c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
     conn.commit()
     return True
@@ -222,3 +220,7 @@ def getPoster(jobID):
 # get the rows associated with the username given from the app_status table
 def getDeletedApplications(username):
     return c.execute("SELECT * FROM app_status WHERE username = ? AND status = 'deleted'", [username]).fetchall()
+
+# gets all the job titles the given username has applied for
+def getAllJobTitlesAppliedFor(username):
+    return c.execute("SELECT j.id, j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'applied' AND a.username = ?", [username]).fetchall()

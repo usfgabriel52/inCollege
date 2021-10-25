@@ -82,6 +82,7 @@ def printJobMenu():
           "(3) View all jobs you have posted\n"
           "(4) Delete a job you have posted\n"
           "(5) View all saved jobs\n"
+          "(6) View all jobs you have applied for\n"
           "(0) Return to Previous Menu.\n")
     return 0
 

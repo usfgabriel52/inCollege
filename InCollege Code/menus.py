@@ -201,6 +201,8 @@ def jobMenu():
             deleteJobMenu(logged_in[2], logged_in[3])
         elif select == "5":
             viewSavedJobs(logged_in[0])  # view currently logged in user's saved jobs
+        elif select == "6":
+            displayAllJobTitlesAppliedFor(logged_in[0])
         elif select == "0":
             break
         else:
@@ -910,7 +912,7 @@ def viewJobTitles():
 
 # function to print the details of the specified job
 def printJobDetails(jobID):
-    j = getJobDetails(jobID)  # retrive details from database
+    j = getJobDetails(jobID)  # retrieve details from database
 
     print("\nTitle: " + j[1] + "\nEmployer: " + j[3] + "\nLocation: " + j[4] + "\nSalary: " + j[5] + "\nDescription: " +
           j[2] + "\n")
@@ -924,9 +926,8 @@ def jobOptions(user, jobID):
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
-        j = getAllJobTitles()
-        apply_job(j[jobID-1], user, logged_in[2], logged_in[3])
-        removeFromSavedJobs(user, jobID)
+        if apply_job(getJobDetails(jobID), user, logged_in[2], logged_in[3]):
+            print("You have sucessfully submitted your application!\n")
     elif option == "2":  # user wants to save the job
         if saveJob(user, jobID):
             print("\nSuccessfully saved job!")
@@ -1006,9 +1007,9 @@ def savedJobOptions(user, jobID):
     option = input("Enter command: ")
 
     if option == "1":  # user wants to apply for the job
-        j = getAllJobTitles()
-        apply_job(j[jobID - 1], user, logged_in[2], logged_in[3])
-        removeFromSavedJobs(user, jobID)
+        if apply_job(getJobDetails(jobID), user, logged_in[2], logged_in[3]):
+            print("You have sucessfully submitted your application!\n")
+            removeFromSavedJobs(user, jobID)
     elif option == "2":  # user wants to remove the job from their saved list
         if removeFromSavedJobs(user, jobID):
             print("\nSuccessfully removed job!")
@@ -1016,9 +1017,28 @@ def savedJobOptions(user, jobID):
     else:
         return None
 
+
 # checks if any of the applications the user submitted has been deleted.
 def checkDeletedApplications(user):
     a = getDeletedApplications(user)
     if len(a) != 0:
         return True
     return False
+
+
+# displasy all the job titles of the jobs the currently logged in user has applied for
+def displayAllJobTitlesAppliedFor(user):
+    print("\nJobs you have applied for:\n")
+
+    jobs = getAllJobTitlesAppliedFor(user)
+
+    if len(jobs) == 0:
+        print("You have not applied for a job!\n")
+        return False
+
+    count = 1
+    for r in jobs:
+        print(str(count) + ". " + r[1])
+        count+=1
+
+    return None
