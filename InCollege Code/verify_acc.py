@@ -18,7 +18,7 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS requests(userName TEXT, requestee TEXT)"""
     c.execute(query)
     conn.commit()
-    query = """CREATE TABLE IF NOT EXISTS Jobs(title TEXT, description TEXT, employer TEXT, location TEXT, salary TEXT, posterfirst TEXT, posterlast TEXT)"""
+    query = """CREATE TABLE IF NOT EXISTS Jobs(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, employer TEXT, location TEXT, salary TEXT, posterfirst TEXT, posterlast TEXT)"""
     c.execute(query)
     conn.commit()
     query = """CREATE TABLE IF NOT EXISTS PersonalProfile(userName TEXT,title TEXT, major TEXT, universityName TEXT, about TEXT)"""
@@ -29,8 +29,15 @@ def create_tables():
     conn.commit()
     query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
     c.execute(query)
-    conn.commit() 
-
+    conn.commit()
+    query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
+    c.execute(query)
+    conn.commit()
+    #c.execute('''CREATE TABLE IF NOT EXISTS app_status(username TEXT, title TEXT, posted TEXT, status TEXT)''')
+    c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT,	PRIMARY KEY("username","jobID"))''')
+    conn.commit()
+    c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
+    conn.commit()
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
