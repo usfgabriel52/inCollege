@@ -98,10 +98,14 @@ def createAccountMenu():
         password = input("Enter password: ")
         firstname = input("Enter First Name: ")
         lastname = input("Enter Last Name: ")
+        membership = input("Do you want to be a plus member? You will be charged $10 per month.(1 = yes or 0 = no):")
 
         # check if username is unique and password is valid
         if not unique_user(username) and password_check(password):
-            data_entry(username, password, firstname, lastname, 1, 1, 1, "English")
+            if membership == "1":
+                data_entry(username, password, firstname, lastname, 1, 1, 1, "English","Plus")
+            else:
+                data_entry(username, password, firstname, lastname, 1, 1, 1, "English","Standard")
             print("Successfully created an account\n")
     else:
         print("All permitted accounts have been created, please come back later\n")

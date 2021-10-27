@@ -9,7 +9,7 @@ c = conn.cursor()
 #table creation for Username table ?
 def create_tables():
     #SQL
-    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT)"""
+    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT, membership TEXT)"""
     c.execute(query)
     conn.commit()
     query = """CREATE TABLE IF NOT EXISTS friends(userName TEXT,friend TEXT)"""
