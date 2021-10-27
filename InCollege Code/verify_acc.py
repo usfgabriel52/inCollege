@@ -41,12 +41,12 @@ def create_tables():
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
-def data_entry(username, password,firstname,lastname,email,sms,ads,language):
+def data_entry(username, password,firstname,lastname,email,sms,ads,language,membership):
     #SQL
     query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language,membership) VALUES(?, ?,?,?,?,?,?,?,?);"""
     
-    #Stores username, password , firstname , lastname 
-    data = (username, password,firstname,lastname,email,sms,ads,language)
+    #Stores username, password , firstname , lastname, email, sms, ads, language, membership
+    data = (username, password,firstname,lastname,email,sms,ads,language,membership)
     c.execute(query, data)
     conn.commit()
 
