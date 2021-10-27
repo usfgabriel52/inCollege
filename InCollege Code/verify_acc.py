@@ -43,7 +43,7 @@ def create_tables():
 #inserts login info from user into table
 def data_entry(username, password,firstname,lastname,email,sms,ads,language):
     #SQL
-    query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language) VALUES(?, ?,?,?,?,?,?,?);"""
+    query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language,membership) VALUES(?, ?,?,?,?,?,?,?,?);"""
     
     #Stores username, password , firstname , lastname 
     data = (username, password,firstname,lastname,email,sms,ads,language)
