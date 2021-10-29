@@ -1,25 +1,55 @@
 from personalProfile import *
 from friends import findFriends
-from friends import findSpecificFriend
+from verify_acc import unique_user
 
 #/////////////////////////////////////////////////////////////////////////     VIEW MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
-
+def view_message():
+    return
 
 
 #/////////////////////////////////////////////////////////////////////////     SEND MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
-def send_message(current_user, membership):
+def send_message(sender, membership):
     
     if membership == "Standard":
-        displayFriends(current_user)
+        
+        displayFriends(sender)
+
+        receiver = input("\nEnter the username of the person you want to send a message to: ")
+
+        if is_friend(sender,receiver):
+            message = input("\nPlease enter your message: ")
+            store_message(sender, receiver, message)
+            print("\nMessage Has Been Sent.\n")
+        else:
+            print("I'm sorry, you are not friends with that person.")
+
     elif membership == "Plus":
+       
         displayAllUsers()
+        
+        receiver = input("\nEnter the username of the person you want to send a message to: ")
+
+        if not unique_user(receiver):
+            message = input("\nPlease enter your message: ")
+            store_message(sender, receiver, message)
+            print("\nMessage Has Been Sent.\n")
+        else:
+            print("I'm sorry, This person is not in the system yet.")
     
-    receiver = input("\nEnter the username of the person you want to send a message to: ")
+    return 0
 
 
-    return
+
+def store_message(sender, receiver, message):
+    
+    query = """INSERT INTO Inbox (receiver, sender, message) VALUES(?, ?, ?);"""
+    
+    data = (receiver, sender, message)
+    c.execute(query, data)
+    conn.commit()   
+    return 0
 
 
 def displayFriends(currUser):
@@ -37,6 +67,7 @@ def displayFriends(currUser):
     return None
 
 
+
 def displayAllUsers():
     print("\n")
     print("{:<15} {:<15} {:<15}".format('Username', 'First Name', 'Last Name'))
@@ -44,6 +75,16 @@ def displayAllUsers():
         print("{:<15} {:<15} {:<15}".format(row[0], row[2], row[3]))
     print("\n")
     return
+
+
+
+def is_friend(userName,friend):
+    query = """SELECT friend FROM friends WHERE username = ? AND friend = ?"""
+    data = [userName, friend]
+    c.execute(query, data)
+    conn.commit()
+    tuple = c.fetchall()
+    return len(tuple) != 0
 
 #/////////////////////////////////////////////////////////////////////////     REPLY TO MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
