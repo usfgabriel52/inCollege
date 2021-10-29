@@ -70,7 +70,7 @@ def displayFriends(currUser):
 
 def displayAllUsers():
     print("\n")
-    print("{:<15} {:<15} {:<15}".format('Username', 'First Name', 'Last Name'))
+    print("{:<15} {:<15} {:<15}".format('Username:', 'First Name:', 'Last Name:'))
     for row in c.execute("""SELECT * FROM Accounts"""):
         print("{:<15} {:<15} {:<15}".format(row[0], row[2], row[3]))
     print("\n")
@@ -290,7 +290,7 @@ def printSavedJobOptionsMenu():
 
 def printMessagesMenu():
     
-    print("Messages Menu\n"
+    print("\nMessages Menu\n"
           "(1) View Messages\n"
           "(2) Send Message\n"
           "(0) Return to Previous Menu\n")
