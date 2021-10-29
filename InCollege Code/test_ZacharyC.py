@@ -104,14 +104,4 @@ def test_show_my_network(monkeypatch):
     return
 
 
-def displayAllUsers():
-    print("\n")
-    print("{:<8} {:<15} {:<10}".format('Username:', 'First Name:', 'Last Name:'))
-    for row in c.execute("""SELECT * FROM Accounts"""):
-        print("{:<8} {:<15} {:<10}".format(row[0], row[2], row[3]))
-    print("\n")
-    return
 
-
-test_maximum_num_accounts()
-displayAllUsers()

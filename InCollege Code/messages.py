@@ -1,7 +1,9 @@
 from personalProfile import *
-from menus import displayAllFriends
+from friends import findFriends
+from friends import findSpecificFriend
 
 #/////////////////////////////////////////////////////////////////////////     VIEW MESSAGES    ////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -10,11 +12,37 @@ from menus import displayAllFriends
 def send_message(current_user, membership):
     
     if membership == "Standard":
-        displayAllFriends(current_user)
+        displayFriends(current_user)
     elif membership == "Plus":
-        return
-
+        displayAllUsers()
     
+    receiver = input("\nEnter the username of the person you want to send a message to: ")
+
+
+    return
+
+
+def displayFriends(currUser):
+    print("\nFriends list:")
+    friends = findFriends(currUser)
+    if len(friends) > 0:
+        i = 1
+        for f in findFriends(currUser):
+            print(str(i) + ". " + f[1] + " " + f[2] + " (" + f[0] + ")")
+            i += 1
+        print("\n")
+        return 1
+    else:
+        print("You don't have any friends!\n")
+    return None
+
+
+def displayAllUsers():
+    print("\n")
+    print("{:<15} {:<15} {:<15}".format('Username', 'First Name', 'Last Name'))
+    for row in c.execute("""SELECT * FROM Accounts"""):
+        print("{:<15} {:<15} {:<15}".format(row[0], row[2], row[3]))
+    print("\n")
     return
 
 #/////////////////////////////////////////////////////////////////////////     REPLY TO MESSAGES    ////////////////////////////////////////////////////////////////////////////////
