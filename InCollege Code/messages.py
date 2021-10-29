@@ -31,7 +31,7 @@ def send_message(sender, membership):
         
         receiver = input("\nEnter the username of the person you want to send a message to: ")
 
-        if not unique_user(receiver):
+        if unique_user(receiver):
             message = input("\nPlease enter your message: ")
             store_message(sender, receiver, message)
             print("\nMessage Has Been Sent.\n")
