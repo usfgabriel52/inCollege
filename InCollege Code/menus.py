@@ -1060,7 +1060,7 @@ def messageMenu():
         if int(opt) == 1:
             return
         elif int(opt) == 2:
-            return
+            send_message(logged_in[0], logged_in[4])
         elif int(opt) == 0:
             break
         else:
