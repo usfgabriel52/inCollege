@@ -74,7 +74,7 @@ def displayAllUsers():
     for row in c.execute("""SELECT * FROM Accounts"""):
         print("{:<15} {:<15} {:<15}".format(row[0], row[2], row[3]))
     print("\n")
-    return
+    return 0
 
 
 
@@ -82,7 +82,6 @@ def is_friend(userName,friend):
     query = """SELECT friend FROM friends WHERE username = ? AND friend = ?"""
     data = [userName, friend]
     c.execute(query, data)
-    conn.commit()
     tuple = c.fetchall()
     return len(tuple) != 0
 
