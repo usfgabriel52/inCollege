@@ -152,8 +152,9 @@ def mainMenu():
                 viewProfile(logged_in[0])
             else:
                 print("You have not created a profile. Please create one first.\n")
+        elif int(opt) == 9:  
+            messageMenu()
         elif int(opt) == 0:
-
             logged_in = []
             print("You have sucessfully logged out!\n")
             break
@@ -1046,3 +1047,27 @@ def displayAllJobTitlesAppliedFor(user):
         count+=1
 
     return None
+
+# /////////////////////////////////////////////////////////////////////////     MESSAGE MENU     /////////////////////////////////////////////////////////////////////////
+
+def messageMenu():
+    while True:
+
+        printMessagesMenu()
+
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            return
+        elif int(opt) == 2:
+            return
+        elif int(opt) == 0:
+            break
+        else:
+            printInvalidEntry()
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     VIEW MESSAGE MENU     /////////////////////////////////////////////////////////////////////////    
+
+
+# /////////////////////////////////////////////////////////////////////////     SEND MESSAGE MENU     /////////////////////////////////////////////////////////////////////////

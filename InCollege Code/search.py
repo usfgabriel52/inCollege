@@ -69,7 +69,7 @@ def current_user(username, password):
 
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0] and password == row[1]:
-            user = [row[0], row[1], row[2], row[3]]
+            user = [row[0], row[1], row[2], row[3], row[8]]
     return user
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

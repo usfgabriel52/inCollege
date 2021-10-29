@@ -1,5 +1,11 @@
 from personalProfile import *
 
+#/////////////////////////////////////////////////////////////////////////     VIEW MESSAGES    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 #/////////////////////////////////////////////////////////////////////////     PRINT SUCCESS STORY     /////////////////////////////////////////////////////////////////////////
 
 def printStudentSuccess():
@@ -46,6 +52,7 @@ def printMainMenu(userName):
             "(6) My Network\n"
             "(7) Edit Personal Profile\n"
             "(8) View Personal Profile\n"
+            "(9) View/Send Messages\n"
             "(0) Logout\n")
     else:
         print("InCollege Main Menu\n"
@@ -56,6 +63,7 @@ def printMainMenu(userName):
             "(5) Important Links\n"
             "(6) Show My Network\n"
             "(7) Create Personal Profile\n"
+            "(9) View/Send Messages\n"
             "(0) Logout\n")
     return 0
 
@@ -192,3 +200,13 @@ def printSavedJobOptionsMenu():
           "\t(1) Apply for job\n"
           "\t(2) Remove job from list\n"
           "\t(0) Cancel\n")
+
+#/////////////////////////////////////////////////////////////////////////     PRINT MESSAGES MENU    /////////////////////////////////////////////////////////////////////////////
+
+def printMessagesMenu():
+    
+    print("Messages Menu\n"
+          "(1) View Messages\n"
+          "(2) Send Message\n"
+          "(0) Return to Previous Menu\n")
+    return
