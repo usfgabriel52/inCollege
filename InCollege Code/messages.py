@@ -46,7 +46,7 @@ def store_message(sender, receiver, message):
     
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
-    
+
     query = """INSERT INTO Inbox (receiver, sender, message) VALUES(?, ?, ?);"""
     
     data = (receiver, sender, message)
@@ -73,20 +73,30 @@ def displayFriends(currUser):
 
 
 def displayAllUsers():
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()    
+
     print("\n")
     print("{:<15} {:<15} {:<15}".format('Username:', 'First Name:', 'Last Name:'))
     for row in c.execute("""SELECT * FROM Accounts"""):
         print("{:<15} {:<15} {:<15}".format(row[0], row[2], row[3]))
     print("\n")
+    conn.close()
     return 0
 
 
 
 def is_friend(userName,friend):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     query = """SELECT friend FROM friends WHERE username = ? AND friend = ?"""
     data = [userName, friend]
     c.execute(query, data)
     tuple = c.fetchall()
+    conn.close()
     return len(tuple) != 0
 
 #/////////////////////////////////////////////////////////////////////////     REPLY TO MESSAGES    ////////////////////////////////////////////////////////////////////////////////

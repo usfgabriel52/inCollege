@@ -6,6 +6,10 @@ c = conn.cursor()
 
 #Requests a friend
 def requestFriend(userName,requestee):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     if findSpecificFriend(userName, requestee).fetchall() != []:
         return 0
     if findSpecificRequest(requestee,userName).fetchall() != []:
@@ -17,6 +21,7 @@ def requestFriend(userName,requestee):
     data = (userName,requestee)
     c.execute(query,data)
     conn.commit()
+    conn.close
     return 3
 
 #finds all friends of user, returns array containing username + name of friend for display
@@ -47,14 +52,23 @@ def findSpecificRequest(userName,requester):
 
 #PRIVATE METHOD: Deletes a request From requests table
 def deleteRequest(userName,requester):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     query = """DELETE FROM requests WHERE userName  = ? AND requestee = ?"""
     data = (userName,requester)
     c.execute(query,data)
     conn.commit()
+    conn.close()
     return 1
 
 #PRIVATE METHOD, Adds friend to friends table 
 def addFriend(userName,friend):
+    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     # insert current user and friend username pair
     query = """INSERT INTO friends(userName, friend) VALUES(?,?)"""
     data = (userName,friend)
@@ -66,6 +80,7 @@ def addFriend(userName,friend):
     data = (friend, userName)
     c.execute(query, data)
     conn.commit()
+    conn.close()
     return 1
 
 #Accepts friend request (removes request and adds friends to friends table)
@@ -85,6 +100,10 @@ def rejectRequest(userName,requester):
 
 #removes a friend
 def removeFriend(userName,friend):
+    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     query = """DELETE FROM friends WHERE userName  = ? AND friend = ?"""
     data = (friend,userName)
     c.execute(query,data)
@@ -94,7 +113,7 @@ def removeFriend(userName,friend):
     data = (userName,friend)
     c.execute(query,data)
     conn.commit()
-
+    conn.close()
     return 1
 
 # get all the friend request for the specified username

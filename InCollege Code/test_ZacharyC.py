@@ -10,9 +10,6 @@ import search
 #this function tests if you can create up to and no more than 10 accounts
 def test_maximum_num_accounts():
     
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
     #Creates a database for the profiles if one doesnt exisit
     verify_acc.create_tables()
     
@@ -34,7 +31,7 @@ def test_maximum_num_accounts():
 
     return
 
-
+test_maximum_num_accounts()
 
 #This function tests if a profile database is created and if a Student can create a profile and add it to the database
 def test_create_profile():
@@ -57,6 +54,8 @@ def test_create_profile():
     # display contents of db after signing up
     for r in c.execute("SELECT * FROM personalProfile"):
         print(r)
+
+    conn.close()
     return
 
 

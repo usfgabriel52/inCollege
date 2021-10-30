@@ -5,6 +5,10 @@ from personalProfile import hasProfile
 
 # search for existing users that satisfy ANY of the criteria: first_name, last_name, university, and major
 def find_users(toFind, currUser):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()   
+
     users = []
 
     if currUser == '': # user is not logged in
@@ -19,18 +23,24 @@ def find_users(toFind, currUser):
     for row in c.execute(query, data):
         if row not in users:
             users.append(row)
-
+    conn.close()
     return users
 
 #/////////////////////////////////////////////////////////////////////////     FIND USER     /////////////////////////////////////////////////////////////////////////
 
 #search for a user based on their first name and last name
 def find_user(first_name, last_name):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     data = [first_name, last_name]
     for row in c.execute("""SELECT * FROM Accounts WHERE first_name = ? AND last_name = ?""", data):
         print("\nThey are a part of the InCollege system.\n")
+        conn.close()
         return True
     print("\nThey are not yet a part of the InCollege system.\n")
+    conn.close()
     return False
 
 #/////////////////////////////////////////////////////////////////////////     SEARCH PEOPLE     /////////////////////////////////////////////////////////////////////
@@ -56,6 +66,10 @@ def searchPeople(currUser):
 
 # display all the relevant user information
 def displayUserInfo(username):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     data = [username]
     for u in c.execute("""SELECT a.username, firstname, lastname, major, universityName FROM Accounts a LEFT JOIN PersonalProfile p ON a.username = p.userName WHERE a.username = ?""", data):
         if (hasProfile(u[0])):
@@ -63,13 +77,19 @@ def displayUserInfo(username):
         else:
             print(u[1] + " " + u[2] + "\nUsername: " + u[0] + "\n")
 
+    conn.close()
+
 #/////////////////////////////////////////////////////////////////////////     CURRENT USER     /////////////////////////////////////////////////////////////////////
 
 def current_user(username, password):
 
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0] and password == row[1]:
             user = [row[0], row[1], row[2], row[3], row[8]]
+    conn.close()
     return user
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

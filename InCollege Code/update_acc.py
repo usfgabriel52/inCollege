@@ -1,13 +1,13 @@
 import sqlite3
 from getpass import getpass
 
-conn = sqlite3.connect('InCollege.db')
-c = conn.cursor()
-
 #/////////////////////////////////////////////////////////////////////////     UPDATE EMAIL OPTION     ////////////////////////////////////////////////////////////////////////////
 
 def update_email_option(username, password):
     
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0]:
             # 0 means False and 1 means True
@@ -21,12 +21,16 @@ def update_email_option(username, password):
     data = (username, password)        
     c.execute(query, data)
     conn.commit()
+    conn.close()
     return
 
 #/////////////////////////////////////////////////////////////////////////     UPDATE SMS OPTION     //////////////////////////////////////////////////////////////////////////////
 
 def update_sms_option(username, password):
-   
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0]:
              # 0 means False and 1 means True
@@ -40,12 +44,16 @@ def update_sms_option(username, password):
     data = (username, password)        
     c.execute(query, data)
     conn.commit()
+    conn.close()
     return
 
 #/////////////////////////////////////////////////////////////////////////     UPDATE ADS OPTION     //////////////////////////////////////////////////////////////////////////////
 
 def update_ad_option(username, password):
-    
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0]:
              # 0 means False and 1 means True
@@ -59,12 +67,16 @@ def update_ad_option(username, password):
     data = (username, password)        
     c.execute(query, data)
     conn.commit()
+    conn.close()
     return
 
 #/////////////////////////////////////////////////////////////////////////     UPDATE LANGUAGE OPTION     /////////////////////////////////////////////////////////////////////////
 
 def update_lang_option(username, password, lang):
     
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     if(lang == "English"):
         query = """UPDATE Accounts SET language = "English" WHERE username = ? AND password = ?;"""
         print("\n Language is now English.\n")
@@ -75,6 +87,7 @@ def update_lang_option(username, password, lang):
     data = (username, password)        
     c.execute(query, data)
     conn.commit()
+    conn.close()
     return
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

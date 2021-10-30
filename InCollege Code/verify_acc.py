@@ -63,6 +63,8 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
 
 #Login attempt for exciting account 
 def login(username, password):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
     #SQL
     query = """SELECT * FROM Accounts WHERE username = ? AND password = ?;"""
     data = (username, password)
@@ -70,6 +72,7 @@ def login(username, password):
     c.execute(query, data)
     conn.commit()
     tuple = c.fetchall()
+    conn.close()
     return len(tuple) != 0
 
 #/////////////////////////////////////////////////////////////////////////     NUMBER OF ACCOUNTS     ///////////////////////////////////////////////////////////////////////
@@ -84,16 +87,21 @@ def number_rows():
     conn.commit()
     
     rows = len(c.fetchall())
+    conn.close()
     return rows
 
 #/////////////////////////////////////////////////////////////////////////     CHECK UNIQUE USERNAME     ////////////////////////////////////////////////////////////////////
 
 #search for exciting User 
 def unique_user(username):
-    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     for row in c.execute("""SELECT * FROM Accounts"""):
         if username == row[0]:
+            conn.close()
             return True
+    conn.close()        
     return False
 
 #/////////////////////////////////////////////////////////////////////////     CHECK PASSWORD    ///////////////////////////////////////////////////////////////////////////
@@ -142,7 +150,10 @@ def password_check(passwd):
 #/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 def getAccountInfo(username):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
     # get all the information associated with the given username
     query = """SELECT * FROM Accounts WHERE username = ?"""
     data = [username]
+    conn.close()
     return c.execute(query, data)

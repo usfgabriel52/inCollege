@@ -10,6 +10,10 @@ c = conn.cursor()
 
 # inserts login info from user into table
 def job_data_entry(title, description, employer, location, salary, posterfirst, posterlast):
+    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     # SQL
     query = """INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast) VALUES(?, ?, ?, ?, ?, ?, ?);"""
 
@@ -17,11 +21,16 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     data = (title, description, employer, location, salary, posterfirst, posterlast)
     c.execute(query, data)
     conn.commit()
+    conn.close()
 
 # /////////////////////////////////////////////////////////////////////////     NUMBER OF JOBS    /////////////////////////////////////////////////////////////////////////
 
 # number of jobs created
 def job_created():
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     # SQL
     rows = -1
     try:
@@ -32,6 +41,7 @@ def job_created():
         rows = len(c.fetchall())
     except Error:
         rows = 0
+    conn.close()
     return rows
 
 
@@ -173,36 +183,57 @@ def getJobsByPoster(pFname, pLname):
 
 # delete a job in the database, including all the applications and remove the job from a user's saved list
 def deleteJob(jobID):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()
+    conn.close()
     return True
 
 
 # look for a job by its title and delete that job
 def deleteJobByTitle(title):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     c.execute("DELETE FROM Jobs WHERE title = ?", [title])
     conn.commit()
+    conn.close()
     return True
 
 
 # add a job in the SavedJobs table
 def saveJob(username, jobID):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     try:
         c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
         conn.commit()
+        conn.close()
         return True
     except:
+        conn.close()
         return False
 
 
 # remove a row from the SavedJobs table
 def removeFromSavedJobs(username, jobID):
+
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
     c.execute("DELETE FROM app_status WHERE username = ? AND jobID = ?", [username, jobID])
     c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
     conn.commit()
+    conn.close()
     return True
 
 
