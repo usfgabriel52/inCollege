@@ -31,7 +31,6 @@ def test_maximum_num_accounts():
 
     return
 
-test_maximum_num_accounts()
 
 #This function tests if a profile database is created and if a Student can create a profile and add it to the database
 def test_create_profile():
