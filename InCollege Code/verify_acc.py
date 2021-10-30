@@ -1,13 +1,13 @@
 import sqlite3
 from getpass import getpass
 
-conn = sqlite3.connect('InCollege.db')
-c = conn.cursor()
 
 #/////////////////////////////////////////////////////////////////////////     CREATE DB     //////////////////////////////////////////////////////////////////////////////
 
 #table creation for Username table ?
 def create_tables():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
     #SQL
     query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT, membership TEXT)"""
     c.execute(query)
@@ -41,10 +41,15 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS Inbox(receiver TEXT, sender TEXT, message TEXT)"""
     c.execute(query)
     conn.commit()
+
+    conn.close()
+    return
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
 def data_entry(username, password,firstname,lastname,email,sms,ads,language,membership):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
     #SQL
     query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language,membership) VALUES(?, ?,?,?,?,?,?,?,?);"""
     
@@ -52,6 +57,7 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
     data = (username, password,firstname,lastname,email,sms,ads,language,membership)
     c.execute(query, data)
     conn.commit()
+    conn.close()
 
 #/////////////////////////////////////////////////////////////////////////     LOGIN ATTEMPT    //////////////////////////////////////////////////////////////////////////
 
