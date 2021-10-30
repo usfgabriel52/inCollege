@@ -12,35 +12,46 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT, membership TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS friends(userName TEXT,friend TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS requests(userName TEXT, requestee TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS Jobs(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, employer TEXT, location TEXT, salary TEXT, posterfirst TEXT, posterlast TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS PersonalProfile(userName TEXT,title TEXT, major TEXT, universityName TEXT, about TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS expierience(userName TEXT, jobId INT, title TEXT, employer TEXT, dateStart TEXT, dateEnd TEXT, location TEXT, description TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
     c.execute(query)
     conn.commit()
+    conn.close()
     #c.execute('''CREATE TABLE IF NOT EXISTS app_status(username TEXT, title TEXT, posted TEXT, status TEXT)''')
     c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT,	PRIMARY KEY("username","jobID"))''')
     conn.commit()
+    conn.close()
     c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
     conn.commit()
+    conn.close()
     query = """CREATE TABLE IF NOT EXISTS Inbox(receiver TEXT, sender TEXT, message TEXT)"""
     c.execute(query)
     conn.commit()
+    conn.close()
 #/////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 #inserts login info from user into table
@@ -52,6 +63,7 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
     data = (username, password,firstname,lastname,email,sms,ads,language,membership)
     c.execute(query, data)
     conn.commit()
+    conn.close()
 
 #/////////////////////////////////////////////////////////////////////////     LOGIN ATTEMPT    //////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +76,7 @@ def login(username, password):
     c.execute(query, data)
     conn.commit()
     tuple = c.fetchall()
-   
+    conn.close()
     return len(tuple) != 0
 
 #/////////////////////////////////////////////////////////////////////////     NUMBER OF ACCOUNTS     ///////////////////////////////////////////////////////////////////////
@@ -77,6 +89,7 @@ def number_rows():
     conn.commit()
     
     rows = len(c.fetchall())
+    conn.close()
     return rows
 
 #/////////////////////////////////////////////////////////////////////////     CHECK UNIQUE USERNAME     ////////////////////////////////////////////////////////////////////

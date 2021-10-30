@@ -48,7 +48,8 @@ def store_message(sender, receiver, message):
     
     data = (receiver, sender, message)
     c.execute(query, data)
-    conn.commit()   
+    conn.commit() 
+    conn.close()  
     return 0
 
 
