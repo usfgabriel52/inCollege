@@ -76,6 +76,8 @@ def login(username, password):
 
 #number of accounts created 
 def number_rows():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()    
     #SQL
     query = """SELECT * FROM Accounts"""
     c.execute(query)
