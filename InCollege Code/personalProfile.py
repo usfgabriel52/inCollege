@@ -72,7 +72,6 @@ def update_profile(userName,section, newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
-    conn.close()
     return 0
 
 
@@ -96,7 +95,6 @@ def update_job(userName,jobId,section,newValue):
     data = (newValue,userName,jobId)
     c.execute(query,data)
     conn.commit()
-    conn.close()
     return 0
 
 
@@ -114,7 +112,6 @@ def update_school(userName,section,newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
-    conn.close()
     return 0
 
 #Formats strings to have the first letter in uppercase of each word and the rest lowercase
@@ -135,7 +132,6 @@ def create_job(userName,jobId):
     data = (userName,jobId,None,None,None,None,None,None) 
     c.execute(query, data)
     conn.commit() 
-    conn.close()
 
 
 #Adds user to school table    
@@ -144,7 +140,6 @@ def create_school(userName):
     data = (userName,None,None,None) 
     c.execute(query,data)
     conn.commit()
-    conn.close()
     
 #Adds user to Personal Profile Table
 def create_profile(userName):
@@ -152,7 +147,6 @@ def create_profile(userName):
     data = (userName,None,None,None,None) 
     c.execute(query,data)
     conn.commit()
-    conn.close()
 
 def checkTitle(userName):
     for row in c.execute("""SELECT * FROM personalProfile"""):

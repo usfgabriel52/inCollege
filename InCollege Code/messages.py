@@ -44,6 +44,9 @@ def send_message(sender, membership):
 
 def store_message(sender, receiver, message):
     
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    
     query = """INSERT INTO Inbox (receiver, sender, message) VALUES(?, ?, ?);"""
     
     data = (receiver, sender, message)

@@ -17,7 +17,6 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     data = (title, description, employer, location, salary, posterfirst, posterlast)
     c.execute(query, data)
     conn.commit()
-    conn.close()
 
 # /////////////////////////////////////////////////////////////////////////     NUMBER OF JOBS    /////////////////////////////////////////////////////////////////////////
 
@@ -33,7 +32,6 @@ def job_created():
         rows = len(c.fetchall())
     except Error:
         rows = 0
-    conn.close()
     return rows
 
 
@@ -179,7 +177,6 @@ def deleteJob(jobID):
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()
-    conn.close()
     return True
 
 
@@ -187,7 +184,6 @@ def deleteJob(jobID):
 def deleteJobByTitle(title):
     c.execute("DELETE FROM Jobs WHERE title = ?", [title])
     conn.commit()
-    conn.close()
     return True
 
 
@@ -197,7 +193,6 @@ def saveJob(username, jobID):
         c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
         conn.commit()
-        conn.close()
         return True
     except:
         return False
@@ -208,7 +203,6 @@ def removeFromSavedJobs(username, jobID):
     c.execute("DELETE FROM app_status WHERE username = ? AND jobID = ?", [username, jobID])
     c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
     conn.commit()
-    conn.close()
     return True
 
 
