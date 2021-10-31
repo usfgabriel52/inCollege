@@ -40,9 +40,10 @@ def create_tables():
     conn.commit()
     c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
     conn.commit()
-    query = """CREATE TABLE IF NOT EXISTS Inbox(receiver TEXT, sender TEXT, message TEXT)"""
-    c.execute(query)
-    conn.commit()
+    
+    #query = """CREATE TABLE IF NOT EXISTS Inbox(receiver TEXT, sender TEXT, message TEXT)"""
+    #c.execute(query)
+    #conn.commit()
     
     query = """CREATE TABLE IF NOT EXISTS messages(sender, recipient, text)"""
     c.execute(query)
