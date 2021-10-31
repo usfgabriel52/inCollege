@@ -124,6 +124,13 @@ def mainMenu():
 
         if findRequests(logged_in[0]).fetchall() != []:
             printHasRequest()
+            
+            
+        #Message notification
+        if messages.inboxNotification():
+         print("\nYou have unread messages in your inbox.")
+        
+        
 
         opt = input("Enter command: ")
 
