@@ -50,7 +50,7 @@ def store_message(sender, receiver, message):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    query = """INSERT INTO Inbox (receiver, sender, message) VALUES(?, ?, ?);"""
+    query = """INSERT INTO messages (receiver, sender, message) VALUES(?, ?, ?);"""
     
     data = (receiver, sender, message)
     c.execute(query, data)
@@ -173,7 +173,7 @@ def delete_message(sender,receiver,message):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    query = """DELETE FROM Inbox WHERE receiver = ? AND sender = ? AND message = ?"""
+    query = """DELETE FROM messages WHERE receiver = ? AND sender = ? AND message = ?"""
     data = (receiver, sender, message)
     c.execute(query, data)
     conn.commit() 
