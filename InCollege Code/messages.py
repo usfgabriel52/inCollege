@@ -1,6 +1,8 @@
 from personalProfile import *
 from friends import findFriends
 from verify_acc import unique_user
+import verify_acc as acc 
+import menus as menu
 
 #/////////////////////////////////////////////////////////////////////////     VIEW MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
@@ -55,6 +57,72 @@ def store_message(sender, receiver, message):
     conn.commit() 
     conn.close()  
     return 0
+
+#///////////////////
+
+def inboxNotification():
+     inlist = acc.c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(acc.username)).fetchall()
+
+     if len(inlist):
+         return True
+     else:
+         return False
+
+        
+        
+ #//////// validation of input
+def user_input(maxIn):
+
+     my_select = input("\nEnter selection: ")
+    
+     numSelec = int(my_select) 
+     while not my_select.isnumeric() or (numSelect > maxIn or numSelect < 1):
+         my_select = input("\nEnter a valid selection: ")
+         numSelect = int(my_select)
+
+     return int(my_select)
+
+#/////////
+
+def inbox():
+
+    inlist = acc.c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(acc.username)).fetchall()
+
+    if len(inlist) != 0:
+         print("\n Inbox:")
+         count = 1
+         for i in inlist:
+             print("\n{}. {}\t{}", count, inlist[0][1], inlist[0][2])
+             count += 1
+
+             #    option to reply or delete
+             print("\nSelect a message to reply / delete, or 0 to go back.")
+             message_select = user_input(len(inlist))
+
+             print("\n0. Go back\n1. Reply\n2. Delete")
+             option_select = user_input(2)
+
+             if option_select == 1:
+                 #   sends reply 
+                 print("Reply sent.")
+                 send_message(message_select[0])
+                 menu.homeMenu()
+
+             else:
+                 #   deletes message 
+                 inist = acc.c.execute(
+                     "DELETE * FROM messages WHERE recipient = '{}' AND sender = '{}' AND text = '{}'",
+                     message_select[0], message_select[1], message_select[2])
+                 print("\nMessage has been deleted.")
+                 menu.homeMenu()
+
+     #  inbox empty
+    else:
+        print("\n  The inbox is empty")
+    menu.homeMenu()
+
+
+#///////////////////////
 
 
 def displayFriends(currUser):
