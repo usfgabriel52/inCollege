@@ -19,11 +19,11 @@ def send_message(sender, membership):
         
         displayFriends(sender)
 
-        receiver = input("\nEnter the username of the person you want to send a message to: ")
+        recipient = input("\nEnter the username of the person you want to send a message to: ")
 
-        if is_friend(sender,receiver):
+        if is_friend(sender,recipient):
             message = input("\nPlease enter your message: ")
-            store_message(sender, receiver, message)
+            store_message(sender, recipient, text)
             print("\nMessage Has Been Sent.\n")
         else:
             print("I'm sorry, you are not friends with that person.")
@@ -32,11 +32,11 @@ def send_message(sender, membership):
        
         displayAllUsers()
         
-        receiver = input("\nEnter the username of the person you want to send a message to: ")
+        recipient = input("\nEnter the username of the person you want to send a message to: ")
 
-        if unique_user(receiver):
+        if unique_user(recipient):
             message = input("\nPlease enter your message: ")
-            store_message(sender, receiver, message)
+            store_message(sender, recipient, text)
             print("\nMessage Has Been Sent.\n")
         else:
             print("I'm sorry, This person is not in the system yet.")
@@ -45,14 +45,14 @@ def send_message(sender, membership):
 
 
 
-def store_message(sender, receiver, message):
+def store_message(sender, recipient, text):
     
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    query = """INSERT INTO messages (receiver, sender, message) VALUES(?, ?, ?);"""
+    query = """INSERT INTO messages (sender, recipient, text) VALUES(?, ?, ?);"""
     
-    data = (receiver, sender, message)
+    data = (sender,recipient, text)
     c.execute(query, data)
     conn.commit() 
     conn.close()  
@@ -169,19 +169,19 @@ def is_friend(userName,friend):
     return len(tuple) != 0
 
 #/////////////////////////////////////////////////////////////////////////     REPLY TO MESSAGES    ////////////////////////////////////////////////////////////////////////////////
-def delete_message(sender,receiver,message):
+def delete_message(sender,receiver,text):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    query = """DELETE FROM messages WHERE receiver = ? AND sender = ? AND message = ?"""
-    data = (receiver, sender, message)
+    query = """DELETE FROM messages WHERE recipient = ? AND sender = ? AND text = ?"""
+    data = (sender, recipient, text)
     c.execute(query, data)
     conn.commit() 
     conn.close()  
     return 0
 
 
-def reply_message(sender, receiver):
+def reply_message(sender, recipient):
     return 
 
 #/////////////////////////////////////////////////////////////////////////     PRINT SUCCESS STORY     /////////////////////////////////////////////////////////////////////////
