@@ -155,5 +155,18 @@ def getAccountInfo(username):
     # get all the information associated with the given username
     query = """SELECT * FROM Accounts WHERE username = ?"""
     data = [username]
+    returnValue = c.execute(query, data).fetchall()
     conn.close()
-    return c.execute(query, data)
+    return returnValue
+
+#////
+
+def deleteAccount(username):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    # get all the information associated with the given username
+    query = """DELETE FROM Accounts WHERE username = ?"""
+    data = [username]
+    c.execute(query, data)
+    conn.commit()
+    conn.close()

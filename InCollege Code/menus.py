@@ -757,7 +757,7 @@ def editProfile():
 # displays the profile of the currently logged in user
 def viewProfile(username):
     profileData = getProfileInfo(username).fetchall()[0]
-    accountData = getAccountInfo(username).fetchall()[0]
+    accountData = getAccountInfo(username)[0]
     jobData = getExperienceInfo(username).fetchall()
     educData = getEducationInfo(username).fetchall()
     numFriends = getNumFriends(username).fetchall()[0]

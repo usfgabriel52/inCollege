@@ -46,38 +46,50 @@ c = conn.cursor()
 #         assert(search.find_user(row[2],row[3])) == True
 #     assert search.find_user("fake","person") == False
 
-def test_markOrUnMarkJobs():
-    jobs.removeFromSavedJobs("tester123",1)
-    assert jobs.saveJob("tester123",1) == True
-    list = (jobs.getAllSavedJobs("tester123"))
-    i =0
-    list_contains_1 = False
-    while i < len(list):
-        if 1 in list[i]:
-            list_contains_1 = True
-        i += 1
-    assert list_contains_1
-    assert jobs.removeFromSavedJobs("tester123",1) == True
+# def test_markOrUnMarkJobs():
+#     jobs.removeFromSavedJobs("tester123",1)
+#     assert jobs.saveJob("tester123",1) == True
+#     list = (jobs.getAllSavedJobs("tester123"))
+#     i =0
+#     list_contains_1 = False
+#     while i < len(list):
+#         if 1 in list[i]:
+#             list_contains_1 = True
+#         i += 1
+#     assert list_contains_1
+#     assert jobs.removeFromSavedJobs("tester123",1) == True
 
 
-def test_jobsTablesExist():
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-    assert c.execute("SELECT * FROM Jobs").fetchall() != None
-    assert c.execute("SELECT * FROM app_status").fetchall() != None
-    assert c.execute("SELECT * FROM SavedJobs").fetchall() != None
+# def test_jobsTablesExist():
+#     conn = sqlite3.connect('InCollege.db')
+#     c = conn.cursor()
+#     assert c.execute("SELECT * FROM Jobs").fetchall() != None
+#     assert c.execute("SELECT * FROM app_status").fetchall() != None
+#     assert c.execute("SELECT * FROM SavedJobs").fetchall() != None
     
 
-def test_job_view():
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-    assert jobs.getAllJobTitles() == c.execute("SELECT id, title FROM Jobs").fetchall()
-    assert jobs.getJobDetails(1) == c.execute("SELECT * FROM Jobs WHERE id = ?", [1]).fetchone()
+# def test_job_view():
+#     conn = sqlite3.connect('InCollege.db')
+#     c = conn.cursor()
+#     assert jobs.getAllJobTitles() == c.execute("SELECT id, title FROM Jobs").fetchall()
+#     assert jobs.getJobDetails(1) == c.execute("SELECT * FROM Jobs WHERE id = ?", [1]).fetchone()
 
-def test_canDeleteJob():
-    sys.stdin = io.StringIO("a \n b\n c\n d\n e\n1\n")
-    jobs.postJob("test1","test2")
+# def test_canDeleteJob():
+#     sys.stdin = io.StringIO("a \n b\n c\n d\n e\n1\n")
+#     jobs.postJob("test1","test2")
 
-    assert menus.deleteJobMenu("test1","test2")
+#     assert menus.deleteJobMenu("test1","test2")
 
-# jobs.postJob("test1","test2")
+def test_addPlusAccount():
+    verify_acc.create_tables()
+    verify_acc.data_entry("test_user", "test_password", "test_first", "test_last", 1, 1, 1, "English","Plus")
+    verify_acc.data_entry("test_user", "test_password", "test_first", "test_last", 1, 1, 1, "English","Standard")
+    assert verify_acc.getAccountInfo("test_user")[0][8] == "Plus"
+    assert verify_acc.getAccountInfo("test_user")[1][8] == "Standard"
+    verify_acc.deleteAccount("test_user")
+def test_messages():
+    assert messages.store_message("test_user1","test_user2","test_message") == 0
+    assert messages.delete_message("test_user1","test_user2","test_message") == 0
+
+def test_displayAllUsers():
+    assert messages.displayAllUsers() == 0
