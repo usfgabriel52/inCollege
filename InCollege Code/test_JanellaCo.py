@@ -3,52 +3,28 @@ import pytest
 import io
 
 import menus
+import messages
 
-# testing option 6 - Important Links Menu when not logged in
-def test_impLinks(monkeypatch):
-    # string that simulates input
-    input = '1\n0\n2\n3\n4\n5\n' \
-            '1\n2\n0\n' \
-            '6\n7\n8\n' \
-            '9\n10\n0\n'
+# test for notification
+def test_inboxNotification(monkeypatch):
+    assert messages.inboxNotification("john") == True  # must return true because the database has messages for john
+    assert messages.inboxNotification("kingofpop1") == False  # must return false because there's no messages for kingofpop1
 
-    # attach the input string to the stdin of the program
+    input = "1\nprincess123\nPrincess1@\n9\n2\njohn\nHow are you?\n0\n0\n1\njohn\p@ssw0rD\n0\n0\n"
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
 
-    # run the function we want to test and check output value
-    assert menus.impLinksMenu() == 0
+    assert menus.homeMenu() == None
 
-def test_usefulLinks(monkeypatch):
-    input='2\n3\n4\n1\n0\n0\n'
+def test_replyInbox(monkeypatch):
+    assert messages.inbox("kingofpop1", "Standard") == -1  # should return -1 because there's no messages
 
+    # test replying
+    input = "1\n1\nprincess123\nHi there\n"
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+    assert messages.inbox("john", "Standard") == 1
 
-    assert menus.usefulLinksMenu() == 0
-
-def test_usefulGeneralGroup(monkeypatch):
-    input = '2\n3\n4\n5\n6\n7\n0\n'
-
+ # test deletion
+def test_deletionInbox(monkeypatch):
+    input = "1\njohn\np@ssw0rD\n9\n1\n1\n2\n0\n0\n"
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-
-    assert menus.usefulGeneralGroup() == 0
-
-
-# test for creating an account
-# When a user signs up, Email, SMS, and Targeted are all set 1 or True, Language is set to "English", and Stored in DB
-def test_createAccount(monkeypatch):
-
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-    # display contents of db before signing up
-    for r in c.execute("SELECT * FROM Accounts"):
-        print(r)
-
-    input = 'johndoe\np@ssw0rD\nJohn\nDoe\n0\n0\n0'
-
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-
-    assert menus.createAccountMenu() == 0
-
-    # display contents of db after signing up
-    for r in c.execute("SELECT * FROM Accounts"):
-        print(r)
+    assert menus.homeMenu() == None

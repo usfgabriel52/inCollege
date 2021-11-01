@@ -1,125 +1,138 @@
 from personalProfile import *
 from friends import findFriends
 from verify_acc import unique_user
-import verify_acc as acc 
+import verify_acc as acc
 import menus as menu
 
 #/////////////////////////////////////////////////////////////////////////     VIEW MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
 def view_message():
-    
+
     return
 
 
 #/////////////////////////////////////////////////////////////////////////     SEND MESSAGES    ////////////////////////////////////////////////////////////////////////////////
 
 def send_message(sender, membership):
-    
+
     if membership == "Standard":
-        
+
         displayFriends(sender)
 
         recipient = input("\nEnter the username of the person you want to send a message to: ")
 
         if is_friend(sender,recipient):
             message = input("\nPlease enter your message: ")
-            store_message(sender, recipient, text)
+            store_message(sender, recipient, message)
             print("\nMessage Has Been Sent.\n")
         else:
             print("I'm sorry, you are not friends with that person.")
 
     elif membership == "Plus":
-       
+
         displayAllUsers()
-        
+
         recipient = input("\nEnter the username of the person you want to send a message to: ")
 
         if unique_user(recipient):
             message = input("\nPlease enter your message: ")
-            store_message(sender, recipient, text)
+            store_message(sender, recipient, message)
             print("\nMessage Has Been Sent.\n")
         else:
             print("I'm sorry, This person is not in the system yet.")
-    
+
     return 0
 
 
 
 def store_message(sender, recipient, text):
-    
+
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
     query = """INSERT INTO messages (sender, recipient, text) VALUES(?, ?, ?);"""
-    
+
     data = (sender,recipient, text)
     c.execute(query, data)
-    conn.commit() 
-    conn.close()  
+    conn.commit()
+    conn.close()
     return 0
 
 #///////////////////
 
-def inboxNotification():
-     inlist = acc.c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(acc.username)).fetchall()
+def inboxNotification(username):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
 
-     if len(inlist):
-         return True
-     else:
-         return False
+    inlist = c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(username)).fetchall()
 
-        
-        
- #//////// validation of input
+    conn.close()
+
+    if len(inlist):
+        return True
+    else:
+        return False
+
+
+
+
+#//////// validation of input
 def user_input(maxIn):
 
-     my_select = input("\nEnter selection: ")
-    
-     numSelec = int(my_select) 
-     while not my_select.isnumeric() or (numSelect > maxIn or numSelect < 1):
-         my_select = input("\nEnter a valid selection: ")
-         numSelect = int(my_select)
+    my_select = input("\nEnter selection: ")
 
-     return int(my_select)
+    numSelect = int(my_select)
+    while not my_select.isnumeric() or (numSelect > maxIn or numSelect < 1):
+        my_select = input("\nEnter a valid selection: ")
+        numSelect = int(my_select)
+
+    return int(my_select)
 
 #/////////
 
-def inbox():
+def inbox(username, membership):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
 
-    inlist = acc.c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(acc.username)).fetchall()
+    inlist = c.execute("SELECT * FROM messages WHERE recipient = '{}'".format(username)).fetchall()
 
     if len(inlist) != 0:
-         print("\n Inbox:")
-         count = 1
-         for i in inlist:
-             print("\n{}. {}\t{}", count, inlist[0][1], inlist[0][2])
-             count += 1
+        print("\nInbox:")
+        count = 1
+        for i in inlist:
+            print("\n{}. {}:\t{}".format(count, i[0], i[2]))
+            count += 1
 
-             #    option to reply or delete
-             print("\nSelect a message to reply / delete, or 0 to go back.")
-             message_select = user_input(len(inlist))
+        #    option to reply or delete
+        print("\nSelect a message to reply / delete, or 0 to go back.")
+        message_select = user_input(len(inlist))
 
-             print("\n0. Go back\n1. Reply\n2. Delete")
-             option_select = user_input(2)
+        print("\n0. Go back\n1. Reply\n2. Delete")
+        option_select = user_input(2)
 
-             if option_select == 1:
-                 #   sends reply 
-                 print("Reply sent.")
-                 send_message(message_select[0])
-                 menu.homeMenu()
+        if option_select == 1:
+        #   sends reply
+            send_message(username, membership)
+            print("Reply sent.")
+            conn.close()
+            return 1
 
-             else:
-                 #   deletes message 
-                 inist = acc.c.execute(
-                     "DELETE * FROM messages WHERE recipient = '{}' AND sender = '{}' AND text = '{}'",
-                     message_select[0], message_select[1], message_select[2])
-                 print("\nMessage has been deleted.")
-                 menu.homeMenu()
+        else:
+            #   deletes message
+            c.execute("DELETE FROM messages WHERE sender = '{}' AND recipient = '{}' AND text = '{}'".
+                    format(inlist[message_select][0], inlist[message_select][1], inlist[message_select][2]))
+            print("\nMessage has been deleted.")
+            conn.commit()
+            conn.close()
+            return 0
 
-     #  inbox empty
+    #  inbox empty
     else:
         print("\n  The inbox is empty")
-    menu.homeMenu()
+        conn.close()
+        return -1
+    conn.close()
+    return None
 
 
 #///////////////////////
@@ -144,7 +157,7 @@ def displayFriends(currUser):
 def displayAllUsers():
 
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
 
     print("\n")
     print("{:<15} {:<15} {:<15}".format('Username:', 'First Name:', 'Last Name:'))
@@ -176,18 +189,18 @@ def delete_message(sender,receiver,text):
     query = """DELETE FROM messages WHERE recipient = ? AND sender = ? AND text = ?"""
     data = (sender, recipient, text)
     c.execute(query, data)
-    conn.commit() 
-    conn.close()  
+    conn.commit()
+    conn.close()
     return 0
 
 
 def reply_message(sender, recipient):
-    return 
+    return
 
 #/////////////////////////////////////////////////////////////////////////     PRINT SUCCESS STORY     /////////////////////////////////////////////////////////////////////////
 
 def printStudentSuccess():
-    print("\nInCollege is an amazing way to learn skills and search for a job.\n" 
+    print("\nInCollege is an amazing way to learn skills and search for a job.\n"
           "Being a college student, I struggled to find a job in my field that I was interested in and worked well with my school schedule.\n"
           "However, after signing up with InCollege I was able to find the job of my dreams and learn some very valuable skills along the way.\n"
           "I highly recommend InCollege to anyone who is searching for a job, wants to learn new skills, or meet some amazing people.\n"
@@ -222,35 +235,35 @@ def printUnderConstruction():
 def printMainMenu(userName):
     if hasProfile(userName):
         print("InCollege Main Menu\n"
-            "(1) Job search / internship\n"
-            "(2) Find someone you know\n"
-            "(3) Learn a new skill\n"
-            "(4) Useful Links\n"
-            "(5) Important Links\n"
-            "(6) My Network\n"
-            "(7) Edit Personal Profile\n"
-            "(8) View Personal Profile\n"
-            "(9) View/Send Messages\n"
-            "(0) Logout\n")
+              "(1) Job search / internship\n"
+              "(2) Find someone you know\n"
+              "(3) Learn a new skill\n"
+              "(4) Useful Links\n"
+              "(5) Important Links\n"
+              "(6) My Network\n"
+              "(7) Edit Personal Profile\n"
+              "(8) View Personal Profile\n"
+              "(9) View/Send Messages\n"
+              "(0) Logout\n")
     else:
         print("InCollege Main Menu\n"
-            "(1) Job search / internship\n"
-            "(2) Find someone you know\n"
-            "(3) Learn a new skill\n"
-            "(4) Useful Links\n"
-            "(5) Important Links\n"
-            "(6) Show My Network\n"
-            "(7) Create Personal Profile\n"
-            "(9) View/Send Messages\n"
-            "(0) Logout\n")
+              "(1) Job search / internship\n"
+              "(2) Find someone you know\n"
+              "(3) Learn a new skill\n"
+              "(4) Useful Links\n"
+              "(5) Important Links\n"
+              "(6) Show My Network\n"
+              "(7) Create Personal Profile\n"
+              "(9) View/Send Messages\n"
+              "(0) Logout\n")
     return 0
 
 #/////////////////////////////////////////////////////////////////////////     PRINT SKILL LIST     ///////////////////////////////////////////////////////////////////////////
 
 def printSkillList():
-    
+
     print("Skill list: ")  # tentative skill list
-    
+
     print("(1) Python Programming\n"
           "(2) Java Programming\n"
           "(3) C++ Programming\n"
@@ -262,7 +275,7 @@ def printSkillList():
 #/////////////////////////////////////////////////////////////////////////     PRINT JOB MENU     /////////////////////////////////////////////////////////////////////////////
 
 def printJobMenu():
-    
+
     print("(1) Post a job\n"
           "(2) View all job titles\n"
           "(3) View all jobs you have posted\n"
@@ -293,7 +306,7 @@ def printImpLinksMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT USEFUL LINKS MENU     ///////////////////////////////////////////////////////////////////
 
 def printUsefulLinksMenu():
-    
+
     print("Useful Links Menu\n"
           "(1) General\n"
           "(2) Browse InCollege\n"
@@ -306,7 +319,7 @@ def printUsefulLinksMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT USEFUL GENERAL MENU     ///////////////////////////////////////////////////////////////////
 
 def printUsefulGeneralGroup():
-    
+
     print("Useful Links Menu\n"
           "(1) Sign Up\n"
           "(2) Help Center\n"
@@ -321,7 +334,7 @@ def printUsefulGeneralGroup():
 #/////////////////////////////////////////////////////////////////////////     PRINT GUEST CONTROL MENU     //////////////////////////////////////////////////////////////////////
 
 def printGuestControlMenu():
-    
+
     print("Guest Control Menu\n"
           "(1) Turn ON/OFF Email\n"
           "(2) Turn ON/OFF SMS\n"
@@ -333,7 +346,7 @@ def printGuestControlMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT LANGUAGE MENU     //////////////////////////////////////////////////////////////////////////
 
 def printLanguageMenu():
-    
+
     print("Language Menu\n"
           "(1) Change Language to English\n"
           "(2) Change Language to Spanish\n"
@@ -344,7 +357,7 @@ def printLanguageMenu():
 
 
 def printPrivacyPolicyMenu():
-    
+
     print("Privacy Policy Menu\n"
           "(1) View Privacy Policy\n"
           "(2) Guest Controls\n"
@@ -382,7 +395,7 @@ def printSavedJobOptionsMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT MESSAGES MENU    /////////////////////////////////////////////////////////////////////////////
 
 def printMessagesMenu():
-    
+
     print("\nMessages Menu\n"
           "(1) View Messages\n"
           "(2) Send Message\n"

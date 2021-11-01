@@ -127,10 +127,8 @@ def mainMenu():
             
             
         #Message notification
-        if messages.inboxNotification():
-         print("\nYou have unread messages in your inbox.")
-        
-        
+        if inboxNotification(logged_in[0]):
+            print("\nYou have unread messages in your inbox.")
 
         opt = input("Enter command: ")
 
@@ -1065,6 +1063,7 @@ def messageMenu():
         opt = input("Enter command: ")
 
         if int(opt) == 1:
+            inbox(logged_in[0], logged_in[4])
             return
         elif int(opt) == 2:
             send_message(logged_in[0], logged_in[4])
