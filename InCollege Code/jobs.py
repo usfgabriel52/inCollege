@@ -2,6 +2,7 @@ import sqlite3
 from getpass import getpass
 from sqlite3.dbapi2 import Error
 from datetime import datetime
+from update_acc import update_last_applied
 
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
@@ -15,7 +16,9 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
     
+    #gets the current date and time
     current_date = datetime.now()
+    # formats the date and time into a string
     formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
 
     # SQL
@@ -152,6 +155,8 @@ def apply_job(job, current_user, firstname, lastname):
     c.execute("INSERT INTO applications VALUES ('{}', '{}', '{}', '{}', '{}')".format(current_user, job[0], grad_date, start_date, story))
     conn.commit()
     conn.close()
+    #this function updates the date of the last time the user applied for a job
+    update_last_applied(current_user)
     return True
 
 # checking if a job is deleted

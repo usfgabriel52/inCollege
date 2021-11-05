@@ -1,5 +1,6 @@
 import sqlite3
 from getpass import getpass
+from datetime import datetime
 
 #/////////////////////////////////////////////////////////////////////////     CREATE DB     //////////////////////////////////////////////////////////////////////////////
 
@@ -8,7 +9,7 @@ def create_tables():
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
     #SQL
-    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT, membership TEXT)"""
+    query = """CREATE TABLE IF NOT EXISTS Accounts(username TEXT, password TEXT,firstname TEXT,lastname TEXT, email INTEGER, sms INTEGER, ads INTEGER, language TEXT, membership TEXT, dateCreated TEXT, lastLogin TEXT, lastApplied TEXT)"""
     c.execute(query)
     conn.commit()
     query = """CREATE TABLE IF NOT EXISTS friends(userName TEXT,friend TEXT)"""
@@ -56,11 +57,17 @@ def create_tables():
 def data_entry(username, password,firstname,lastname,email,sms,ads,language,membership):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
-    #SQL
-    query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language,membership) VALUES(?, ?,?,?,?,?,?,?,?);"""
     
-    #Stores username, password , firstname , lastname, email, sms, ads, language, membership
-    data = (username, password,firstname,lastname,email,sms,ads,language,membership)
+    #gets the current date and time
+    current_date = datetime.now()
+    # formats the date and time into a string
+    formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
+
+    #SQL
+    query = """INSERT INTO Accounts (username, password,firstname,lastname,email,sms,ads,language,membership, dateCreated, lastLogin, lastApplied) VALUES(?, ?,?,?,?,?,?,?,?,?,?,?);"""
+    
+    #Stores username, password , firstname , lastname, email, sms, ads, language, membership, dateCreated, lastLogin, lastApplied
+    data = (username, password,firstname,lastname,email,sms,ads,language,membership,formatted_date, None, None)
     c.execute(query, data)
     conn.commit()
     conn.close()

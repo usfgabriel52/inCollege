@@ -39,6 +39,8 @@ def loginMenu():
     global logged_in
     # gets the first and last name of the current user that is logged in
     logged_in = current_user(username, password)
+    #this function updates the last login time for the account being logged into
+    update_last_login(username)
     mainMenu()
 
 

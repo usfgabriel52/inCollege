@@ -1,5 +1,6 @@
 import sqlite3
 from getpass import getpass
+from datetime import datetime
 
 #/////////////////////////////////////////////////////////////////////////     UPDATE EMAIL OPTION     ////////////////////////////////////////////////////////////////////////////
 
@@ -90,4 +91,43 @@ def update_lang_option(username, password, lang):
     conn.close()
     return
 
+#/////////////////////////////////////////////////////////////////////////     UPDATE LAST LOGIN DATE / TIME      /////////////////////////////////////////////////////////////////////////
+
+def update_last_login(username):
+    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    #gets the current date and time
+    current_date = datetime.now()
+    # formats the date and time into a string
+    formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
+
+    query = """UPDATE Accounts SET lastLogin = ? WHERE username = ?;"""
+    data = (formatted_date, username)
+
+    c.execute(query, data)
+    conn.commit()
+    conn.close()
+    return 0
+
+#/////////////////////////////////////////////////////////////////////////     UPDATE LAST APPLIED FOR A JOB DATE / TIME      /////////////////////////////////////////////////////////////////////////
+
+def update_last_applied(username):
+    
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    #gets the current date and time
+    current_date = datetime.now()
+    # formats the date and time into a string
+    formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
+
+    query = """UPDATE Accounts SET lastApplied = ? WHERE username = ?;"""
+    data = (formatted_date, username)
+
+    c.execute(query, data)
+    conn.commit()
+    conn.close()
+    return 0
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
