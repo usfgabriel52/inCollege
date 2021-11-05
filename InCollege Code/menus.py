@@ -122,7 +122,7 @@ def mainMenu():
         global logged_in
 
         if not hasProfile(logged_in[0]):
-            print("\nDon't forget tocreate a profile!\n")
+            print("\nDon't forget to create a profile!\n")
 
         # prints the main menu
         printMainMenu(logged_in[0])
