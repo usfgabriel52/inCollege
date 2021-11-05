@@ -1,6 +1,7 @@
 import sqlite3
 from getpass import getpass
 from sqlite3.dbapi2 import Error
+from datetime import datetime
 
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
@@ -13,12 +14,15 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
+    
+    current_date = datetime.now()
+    formatted_date = current_date.strftime('%Y-%m-%d')
 
     # SQL
-    query = """INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast) VALUES(?, ?, ?, ?, ?, ?, ?);"""
+    query = """INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast, datePosted) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"""
 
     # Stores username, password , firstname , lastname
-    data = (title, description, employer, location, salary, posterfirst, posterlast)
+    data = (title, description, employer, location, salary, posterfirst, posterlast, formatted_date)
     c.execute(query, data)
     conn.commit()
     conn.close()
