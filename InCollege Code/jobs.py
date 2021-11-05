@@ -16,7 +16,7 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     c = conn.cursor()
     
     current_date = datetime.now()
-    formatted_date = current_date.strftime('%Y-%m-%d')
+    formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
 
     # SQL
     query = """INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast, datePosted) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"""
