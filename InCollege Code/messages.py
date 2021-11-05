@@ -176,7 +176,7 @@ def is_friend(userName,friend):
     return len(tuple) != 0
 
 
-def delete_message(sender,receiver,text):
+def delete_message(sender,recipient,text):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
