@@ -123,6 +123,10 @@ def mainMenu():
 
         if not hasProfile(logged_in[0]):
             print("\nDon't forget to create a profile!\n")
+        
+        #Message notification
+        if inboxNotification(logged_in[0]):
+            print("\nYou have messages waiting for you.\n")
 
         # prints the main menu
         printMainMenu(logged_in[0])
@@ -131,10 +135,6 @@ def mainMenu():
         if findRequests(logged_in[0]).fetchall() != []:
             printHasRequest()
             
-            
-        #Message notification
-        if inboxNotification(logged_in[0]):
-            print("\nYou have unread messages in your inbox.")
 
         opt = input("Enter command: ")
 
