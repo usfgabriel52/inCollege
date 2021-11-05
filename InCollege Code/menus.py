@@ -198,6 +198,8 @@ def skillMenu():
 def jobMenu():
     while True:
         print("\nJob search/internship.\n")
+        #notification for number of jobs applied for by the user.
+        applied_jobs_notification(logged_in[0])
 
         printJobMenu()
 

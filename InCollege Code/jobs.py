@@ -261,6 +261,14 @@ def getPoster(jobID):
 def getDeletedApplications(username):
     return c.execute("SELECT * FROM app_status WHERE username = ? AND status = 'deleted'", [username]).fetchall()
 
+
 # gets all the job titles the given username has applied for
 def getAllJobTitlesAppliedFor(username):
     return c.execute("SELECT j.id, j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'applied' AND a.username = ?", [username]).fetchall()
+
+
+#this function will display the number of jobs the user has applied for
+def applied_jobs_notification(user):
+    jobs = getAllJobTitlesAppliedFor(user)
+    print("\nYou have currently applied for ", len(jobs), " jobs.\n")
+    return 0
