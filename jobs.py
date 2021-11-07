@@ -301,7 +301,7 @@ def moreThan7DaysApply(username):
     else:
         return False
 
-def getNewUser(username):
+def getNewUserNoti(username):
     newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT CONVERT(DATETIME, lastLogin) FROM Accounts username = ?)", [username]).fetchall()
 
     for newUser in newUsers:
