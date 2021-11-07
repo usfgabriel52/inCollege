@@ -301,7 +301,7 @@ def moreThan7DaysApply(username):
         return False
 
 def getNewUserNoti(username):
-    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts username = ?)", [username]).fetchall()
+    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
 
     for newUser in newUsers:
         print(newUser[0] +" " +newUser[1] +" has joined inCollege")
