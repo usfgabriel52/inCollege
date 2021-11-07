@@ -38,14 +38,12 @@ def loginMenu():
             print("Incorrect username/password, please try again\n")
     print("\nYou have successfully logged in\n")
 
-    global logged_in
-
-    # gets the first and last name of the current user that is logged in
-    logged_in = current_user(username, password)
-
-    # notifications new user join/register account
+    #notifications new user join/register account
     newUsers = getNewUserNoti(logged_in[0])
 
+    global logged_in
+    # gets the first and last name of the current user that is logged in
+    logged_in = current_user(username, password)
     #this function updates the last login time for the account being logged into
     update_last_login(username)
     mainMenu()
@@ -211,14 +209,13 @@ def jobMenu():
 
         #notification if applied jobs has been deleted
         checkAppliedJobsDelete(logged_in[0])
-        #notification new jobs posted
-        for job in newJobs:
-            print("A new new job "+ job + " has been posted.")
-        #notified once, so remove new job => no longer new job
-        newJobs.clear()
+
         #notification if more than 7 days have not applied jobs
         if moreThan7DaysApply(logged_in[0]):
             print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
+
+        #notify new job
+        getNewJobTitleNoti(logged_in[0])
 
         printJobMenu()
 
