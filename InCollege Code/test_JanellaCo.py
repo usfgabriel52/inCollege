@@ -5,6 +5,7 @@ import io
 import menus
 import messages
 import verify_acc
+import jobs
 
 # test notifications when a new user has joined
 def test_newUserNotif(monkeypatch):
@@ -24,6 +25,7 @@ def test_newUserNotif(monkeypatch):
     conn.commit()
     c.close()
 
+
 def test_jobsNotifs(monkeypatch):
     # should show the number of jobs applied as 2 since the database contains two applications for princess123
     input = "1\nprincess123\nPrincess1@\n1\n0\n0\n0"
@@ -31,9 +33,28 @@ def test_jobsNotifs(monkeypatch):
 
     assert menus.homeMenu() == None
 
-
     # should show a notification about the user not applying for a job recently
     input = "1\nCoolDude123\nCoolDude1@\n1\n0\n0\n0"
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
 
     assert menus.homeMenu() == None
+
+def test_newJobNotif(monkeypatch):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    # insert a new job into the database
+    current_date = datetime.now()
+    formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
+    c.execute("INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast, datePosted) "
+              "VALUES('Mobile App Developer','need an experienced developer for our mobile app', 'InCollege', 'Tampa, FL', '$60000', 'Anna', 'Collins', ?); ", formatted_date)
+    conn.commit()
+
+    input = "1\nCoolDude123\nCoolDude1@\n1\n0\n0\n0"
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+
+    assert menus.homeMenu() == None
+
+    c.execute("DELETE FROM Jobs WHERE title = 'Mobile App Developer' AND description = 'need an experienced developer for our mobile app' AND posterfirst = 'Anna' AND posterlast = 'Collins'")
+    conn.commit()
+    c.close()
