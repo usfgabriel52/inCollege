@@ -8,8 +8,6 @@ from update_acc import update_last_applied
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
-#global variable for new job posted
-newJobs = []
 
 
 # /////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
@@ -290,8 +288,11 @@ def checkAppliedJobsDelete(username):
         print(job)
 
 #this function is to get the new posted job title
-def getNewJobTitle(title):
-    newJobs.append(title)
+def getNewJobTitleNoti(username):
+    newJobs = c.execute("SELECT title FROM Jobs WHERE datePosted > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
+
+    for newJob in newJobs:
+        print("A new job " + newJob[0] + " has been posted.")
 
 def moreThan7DaysApply(username):
     lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
@@ -305,4 +306,4 @@ def getNewUserNoti(username):
     newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
 
     for newUser in newUsers:
-        print(newUser[0] +" " + newUser[1] +" has joined inCollege")
+        print(newUser[0] +" " +newUser[1] +" has joined inCollege")

@@ -39,12 +39,14 @@ def loginMenu():
     print("\nYou have successfully logged in\n")
 
     global logged_in
-
     # gets the first and last name of the current user that is logged in
     logged_in = current_user(username, password)
 
     # notifications new user join/register account
-    newUsers = getNewUserNoti(logged_in[0])
+    getNewUserNoti(logged_in[0])
+
+    # notify new job
+    getNewJobTitleNoti(logged_in[0])
 
     #this function updates the last login time for the account being logged into
     update_last_login(username)
@@ -69,8 +71,7 @@ def homeMenu():
         # gets user input
         select = input("Enter command: ")
 
-        if (
-                select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6"):
+        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6"):
             break
         else:
             # if user inputs an incorrect value an this function prints an error message
@@ -211,11 +212,7 @@ def jobMenu():
 
         #notification if applied jobs has been deleted
         checkAppliedJobsDelete(logged_in[0])
-        #notification new jobs posted
-        for job in newJobs:
-            print("A new new job "+ job + " has been posted.")
-        #notified once, so remove new job => no longer new job
-        newJobs.clear()
+
         #notification if more than 7 days have not applied jobs
         if moreThan7DaysApply(logged_in[0]):
             print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")

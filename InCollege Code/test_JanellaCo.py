@@ -1,6 +1,7 @@
 import sqlite3
 import pytest
 import io
+from datetime import datetime
 
 import menus
 import messages
@@ -43,11 +44,14 @@ def test_newJobNotif(monkeypatch):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
+    c.execute("UPDATE Accounts SET lastLogin = '2021-11-05 18:14:21' WHERE username = 'CoolDude123'")
+    conn.commit()
+
     # insert a new job into the database
     current_date = datetime.now()
     formatted_date = current_date.strftime('%Y-%m-%d %H:%M:%S')
     c.execute("INSERT INTO Jobs(title, description, employer, location, salary, posterfirst, posterlast, datePosted) "
-              "VALUES('Mobile App Developer','need an experienced developer for our mobile app', 'InCollege', 'Tampa, FL', '$60000', 'Anna', 'Collins', ?); ", formatted_date)
+              "VALUES('Mobile App Developer','need an experienced developer for our mobile app', 'InCollege', 'Tampa, FL', '$60000', 'Anna', 'Collins', ?); ", [formatted_date])
     conn.commit()
 
     input = "1\nCoolDude123\nCoolDude1@\n1\n0\n0\n0"
