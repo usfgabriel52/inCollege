@@ -209,14 +209,13 @@ def jobMenu():
 
         #notification if applied jobs has been deleted
         checkAppliedJobsDelete(logged_in[0])
-        #notification new jobs posted
-        for job in newJobs:
-            print("A new new job "+ job + " has been posted.")
-        #notified once, so remove new job => no longer new job
-        newJobs.clear()
+
         #notification if more than 7 days have not applied jobs
         if moreThan7DaysApply(logged_in[0]):
             print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
+
+        #notify new job
+        getNewJobTitleNoti(logged_in[0])
 
         printJobMenu()
 
