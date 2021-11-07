@@ -70,8 +70,6 @@ def postJob(posterfirst, posterlast):
 
         job_data_entry(title, description, employer, location, salary, posterfirst, posterlast)
 
-        getNewJobTitle(title)
-
         print("Successfully added a job.\n")
     else:
         print("Job limit has been reached please try again later.\n")
@@ -303,7 +301,7 @@ def moreThan7DaysApply(username):
         return False
 
 def getNewUserNoti(username):
-    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
+    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts username = ?)", [username]).fetchall()
 
     for newUser in newUsers:
         print(newUser[0] +" " +newUser[1] +" has joined inCollege")
