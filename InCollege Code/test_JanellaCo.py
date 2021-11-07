@@ -4,27 +4,25 @@ import io
 
 import menus
 import messages
+import verify_acc
 
-# test for notification
-def test_inboxNotification(monkeypatch):
-    assert messages.inboxNotification("john") == True  # must return true because the database has messages for john
-    assert messages.inboxNotification("kingofpop1") == False  # must return false because there's no messages for kingofpop1
+# test notifications when a new user has joined
+def test_newUserNotif(monkeypatch):
+    # add a new user
+    verify_acc.data_entry("jane", "p@ssw0rD", "Jane", "Doe", 1, 1, 1, "English", "Standard")
 
-    input = "1\nprincess123\nPrincess1@\n9\n2\njohn\nHow are you?\n0\n0\n1\njohn\p@ssw0rD\n0\n0\n"
+    # log in as a different user
+    input = "1\njohn\np@ssw0rD\n0\n0"
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
 
     assert menus.homeMenu() == None
 
-def test_replyInbox(monkeypatch):
-    assert messages.inbox("kingofpop1", "Standard") == -1  # should return -1 because there's no messages
+    # delete newly added row
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM Accounts WHERE username = 'jane'")
+    conn.commit()
+    c.close()
 
-    # test replying
-    input = "1\n1\nprincess123\nHi there\n"
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert messages.inbox("john", "Standard") == 1
-
- # test deletion
-def test_deletionInbox(monkeypatch):
-    input = "1\njohn\np@ssw0rD\n9\n1\n1\n2\n0\n0\n"
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert menus.homeMenu() == None
+def test_jobsNotifs(monkeypatch):
+    
