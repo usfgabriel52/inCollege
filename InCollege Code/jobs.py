@@ -4,8 +4,12 @@ from sqlite3.dbapi2 import Error
 from datetime import datetime
 from update_acc import update_last_applied
 
+
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
+
+#global variable for new job posted
+newJobs = []
 
 
 # /////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
@@ -68,6 +72,8 @@ def postJob(posterfirst, posterlast):
 
         job_data_entry(title, description, employer, location, salary, posterfirst, posterlast)
 
+        getNewJobTitle(title)
+
         print("Successfully added a job.\n")
     else:
         print("Job limit has been reached please try again later.\n")
@@ -126,6 +132,9 @@ def apply_job(job, current_user, firstname, lastname):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
+    # gets the current date and time
+    current_date = datetime.now()
+
     # checks poster
     poster = getPoster(job[0])
     if poster[1] == firstname and poster[2] == lastname:
@@ -142,7 +151,7 @@ def apply_job(job, current_user, firstname, lastname):
             "UPDATE app_status SET status = 'applied' WHERE username = '{}' AND jobID = '{}'".format(current_user, job[0])
         )
     else:  # applied for a job
-        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied')".format(current_user, job[0]))
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied', dateApplied)".format(current_user, job[0], current_date))
         conn.commit()
 
     # inputs
@@ -272,3 +281,23 @@ def applied_jobs_notification(user):
     jobs = getAllJobTitlesAppliedFor(user)
     print("\nYou have currently applied for ", len(jobs), " jobs.\n")
     return 0
+
+def checkAppliedJobsDelete(username):
+    jobsDeleted = c.execute("SELECT j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'deleted' AND a.username = ?", [username]).fetchall()
+    print("\nJob that you applied for has been deleted: ")
+    for job in jobsDeleted:
+        print("\n")
+        print(job)
+
+#this function is to get the new posted job title
+def getNewJobTitle(title):
+    newJobs.append(title)
+
+def moreThan7DaysApply(username):
+    lastTimeApply = c.execute("SELECT dateApplied FROM app_status WHERE username = ? ORDER BY dateApplied DESC LIMIT 1", [username]).fetchall()
+    # gets the current date and time
+    current_date = datetime.now()
+    if lastTimeApply + 7 < current_date:
+        return True
+    else:
+        return False

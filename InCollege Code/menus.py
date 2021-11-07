@@ -14,6 +14,9 @@ from friends import *
 # username, password, first name, last name
 logged_in = []
 
+import jobs
+#global variable new user just join/ register account for function notification
+newUsers = []
 
 # /////////////////////////////////////////////////////////////////////////     LOGIN MENU     /////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +39,13 @@ def loginMenu():
         if not found:
             print("Incorrect username/password, please try again\n")
     print("\nYou have successfully logged in\n")
+
+    #notifications new user join/register account
+    for newUser in newUsers:
+        print(newUser + " has joined InCollege")
+    #notified once, so clear newUser after notify
+    newUsers.clear()
+
     global logged_in
     # gets the first and last name of the current user that is logged in
     logged_in = current_user(username, password)
@@ -109,6 +119,7 @@ def createAccountMenu():
             else:
                 data_entry(username, password, firstname, lastname, 1, 1, 1, "English","Standard")
             print("Successfully created an account\n")
+            newUsers.append(firstname+" "+lastname)
     else:
         print("All permitted accounts have been created, please come back later\n")
     return 0
@@ -200,6 +211,17 @@ def jobMenu():
         print("\nJob search/internship.\n")
         #notification for number of jobs applied for by the user.
         applied_jobs_notification(logged_in[0])
+
+        #notification if applied jobs has been deleted
+        checkAppliedJobsDelete(logged_in[0])
+        #notification new jobs posted
+        for job in newJobs:
+            print("A new new job "+ job + " has been posted.")
+        #notified once, so remove new job => no longer new job
+        newJobs.clear()
+        #notification if more than 7 days have not applied jobs
+        if moreThan7DaysApply(logged_in[0]):
+            print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
 
         printJobMenu()
 
@@ -1080,4 +1102,4 @@ def messageMenu():
         else:
             printInvalidEntry()
     return 0
-  
+
