@@ -210,17 +210,16 @@ def jobMenu():
         #notification for number of jobs applied for by the user.
         applied_jobs_notification(logged_in[0])
 
-        #notification if applied jobs has been deleted
-        checkAppliedJobsDelete(logged_in[0])
+        if checkDeletedApplications(logged_in[0]):
+            print("One or more of the jobs you have applied for has been deleted.")
+            # notification if applied jobs has been deleted
+            checkAppliedJobsDelete(logged_in[0])
 
         #notification if more than 7 days have not applied jobs
         if moreThan7DaysApply(logged_in[0]):
             print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
 
         printJobMenu()
-
-        if checkDeletedApplications(logged_in[0]):
-            print("One or more of the jobs you have applied for has been deleted.")
 
         select = input("Enter Command: ")
 

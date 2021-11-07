@@ -201,7 +201,7 @@ def deleteJob(jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
+    #c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()
@@ -280,10 +280,9 @@ def applied_jobs_notification(user):
 
 def checkAppliedJobsDelete(username):
     jobsDeleted = c.execute("SELECT j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'deleted' AND a.username = ?", [username]).fetchall()
-    print("\nJob that you applied for has been deleted: ")
+    print("\nJob(s) that you applied for that has been deleted: ")
     for job in jobsDeleted:
-        print("\n")
-        print(job)
+        print(job[0]+"\n")
 
 #this function is to get the new posted job title
 def getNewJobTitleNoti(username):

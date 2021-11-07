@@ -40,6 +40,11 @@ def test_jobsNotifs(monkeypatch):
 
     assert menus.homeMenu() == None
 
+    input = "1\njohn\np@ssw0rD\n1\n0\n0\n0"
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+
+    assert menus.homeMenu() == None
+
 def test_newJobNotif(monkeypatch):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
