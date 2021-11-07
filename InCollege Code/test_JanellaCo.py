@@ -25,4 +25,15 @@ def test_newUserNotif(monkeypatch):
     c.close()
 
 def test_jobsNotifs(monkeypatch):
-    
+    # should show the number of jobs applied as 2 since the database contains two applications for princess123
+    input = "1\nprincess123\nPrincess1@\n1\n0\n0\n0"
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+
+    assert menus.homeMenu() == None
+
+
+    # should show a notification about the user not applying for a job recently
+    input = "1\nCoolDude123\nCoolDude1@\n1\n0\n0\n0"
+    monkeypatch.setattr('sys.stdin', io.StringIO(input))
+
+    assert menus.homeMenu() == None
