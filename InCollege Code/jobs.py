@@ -294,10 +294,9 @@ def getNewJobTitle(title):
     newJobs.append(title)
 
 def moreThan7DaysApply(username):
-    lastTimeApply = c.execute("SELECT dateApplied FROM app_status WHERE username = ? ORDER BY dateApplied DESC LIMIT 1", [username]).fetchall()
-    # gets the current date and time
-    current_date = datetime.now()
-    if lastTimeApply + 7 < current_date:
+    lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
+
+    if lastTimeApply == None:
         return True
     else:
         return False

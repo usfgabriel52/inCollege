@@ -36,7 +36,7 @@ def create_tables():
     conn.commit()
     
     #c.execute('''CREATE TABLE IF NOT EXISTS app_status(username TEXT, title TEXT, posted TEXT, status TEXT)''')
-    c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT,	PRIMARY KEY("username","jobID"))''')
+    c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT, "dateApplied" DATETIME,	PRIMARY KEY("username","jobID"))''')
     conn.commit()
     c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
     conn.commit()
