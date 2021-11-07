@@ -296,7 +296,13 @@ def getNewJobTitle(title):
 def moreThan7DaysApply(username):
     lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
 
-    if len(lastTimeApply) == 0:
+    if lastTimeApply == None:
         return True
     else:
         return False
+
+def getNewUserNoti(username):
+    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
+
+    for newUser in newUsers:
+        print(newUser[0] +" " + newUser[1] +" has joined inCollege")

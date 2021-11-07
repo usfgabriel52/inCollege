@@ -15,8 +15,6 @@ from friends import *
 logged_in = []
 
 import jobs
-#global variable new user just join/ register account for function notification
-newUsers = []
 
 # /////////////////////////////////////////////////////////////////////////     LOGIN MENU     /////////////////////////////////////////////////////////////////////////
 
@@ -40,15 +38,14 @@ def loginMenu():
             print("Incorrect username/password, please try again\n")
     print("\nYou have successfully logged in\n")
 
-    #notifications new user join/register account
-    for newUser in newUsers:
-        print(newUser + " has joined InCollege")
-    #notified once, so clear newUser after notify
-    newUsers.clear()
-
     global logged_in
+
     # gets the first and last name of the current user that is logged in
     logged_in = current_user(username, password)
+
+    # notifications new user join/register account
+    newUsers = getNewUserNoti(logged_in[0])
+
     #this function updates the last login time for the account being logged into
     update_last_login(username)
     mainMenu()
