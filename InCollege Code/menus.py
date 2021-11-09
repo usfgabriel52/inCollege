@@ -10,11 +10,10 @@ from update_acc import *
 from personalProfile import *
 # imports all functions from friends.py
 from friends import *
+import jobs
 
 # username, password, first name, last name
 logged_in = []
-
-import jobs
 
 # /////////////////////////////////////////////////////////////////////////     LOGIN MENU     /////////////////////////////////////////////////////////////////////////
 
@@ -23,14 +22,19 @@ def loginMenu():
 
     if number_rows() == 0:
         print("No users in the system. Please create an account.")
-        return
+        return 0
 
     found = False
 
     while not found:  # continue looping as long as user inputs invalid login info
         # get input from the user
+        print("If you wish to return to the previous menu enter 0 for both fields:\n")
         username = input("Enter username: ")
         password = input("Enter password: ")
+
+        #allows user to go back to the previous menus
+        if username == "0" and password == "0":
+            return 0
 
         # check if username and password are valid
         found = login(username, password)
@@ -1119,7 +1123,7 @@ def trainingMenu():
             break
         else:   
             printInvalidEntry() 
-            
+
     return 0
 
 # /////////////////////////////////////////////////////////////////////////     TRAINING AND EDUCATION MENU     ///////////////////////////////////////////////////////////
@@ -1150,6 +1154,28 @@ def trainAndEduMenu():
 # /////////////////////////////////////////////////////////////////////////     BUSINESS ANALYSIS AND STRATEGY MENU     ///////////////////////////////////////////////////
 
 def businessAnalysisMenu():
+    while True:
+        
+        printBusinessAnalysisMenu(logged_in)
+
+        print("\nNot seeing what you’re looking for? Sign in to see all 7,609 results.\n")
+        
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            loginMenu()
+        elif int(opt) == 2:
+            loginMenu()
+        elif int(opt) == 3:
+            loginMenu()
+        elif int(opt) == 4:
+            loginMenu()
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+
+
     return 0
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
