@@ -415,21 +415,14 @@ def printTrainAndEduMenu():
           "(0) Exit\n")
     return 0
 
-#/////////////////////////////////////////////////////////////////////////     PRINT TRAINING MENU    /////////////////////////////////////////////////////////////////////////////
+#/////////////////////////////////////////////////////////////////////////     PRINT BUSINESS ANALYSIS AND STRATEGY MENU    /////////////////////////////////////////////////////////////////////////////
 
-def printBusinessAnalysisMenu(logged_in):
-    if logged_in == []:
-        print("\nBusiness Analysis and Strategey Menu\n"
-            "(1) How to use InCollege learning\n"
-            "(2) Train the trainer\n"
-            "(3) Gamification of learning\n"
-            "(0) Exit\n")
-    else:
-        print("\nBusiness Analysis and Strategey Menu\n"
-            "(1) How to use InCollege learning\n"
-            "(2) Train the trainer\n"
-            "(3) Gamification of learning\n"
-            "(4) Understanding the Architectural Design Process"
-            "(5) Project Management Simplified"
-            "(0) Exit\n")
+def printBusinessAnalysisMenu():
+    
+    print("\nBusiness Analysis and Strategey Menu\n"
+        "(1) How to use InCollege learning\n"
+        "(2) Train the trainer\n"
+        "(3) Gamification of learning\n"
+        "(0) Exit\n")
+
     return 0    

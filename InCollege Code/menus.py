@@ -1156,7 +1156,7 @@ def trainAndEduMenu():
 def businessAnalysisMenu():
     while True:
         
-        printBusinessAnalysisMenu(logged_in)
+        printBusinessAnalysisMenu()
 
         print("\nNot seeing what you’re looking for? Sign in to see all 7,609 results.\n")
         
