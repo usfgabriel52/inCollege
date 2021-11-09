@@ -396,7 +396,8 @@ def printMessagesMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT TRAINING MENU    /////////////////////////////////////////////////////////////////////////////
 
 def printTrainingMenu():
-    print("(1) Training and Education\n"
+    print("\nTraining Menu\n"
+          "(1) Training and Education\n"
           "(2) IT Help Desk\n"
           "(3) Business Analysis and Strategy\n"
           "(4) Security\n"
@@ -406,7 +407,8 @@ def printTrainingMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT TRAINING AND EDUCATION MENU    ///////////////////////////////////////////////////////////////
 
 def printTrainAndEduMenu():
-    print("(1) Coding\n"
+    print("\nTraining and Education Menu\n"
+          "(1) Coding\n"
           "(2) Resume Building\n"
           "(3) Public Speaking\n"
           "(4) Making A Presentation\n"
@@ -417,12 +419,14 @@ def printTrainAndEduMenu():
 
 def printBusinessAnalysisMenu(logged_in):
     if logged_in == []:
-        print("(1) How to use InCollege learning\n"
+        print("\nBusiness Analysis and Strategey Menu\n"
+            "(1) How to use InCollege learning\n"
             "(2) Train the trainer\n"
             "(3) Gamification of learning\n"
             "(0) Exit\n")
     else:
-        print("(1) How to use InCollege learning\n"
+        print("\nBusiness Analysis and Strategey Menu\n"
+            "(1) How to use InCollege learning\n"
             "(2) Train the trainer\n"
             "(3) Gamification of learning\n"
             "(4) Understanding the Architectural Design Process"

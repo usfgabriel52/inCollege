@@ -1114,11 +1114,11 @@ def trainingMenu():
         if int(opt) == 1:
             trainAndEduMenu()
         elif int(opt) == 2:
-            print("Coming Soon!")
+            print("\nComing Soon!\n")
         elif int(opt) == 3:
             businessAnalysisMenu()
         elif int(opt) == 4:
-            print("Coming Soon!")
+            print("\nComing Soon!\n")
         elif int(opt) == 0:
             break
         else:   
