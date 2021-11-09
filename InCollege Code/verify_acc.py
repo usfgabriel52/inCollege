@@ -65,10 +65,12 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
     data = (username, password,firstname,lastname,email,sms,ads,language,membership,formatted_date, None, None)
     c.execute(query, data)
     conn.commit()
+
     #Stores the training that has been complete by the student
     query = """INSERT INTO Training (username, howTo, trainTrainer, gamification, UADP, PMS) VALUES(?, ?, ?, ?, ?, ?);"""
     data = (username,  "Incomplete", "Incomplete", "Incomplete", "Incomplete", "Incomplete")
     c.execute(query, data)
+    conn.commit()
     conn.close()
 
 #/////////////////////////////////////////////////////////////////////////     LOGIN ATTEMPT    //////////////////////////////////////////////////////////////////////////
