@@ -30,22 +30,17 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS education(userName TEXT, schoolName TEXT, degree TEXT, yearsAttended INT)"""
     c.execute(query)
     conn.commit()
-    
     query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
     c.execute(query)
     conn.commit()
-    
-    #c.execute('''CREATE TABLE IF NOT EXISTS app_status(username TEXT, title TEXT, posted TEXT, status TEXT)''')
     c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT, "dateApplied" DATETIME,	PRIMARY KEY("username","jobID"))''')
     conn.commit()
     c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
     conn.commit()
-    
-    #query = """CREATE TABLE IF NOT EXISTS Inbox(receiver TEXT, sender TEXT, message TEXT)"""
-    #c.execute(query)
-    #conn.commit()
-    
     query = """CREATE TABLE IF NOT EXISTS messages(sender, recipient, text)"""
+    c.execute(query)
+    conn.commit()
+    query = """CREATE TABLE IF NOT EXISTS Training(username TEXT, howTO TEXT, trainTrainer TEXT, gamification TEXT, UADP TEXT, PMS TEXT)"""
     c.execute(query)
     conn.commit()
 
@@ -70,6 +65,10 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
     data = (username, password,firstname,lastname,email,sms,ads,language,membership,formatted_date, None, None)
     c.execute(query, data)
     conn.commit()
+    #Stores the training that has been complete by the student
+    query = """INSERT INTO Training (username, howTo, trainTrainer, gamification, UADP, PMS) VALUES(?, ?, ?, ?, ?, ?);"""
+    data = (username,  "Incomplete", "Incomplete", "Incomplete", "Incomplete", "Incomplete")
+    c.execute(query, data)
     conn.close()
 
 #/////////////////////////////////////////////////////////////////////////     LOGIN ATTEMPT    //////////////////////////////////////////////////////////////////////////

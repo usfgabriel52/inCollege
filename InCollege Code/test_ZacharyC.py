@@ -100,6 +100,3 @@ def test_show_my_network(monkeypatch):
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
     assert menus.friendsMenu() == 1
     return
-
-
-
