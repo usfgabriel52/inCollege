@@ -71,7 +71,7 @@ def homeMenu():
         # gets user input
         select = input("Enter command: ")
 
-        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6"):
+        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6" or select == "7"):
             break
         else:
             # if user inputs an incorrect value an this function prints an error message
@@ -91,6 +91,8 @@ def homeMenu():
         usefulLinksMenu()
     elif (select == "6"):
         impLinksMenu()
+    elif (select == "7"):
+        trainingMenu()
     elif (select == "0"):
         print("Thank you for using InCollege!")
         quit()
@@ -816,7 +818,7 @@ def viewProfile(username):
     return
 
 
-# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# /////////////////////////////////////////////////////////////////////////     FRIENDS MENU     /////////////////////////////////////////////////////////////////////////
 
 def friendsMenu():
     while True:
@@ -1096,3 +1098,58 @@ def messageMenu():
             printInvalidEntry()
     return 0
 
+# /////////////////////////////////////////////////////////////////////////     TRAINING MENU     /////////////////////////////////////////////////////////////////////////
+
+def trainingMenu():
+    
+    while True:    
+        printTrainingMenu()
+
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            trainAndEduMenu()
+        elif int(opt) == 2:
+            print("Coming Soon!")
+        elif int(opt) == 3:
+            businessAnalysisMenu()
+        elif int(opt) == 4:
+            print("Coming Soon!")
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+            
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     TRAINING AND EDUCATION MENU     ///////////////////////////////////////////////////////////
+
+
+def trainAndEduMenu():
+    
+    while True:    
+        printTrainAndEduMenu()
+
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            printUnderConstruction()
+        elif int(opt) == 2:
+            printUnderConstruction()
+        elif int(opt) == 3:
+            printUnderConstruction()
+        elif int(opt) == 4:
+            printUnderConstruction()
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     BUSINESS ANALYSIS AND STRATEGY MENU     ///////////////////////////////////////////////////
+
+def businessAnalysisMenu():
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

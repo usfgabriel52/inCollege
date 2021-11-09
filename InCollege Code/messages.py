@@ -206,6 +206,7 @@ def printHomeMenu():
           "(4) View Video\n"
           "(5) Useful Links Menu\n"
           "(6) InCollege Important Links Menu\n"
+          "(7) Training\n"
           "(0) Exit\n")
     return 0
 
@@ -391,3 +392,22 @@ def printMessagesMenu():
           "(2) Send Message\n"
           "(0) Return to Previous Menu\n")
     return
+
+#/////////////////////////////////////////////////////////////////////////     PRINT TRAINING MENU    /////////////////////////////////////////////////////////////////////////////
+
+def printTrainingMenu():
+    print("(1) Training and Education\n"
+          "(2) IT Help Desk\n"
+          "(3) Business Analysis and Strategy\n"
+          "(4) Security\n"
+          "(0) Exit\n")
+    return 0
+
+
+def printTrainAndEduMenu():
+    print("(1) Coding\n"
+          "(2) Resume Building\n"
+          "(3) Public Speaking\n"
+          "(4) Making A Presentation\n"
+          "(0) Exit\n")
+    return 0
