@@ -10,6 +10,8 @@ from update_acc import *
 from personalProfile import *
 # imports all functions from friends.py
 from friends import *
+#imports all training functions
+from training import *
 import jobs
 
 # username, password, first name, last name
@@ -180,6 +182,8 @@ def mainMenu():
                 print("You have not created a profile. Please create one first.\n")
         elif int(opt) == 9:  
             messageMenu()
+        elif int(opt) == 10:
+            inCollegeLearningMenu()
         elif int(opt) == 0:
             logged_in = []
             print("You have sucessfully logged out!\n")
@@ -1179,3 +1183,70 @@ def businessAnalysisMenu():
     return 0
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+def inCollegeLearningMenu():
+    while True: 
+        printInCollegeLearningMenu(logged_in[0])
+        opt = input("Enter command: ")
+        if int(opt) == 1:
+            if(checkTraining(logged_in[0])[1] == "Incomplete"):
+                CompleteTraining(logged_in[0],"howTO")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 2:
+            if(checkTraining(logged_in[0])[2] == "Incomplete"):
+                CompleteTraining(logged_in[0],"trainTrainer")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 3:
+            if(checkTraining(logged_in[0])[3] == "Incomplete"):
+                CompleteTraining(logged_in[0],"gamification")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 4:
+            if(checkTraining(logged_in[0])[4] == "Incomplete"):
+                CompleteTraining(logged_in[0],"UADP")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt) == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 5:
+            if(checkTraining(logged_in[0])[5] == "Incomplete"):
+                CompleteTraining(logged_in[0],"PMS")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 0:
+            break
+    
+    
+    return 0
+
+    

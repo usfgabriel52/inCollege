@@ -1,6 +1,7 @@
 from personalProfile import *
 from friends import findFriends
 from verify_acc import unique_user
+from training import checkTraining
 import verify_acc as acc
 import menus as menu
 
@@ -235,6 +236,7 @@ def printMainMenu(userName):
               "(7) Edit Personal Profile\n"
               "(8) View Personal Profile\n"
               "(9) View/Send Messages\n"
+              "(10) In College Learning\n"
               "(0) Logout\n")
     else:
         print("InCollege Main Menu\n"
@@ -246,6 +248,7 @@ def printMainMenu(userName):
               "(6) Show My Network\n"
               "(7) Create Personal Profile\n"
               "(9) View/Send Messages\n"
+              "(10) In College Learning\n"
               "(0) Logout\n")
     return 0
 
@@ -419,10 +422,43 @@ def printTrainAndEduMenu():
 
 def printBusinessAnalysisMenu():
     
-    print("\nBusiness Analysis and Strategey Menu\n"
+    print("\nBusiness Analysis and Strategy Menu\n"
         "(1) How to use InCollege learning\n"
         "(2) Train the trainer\n"
         "(3) Gamification of learning\n"
         "(0) Exit\n")
 
     return 0    
+
+#/////////////////////////////////////////////////////////////////////////     PRINT IN COLLEGE LEARNING MENU    /////////////////////////////////////////////////////////////////////////////
+
+def printInCollegeLearningMenu(username):
+    printStatus = []
+    trainingStatus = checkTraining(username)
+    for i in range(len(trainingStatus)):
+        if trainingStatus[i]== "Incomplete":
+            printStatus.append("")
+        elif trainingStatus[i] == "Complete":
+            printStatus.append("-Completed")
+    
+    print("InCollege Learning Menu\n"
+        "(1) How to use InCollege learning" ,printStatus[0],"\n"
+        "(2) Train the trainer" ,printStatus[1],"\n"
+        "(3) Gamification of learning" ,printStatus[2],"\n"
+        "(4) Understanding the Architectural Design Process" ,printStatus[3],"\n"
+        "(5) Project Management Simplified" ,printStatus[4],"\n"
+        "(0) Exit\n")
+        
+    return 0
+
+
+def printAlreadyTakenTraining():
+    print("You have already taken this training\n"
+        "Would you like to take it again?\n"
+        "1 = yes, 0 = no\n")
+
+def printCompletedTraining():
+    print("You have now completed this training\n")
+
+def printCourseCancelled():
+    print("Course Cancelled\n")
