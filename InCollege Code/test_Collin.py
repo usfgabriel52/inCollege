@@ -7,7 +7,8 @@ import verify_acc
 import messages
 import training 
 
-
+conn = sqlite3.connect('InCollege.db')
+c = conn.cursor()
 
 
 #function to test for check format of datetime 
@@ -63,31 +64,33 @@ import training
 #---------------------------------------------------------------------------------#
 
 
-#function to test for training query complete
-
- def CompleteTraining(username,training):
+def test_completeTraining():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    assert training.completeTraining == c.execute("SELECT * FROM Training WHERE username = ?").fetchall()
+    
+    
+    
+def CompleteTraining(username,training):
      conn = sqlite3.connect('InCollege.db')
      c = conn.cursor()
-        
-        
-        
-     query = """UPDATE Training SET """+training+""" = ? WHERE username = ?"""
-     c.execute (query,["Complete",username])
-     conn.commit()
-     conn.close
+    
+    
+    
+ def test_InCollegeLearningMenu():
+     sys.stdin = io.StringIO('4\n1\n2\n3\n4\n5\n0\n0\n')
+     assert menus.InCollegeLearningMenu() == 0
+    
+    
+    
 
-     return 0
+def test_printAlreadyTakenTraining():
+    assert messages.printAlreadytaken() == 0
+    
 
- def checkTraining(username):
-     conn = sqlite3.connect('InCollege.db')
-     c = conn.cursor()
-     query = """SELECT * FROM Training WHERE username = ?"""
-     userTraining = c.execute (query,[username]).fetchall()[0]
-     conn.close()
-     return userTraining
+def test_printCompletedTraining():
+    assert messages.printCompletedTraining() == 0
 
-
-
-
-
+def printCourseCancelled():
+     assert messages.printCourseCancelled() == 0
 
