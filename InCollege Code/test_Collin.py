@@ -71,12 +71,6 @@ def test_completeTraining():
     
     
     
-def CompleteTraining(username,training):
-     conn = sqlite3.connect('InCollege.db')
-     c = conn.cursor()
-    
-    
-    
  def test_InCollegeLearningMenu():
      sys.stdin = io.StringIO('4\n1\n2\n3\n4\n5\n0\n0\n')
      assert menus.InCollegeLearningMenu() == 0
