@@ -10,11 +10,12 @@ from update_acc import *
 from personalProfile import *
 # imports all functions from friends.py
 from friends import *
+#imports all training functions
+from training import *
+import jobs
 
 # username, password, first name, last name
 logged_in = []
-
-import jobs
 
 # /////////////////////////////////////////////////////////////////////////     LOGIN MENU     /////////////////////////////////////////////////////////////////////////
 
@@ -23,14 +24,19 @@ def loginMenu():
 
     if number_rows() == 0:
         print("No users in the system. Please create an account.")
-        return
+        return 0
 
     found = False
 
     while not found:  # continue looping as long as user inputs invalid login info
         # get input from the user
+        print("If you wish to return to the previous menu enter 0 for both fields:\n")
         username = input("Enter username: ")
         password = input("Enter password: ")
+
+        #allows user to go back to the previous menus
+        if username == "0" and password == "0":
+            return 0
 
         # check if username and password are valid
         found = login(username, password)
@@ -71,7 +77,7 @@ def homeMenu():
         # gets user input
         select = input("Enter command: ")
 
-        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6"):
+        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6" or select == "7"):
             break
         else:
             # if user inputs an incorrect value an this function prints an error message
@@ -91,6 +97,8 @@ def homeMenu():
         usefulLinksMenu()
     elif (select == "6"):
         impLinksMenu()
+    elif (select == "7"):
+        trainingMenu()
     elif (select == "0"):
         print("Thank you for using InCollege!")
         quit()
@@ -174,6 +182,8 @@ def mainMenu():
                 print("You have not created a profile. Please create one first.\n")
         elif int(opt) == 9:  
             messageMenu()
+        elif int(opt) == 10:
+            inCollegeLearningMenu()
         elif int(opt) == 0:
             logged_in = []
             print("You have sucessfully logged out!\n")
@@ -816,7 +826,7 @@ def viewProfile(username):
     return
 
 
-# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# /////////////////////////////////////////////////////////////////////////     FRIENDS MENU     /////////////////////////////////////////////////////////////////////////
 
 def friendsMenu():
     while True:
@@ -1096,3 +1106,147 @@ def messageMenu():
             printInvalidEntry()
     return 0
 
+# /////////////////////////////////////////////////////////////////////////     TRAINING MENU     /////////////////////////////////////////////////////////////////////////
+
+def trainingMenu():
+    
+    while True:    
+        printTrainingMenu()
+
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            trainAndEduMenu()
+        elif int(opt) == 2:
+            print("\nComing Soon!\n")
+        elif int(opt) == 3:
+            businessAnalysisMenu()
+        elif int(opt) == 4:
+            print("\nComing Soon!\n")
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     TRAINING AND EDUCATION MENU     ///////////////////////////////////////////////////////////
+
+
+def trainAndEduMenu():
+    
+    while True:    
+        printTrainAndEduMenu()
+
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            printUnderConstruction()
+        elif int(opt) == 2:
+            printUnderConstruction()
+        elif int(opt) == 3:
+            printUnderConstruction()
+        elif int(opt) == 4:
+            printUnderConstruction()
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////     BUSINESS ANALYSIS AND STRATEGY MENU     ///////////////////////////////////////////////////
+
+def businessAnalysisMenu():
+    while True:
+        
+        printBusinessAnalysisMenu()
+
+        print("\nNot seeing what you’re looking for? Sign in to see all 7,609 results.\n")
+        
+        opt = input("Enter command: ")
+
+        if int(opt) == 1:
+            loginMenu()
+        elif int(opt) == 2:
+            loginMenu()
+        elif int(opt) == 3:
+            loginMenu()
+        elif int(opt) == 4:
+            loginMenu()
+        elif int(opt) == 0:
+            break
+        else:   
+            printInvalidEntry() 
+
+
+    return 0
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+def inCollegeLearningMenu():
+    while True: 
+        printInCollegeLearningMenu(logged_in[0])
+        opt = input("Enter command: ")
+        if int(opt) == 1:
+            if(checkTraining(logged_in[0])[1] == "Incomplete"):
+                CompleteTraining(logged_in[0],"howTO")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 2:
+            if(checkTraining(logged_in[0])[2] == "Incomplete"):
+                CompleteTraining(logged_in[0],"trainTrainer")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 3:
+            if(checkTraining(logged_in[0])[3] == "Incomplete"):
+                CompleteTraining(logged_in[0],"gamification")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 4:
+            if(checkTraining(logged_in[0])[4] == "Incomplete"):
+                CompleteTraining(logged_in[0],"UADP")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt) == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 5:
+            if(checkTraining(logged_in[0])[5] == "Incomplete"):
+                CompleteTraining(logged_in[0],"PMS")
+                printCompletedTraining()
+            else:
+                printAlreadyTakenTraining()
+                newOpt = input("Enter command: ")
+                if int(newOpt)  == 1:
+                    printCompletedTraining()
+                else:
+                    printCourseCancelled()
+        if int(opt) == 0:
+            break
+    
+    
+    return 0
+
+    
