@@ -2,6 +2,7 @@ import pytest
 import friends
 import sqlite3
 import jobs
+import training
 
 #function ro test whether remove friend function works
 def test_removeFriend():
@@ -41,3 +42,9 @@ def test_deleteJob():
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
     assert jobs.getAllJobTitlesAppliedFor == c.execute("SELECT * FROM app_status WHERE username = ? AND status = 'deleted").fetchall()
+
+#function to check course take again
+def test_takeAgainJob(username):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+    assert training.checkTraining(username) == c.execute("SELECT * FROM Training WHERE username = ? ", username).fetchall()[0]
