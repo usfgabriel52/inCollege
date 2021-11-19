@@ -3,7 +3,7 @@ from getpass import getpass
 from sqlite3.dbapi2 import Error
 from datetime import datetime
 from update_acc import update_last_applied
-
+from OutputApis import *
 
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
@@ -30,6 +30,8 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     data = (title, description, employer, location, salary, posterfirst, posterlast, formatted_date)
     c.execute(query, data)
     conn.commit()
+    MyCollegeJobs_append([title,description,employer,location,salary])
+    MyCollegeAppliedJobs_WriteOut()
     conn.close()
 
 # /////////////////////////////////////////////////////////////////////////     NUMBER OF JOBS    /////////////////////////////////////////////////////////////////////////
@@ -205,6 +207,8 @@ def deleteJob(jobID):
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()
+    MyCollegeJobs_WriteOut()
+    MyCollegeAppliedJobs_WriteOut()
     conn.close()
     return True
 
@@ -217,6 +221,8 @@ def deleteJobByTitle(title):
 
     c.execute("DELETE FROM Jobs WHERE title = ?", [title])
     conn.commit()
+    MyCollegeJobs_WriteOut()
+    MyCollegeAppliedJobs_WriteOut()
     conn.close()
     return True
 

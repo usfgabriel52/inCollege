@@ -1,5 +1,5 @@
 import sqlite3
-
+from OutputApis import MyCollegeTraining_WriteOut
 
 def CompleteTraining(username,training):
     conn = sqlite3.connect('InCollege.db')
@@ -7,8 +7,8 @@ def CompleteTraining(username,training):
     query = """UPDATE Training SET """+training+""" = ? WHERE username = ?"""
     c.execute (query,["Complete",username])
     conn.commit()
-    conn.close
-
+    conn.close()
+    MyCollegeTraining_WriteOut()
     return 0
 
 def checkTraining(username):
