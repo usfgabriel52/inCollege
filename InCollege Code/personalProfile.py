@@ -1,6 +1,6 @@
 import sqlite3
 from getpass import getpass
-
+from OutputApis import * 
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
@@ -106,6 +106,7 @@ def update_profile(userName,section, newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
     return 0
 
@@ -135,6 +136,7 @@ def update_job(userName,jobId,section,newValue):
     data = (newValue,userName,jobId)
     c.execute(query,data)
     conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
     return 0
 
@@ -158,6 +160,7 @@ def update_school(userName,section,newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
     return 0
 
@@ -182,7 +185,8 @@ def create_job(userName,jobId):
     query = """INSERT INTO expierience(userName , jobId , title , employer , dateStart , dateEnd , location , description ) VALUES(? , ? , ? , ? , ? , ? , ? , ? )"""
     data = (userName,jobId,None,None,None,None,None,None) 
     c.execute(query, data)
-    conn.commit() 
+    conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
 
 
@@ -196,6 +200,7 @@ def create_school(userName):
     data = (userName,None,None,None) 
     c.execute(query,data)
     conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
     
 #Adds user to Personal Profile Table
@@ -208,6 +213,7 @@ def create_profile(userName):
     data = (userName,None,None,None,None) 
     c.execute(query,data)
     conn.commit()
+    MyCollegeProfiles_WriteOut()
     conn.close()
 
 

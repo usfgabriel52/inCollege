@@ -129,5 +129,42 @@ def MyCollegeAppliedJobs_WriteOut():
         for applicant in applicants:
             appliedJobs.write(applicant[0] + " "+ applicant[4] +"\n")
         appliedJobs.write("=====\n")
+    appliedJobs.close()
     conn.close()
     return 0
+
+
+
+### MyCollegeSavedJobs
+
+def MyCollegeSavedJobs_WriteOut():
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()    
+    query = """SELECT * FROM Accounts"""
+    users = c.execute(query).fetchall()
+    savedJobs = open("MyCollege_savedJobs.txt","w")
+    for user in users:
+        query = """SELECT * FROM SavedJobs WHERE username = ?"""
+        
+        jobs = c.execute(query,[user[0]]).fetchall()
+        if jobs != []:
+            savedJobs.write(user[0]+"\n")
+            for job in jobs:
+                query = """SELECT * FROM Jobs WHERE id = ?"""
+                jobName = c.execute(query,[job[1]]).fetchall()
+                savedJobs.write(jobName[0][1] + "\n")
+            savedJobs.write("=====\n")
+    savedJobs.close()
+    conn.close()
+    return 0
+
+
+    ###Startup Runall
+
+def RunallOutputAPIS():
+    MyCollegeSavedJobs_WriteOut()
+    MyCollegeTraining_WriteOut()
+    MyCollegeJobs_WriteOut()
+    MyCollegeProfiles_WriteOut()
+    MyCollegeUsers_WriteOut()
+    MyCollegeAppliedJobs_WriteOut()

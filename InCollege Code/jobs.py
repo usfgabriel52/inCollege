@@ -164,6 +164,7 @@ def apply_job(job, current_user, firstname, lastname):
     conn.close()
     #this function updates the date of the last time the user applied for a job
     update_last_applied(current_user)
+    MyCollegeAppliedJobs_WriteOut()
     return True
 
 # checking if a job is deleted
@@ -207,9 +208,10 @@ def deleteJob(jobID):
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()
+    conn.close()
     MyCollegeJobs_WriteOut()
     MyCollegeAppliedJobs_WriteOut()
-    conn.close()
+    MyCollegeSavedJobs_WriteOut()
     return True
 
 
@@ -238,6 +240,7 @@ def saveJob(username, jobID):
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
         conn.commit()
         conn.close()
+        MyCollegeSavedJobs_WriteOut()
         return True
     except:
         conn.close()
@@ -254,6 +257,7 @@ def removeFromSavedJobs(username, jobID):
     c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
     conn.commit()
     conn.close()
+    MyCollegeSavedJobs_WriteOut()
     return True
 
 

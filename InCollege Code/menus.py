@@ -77,33 +77,33 @@ def homeMenu():
         # gets user input
         select = input("Enter command: ")
 
-        if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6" or select == "7"):
-            break
-        else:
-            # if user inputs an incorrect value an this function prints an error message
-            printInvalidEntry()
-            continue
+        # if (select == "1" or select == "2" or select == "3" or select == "4" or select == "0" or select == "5" or select == "6" or select == "7"):
+        #     break
+        # else:
+        #     # if user inputs an incorrect value an this function prints an error message
+        #     printInvalidEntry()
+        #     continue
 
-    if (select == "1"):
-        loginMenu()  # redirect the user to log in menu
-    elif (select == "2"):
-        createAccountMenu()  # redirect the user to register menu
-    elif (select == "3"):
-        if searchPeople(''):
-            print("Please login to add people as a friend. Thank you.\n")
-    elif (select == "4"):
-        print("\nVideo is now playing...\n")
-    elif (select == "5"):
-        usefulLinksMenu()
-    elif (select == "6"):
-        impLinksMenu()
-    elif (select == "7"):
-        trainingMenu()
-    elif (select == "0"):
-        print("Thank you for using InCollege!")
-        quit()
-    else:
-        printInvalidEntry()
+        if (select == "1"):
+            loginMenu()  # redirect the user to log in menu
+        elif (select == "2"):
+            createAccountMenu()  # redirect the user to register menu
+        elif (select == "3"):
+            if searchPeople(''):
+                print("Please login to add people as a friend. Thank you.\n")
+        elif (select == "4"):
+            print("\nVideo is now playing...\n")
+        elif (select == "5"):
+            usefulLinksMenu()
+        elif (select == "6"):
+            impLinksMenu()
+        elif (select == "7"):
+            trainingMenu()
+        elif (int(select) == 0):
+            print("Thank you for using InCollege!")
+            quit()
+        else:
+            printInvalidEntry()
 
 
 # /////////////////////////////////////////////////////////////////////     CREATE ACCOUNT MENU     ////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ def createAccountMenu():
             else:
                 data_entry(username, password, firstname, lastname, 1, 1, 1, "English","Standard")
             print("Successfully created an account\n")
-            newUsers.append(firstname+" "+lastname)
+            ##newUsers.append(firstname+" "+lastname)
     else:
         print("All permitted accounts have been created, please come back later\n")
     return 0
@@ -227,7 +227,7 @@ def jobMenu():
 
         #notification if more than 7 days have not applied jobs
         if moreThan7DaysApply(logged_in[0]):
-            print("Remember – you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
+            print("Remember - you're going to want to have a job when you graduate. Make sure that you start to apply for jobs today!")
 
         printJobMenu()
 
@@ -1161,8 +1161,7 @@ def businessAnalysisMenu():
     while True:
         
         printBusinessAnalysisMenu()
-
-        print("\nNot seeing what you’re looking for? Sign in to see all 7,609 results.\n")
+        print("\nNot seeing what you're looking for? Sign in to see all 7,609 results.\n")
         
         opt = input("Enter command: ")
 
