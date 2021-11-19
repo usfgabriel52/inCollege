@@ -106,8 +106,8 @@ def update_profile(userName,section, newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
-    MyCollegeProfiles_WriteOut()
     conn.close()
+    MyCollegeProfiles_WriteOut()
     return 0
 
 
@@ -136,8 +136,8 @@ def update_job(userName,jobId,section,newValue):
     data = (newValue,userName,jobId)
     c.execute(query,data)
     conn.commit()
-    MyCollegeProfiles_WriteOut()
     conn.close()
+    MyCollegeProfiles_WriteOut()
     return 0
 
 
@@ -160,8 +160,8 @@ def update_school(userName,section,newValue):
     data = (newValue,userName)
     c.execute(query,data)
     conn.commit()
-    MyCollegeProfiles_WriteOut()
     conn.close()
+    MyCollegeProfiles_WriteOut()
     return 0
 
 #Formats strings to have the first letter in uppercase of each word and the rest lowercase
@@ -186,8 +186,8 @@ def create_job(userName,jobId):
     data = (userName,jobId,None,None,None,None,None,None) 
     c.execute(query, data)
     conn.commit()
-    MyCollegeProfiles_WriteOut()
     conn.close()
+    MyCollegeProfiles_WriteOut()
 
 
 #Adds user to school table    
@@ -200,8 +200,8 @@ def create_school(userName):
     data = (userName,None,None,None) 
     c.execute(query,data)
     conn.commit()
-    MyCollegeProfiles_WriteOut()
     conn.close()
+    MyCollegeProfiles_WriteOut()
     
 #Adds user to Personal Profile Table
 def create_profile(userName):
