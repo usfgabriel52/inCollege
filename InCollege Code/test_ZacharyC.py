@@ -110,7 +110,7 @@ def test_jobs_outAPI():
     #Creates a database for the profiles if one doesnt exisit
     verify_acc.create_tables()
     OutputApis.MyCollegeJobs_WriteOut()
-    file_exists = os.path.exists('MyCollege_job.txt')
+    file_exists = os.path.exists("output files\\MyCollege_job.txt")
     assert file_exists == True
     assert os.path.getsize() == 0
 
