@@ -4,7 +4,6 @@ import io
 import personalProfile
 import menus
 import verify_acc
-import search
 import jobs 
 import OutputApis
 import os.path
@@ -94,6 +93,24 @@ def test_savedJobs_outAPI():
     OutputApis.MyCollegeJobs_WriteOut()
     file_exists = os.path.exists("output files\\MyCollege_savedJobs.txt")
     assert file_exists == True
+
+    jobs.saveJob("zchenoweth", 1)
+
+    with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
+        print(f.read())
+    f.close()
+
+    jobs.saveJob("kingofpop1", 1)
+
+    with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
+        print(f.read())
+    f.close()
+
+    jobs.removeFromSavedJobs("zchenoweth", 1)
+
+    with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
+        print(f.read())
+    f.close()
 
     return 0
 
