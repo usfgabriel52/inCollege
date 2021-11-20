@@ -72,40 +72,13 @@ def postJob(posterfirst, posterlast):
 
         job_data_entry(title, description, employer, location, salary, posterfirst, posterlast)
 
-        getNewJobTitle(title)
-
         print("Successfully added a job.\n")
     else:
         print("Job limit has been reached please try again later.\n")
     return 0
 
 
-# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-# username shows job selected, or returns "0" to go back
-def list_jobs(username):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    jobs = c.execute("SELECT * FROM jobs").fetchall()
-    store_list = []
-    count = 1
-    print("\n0. Back\n")
-    for i in jobs:
-        # sends title posted
-        store_list.append(i)
-        tmp = check_job_status(username, i[0])
-        print(str(count) + ". " + "Title: " + str(i[1]) + "\n\tEmployer: " + str(i[3]) + "\n\tLocation: " + str(
-            i[4]) + "\n\tSalary: " + str(i[5]) + "\n\tDescription: " + str(i[2]) + "\n\tStatus: " + str(tmp) + "\n")
-        count += 1
-
-    conn.close()
-
-    return None
-
-
-# //////////
-
+# returns the application status of the given jobID and username
 def check_job_status(username, jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
@@ -129,6 +102,7 @@ def check_job_status(username, jobID):
 
 # /////////////
 
+# applying for a job menu
 def apply_job(job, current_user, firstname, lastname):
     print("Apply for Jobs:")
     conn = sqlite3.connect('InCollege.db')
@@ -172,24 +146,9 @@ def apply_job(job, current_user, firstname, lastname):
     # this function updates the date of the last time the user applied for a job
     update_last_applied(current_user)
 
+    # run output APIs
     MyCollegeAppliedJobs_WriteOut()
 
-    return True
-
-
-# checking if a job is deleted
-def job_deleted(username):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    tmp = c.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
-    if str(tmp.fetchone()) == "None":
-        conn.close()
-        return False
-    else:
-        c.execute("DELETE FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
-        conn.commit()
-        conn.close()
     return True
 
 
@@ -228,21 +187,11 @@ def deleteJob(jobID):
     conn.commit()
     conn.close()
 
+    # run output APIs
     MyCollegeJobs_WriteOut()
     MyCollegeAppliedJobs_WriteOut()
     MyCollegeSavedJobs_WriteOut()
 
-    return True
-
-
-# look for a job by its title and delete that job
-def deleteJobByTitle(title):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    c.execute("DELETE FROM Jobs WHERE title = ?", [title])
-    conn.commit()
-    conn.close()
     return True
 
 
@@ -258,6 +207,7 @@ def saveJob(username, jobID):
         conn.commit()
         conn.close()
 
+        # run output APIs
         MyCollegeSavedJobs_WriteOut()
 
         return True
@@ -277,8 +227,17 @@ def removeFromSavedJobs(username, jobID):
     conn.commit()
     conn.close()
 
+    # run output APIs
     MyCollegeSavedJobs_WriteOut()
     return True
+
+
+# gets job details by in the Jobs table associated with the given title
+def getJobDetailsByTitle(title):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    return c.execute("SELECT * FROM Jobs WHERE title = ?", [title]).fetchall()
 
 
 # get all the rows in SavedJobs associated with the given username
@@ -305,12 +264,6 @@ def getAllJobTitlesAppliedFor(username):
         [username]).fetchall()
 
 
-def getJobDetailsByTitle(title):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    return c.execute("SELECT * FROM Jobs WHERE title = ?", [title]).fetchall()
-
 # this function will display the number of jobs the user has applied for
 def applied_jobs_notification(user):
     jobs = getAllJobTitlesAppliedFor(user)
@@ -318,6 +271,7 @@ def applied_jobs_notification(user):
     return 0
 
 
+# function for notifying the user that a job they have applied for has been deleted
 def checkAppliedJobsDelete(username):
     jobsDeleted = c.execute(
         "SELECT j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'deleted' AND a.username = ?",
@@ -336,6 +290,7 @@ def getNewJobTitleNoti(username):
         print("A new job " + newJob[0] + " has been posted.")
 
 
+# checks if the given username hasn't applied for a job for 7 days
 def moreThan7DaysApply(username):
     lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
 
@@ -345,6 +300,7 @@ def moreThan7DaysApply(username):
         return False
 
 
+# notification for new users in the database
 def getNewUserNoti(username):
     newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
 
