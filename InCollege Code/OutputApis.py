@@ -24,7 +24,7 @@ def MyCollegeJobs_WriteOut():
     return 0
 
 def MyCollegeJobs_append(job):
-    myCollegeJob =open("output files\\MyCollege_job.txt","a")
+    myCollegeJob=open("output files\\MyCollege_job.txt","a")
     myCollegeJob.write(job[0]+"\n")
     myCollegeJob.write(job[1]+"\n")
     myCollegeJob.write(job[2]+"\n")
