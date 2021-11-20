@@ -34,7 +34,7 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS SavedJobs(username TEXT, jobID INTEGER, PRIMARY KEY(username,jobID))"""
     c.execute(query)
     conn.commit()
-    c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT, "dateApplied" DATETIME,	PRIMARY KEY("username","jobID"))''')
+    c.execute('''CREATE TABLE  IF NOT EXISTS "app_status" ("username" TEXT, "jobID" INTEGER, "status" TEXT, "dateApplied" DATETIME)''')
     conn.commit()
     c.execute('''CREATE TABLE IF NOT EXISTS applications(username TEXT, jobID INTEGER, grad_date TEXT, start_date TEXT, story TEXT)''')
     conn.commit()

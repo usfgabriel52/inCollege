@@ -205,11 +205,18 @@ def deleteJob(jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    #c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
-    c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
-    c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
+    if len(c.execute("SELECT * FROM app_status WHERE jobID = ?", [jobID]).fetchall()) == 0:
+        # insert a row into app_status that indicates a job is deleted if there are no related applications
+        c.execute("INSERT INTO app_status VALUES (NULL, ?, 'deleted', NULL)",[jobID])
+    else:
+        # update every status of entries related to that jobID to deleted
+        c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
+
+    c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs
+
     conn.commit()
     conn.close()
+
     MyCollegeJobs_WriteOut()
     MyCollegeAppliedJobs_WriteOut()
     MyCollegeSavedJobs_WriteOut()
