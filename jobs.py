@@ -184,17 +184,17 @@ def job_deleted(username):
 
 # get all the job titles in the database
 def getAllJobTitles():
-    return c.execute("SELECT id, title FROM Jobs").fetchall()
+    return c.execute("SELECT id, title FROM Jobs AND id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')").fetchall()
 
 
 # get the details of the specified job ID
 def getJobDetails(id):
-    return c.execute("SELECT * FROM Jobs WHERE id = ?", [id]).fetchone()
+    return c.execute("SELECT * FROM Jobs WHERE id = ? AND id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')", [id]).fetchone()
 
 
 # get all the jobs posted by the given first name and last name
 def getJobsByPoster(pFname, pLname):
-    return c.execute("SELECT * FROM Jobs WHERE posterfirst = ? AND posterlast = ?", [pFname, pLname]).fetchall()
+    return c.execute("SELECT * FROM Jobs id WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted') AND posterfirst = ? AND posterlast = ?))", [pFname, pLname]).fetchall()
 
 
 # delete a job in the database, including all the applications and remove the job from a user's saved list
