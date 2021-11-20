@@ -264,12 +264,6 @@ def getAllJobTitlesAppliedFor(username):
         [username]).fetchall()
 
 
-def getJobDetailsByTitle(title):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    return c.execute("SELECT * FROM Jobs WHERE title = ?", [title]).fetchall()
-
 # this function will display the number of jobs the user has applied for
 def applied_jobs_notification(user):
     jobs = getAllJobTitlesAppliedFor(user)
@@ -277,6 +271,7 @@ def applied_jobs_notification(user):
     return 0
 
 
+# function for notifying the user that a job they have applied for has been deleted
 def checkAppliedJobsDelete(username):
     jobsDeleted = c.execute(
         "SELECT j.title FROM Jobs j INNER JOIN app_status a ON j.id = a.jobID WHERE status == 'deleted' AND a.username = ?",
@@ -295,6 +290,7 @@ def getNewJobTitleNoti(username):
         print("A new job " + newJob[0] + " has been posted.")
 
 
+# checks if the given username hasn't applied for a job for 7 days
 def moreThan7DaysApply(username):
     lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
 
@@ -304,6 +300,7 @@ def moreThan7DaysApply(username):
         return False
 
 
+# notification for new users in the database
 def getNewUserNoti(username):
     newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
 
