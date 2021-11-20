@@ -65,7 +65,6 @@ def readJobsFile():
 
                 title = information[0]
                 for d in range(1, desc_index + 1):
-
                     if desc_index == 1 or d == desc_index:
                         description += information[d]
                     else:
