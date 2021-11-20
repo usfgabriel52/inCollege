@@ -9,7 +9,6 @@ conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
 
 
-
 # /////////////////////////////////////////////////////////////////////////     ENTER DATA INTO DB     ////////////////////////////////////////////////////////////////////
 
 # inserts login info from user into table
@@ -259,6 +258,13 @@ def removeFromSavedJobs(username, jobID):
     conn.close()
     MyCollegeSavedJobs_WriteOut()
     return True
+
+
+def getJobDetailsByTitle(title):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    return c.execute("SELECT * FROM Jobs WHERE title = ?", [title]).fetchall()
 
 
 # get all the rows in SavedJobs associated with the given username

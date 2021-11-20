@@ -1,8 +1,5 @@
 import sqlite3
 
-from jobs import moreThan7DaysApply
-
-
 
 ###MyCollege_jobs.txt "myCollegeJob"
 
@@ -15,7 +12,7 @@ def MyCollegeJobs_WriteOut():
     query = """SELECT * FROM Jobs"""
     jobsarr = c.execute(query).fetchall()
     conn.close()
-    myCollegeJob =open( "MyCollege_job.txt","w")
+    myCollegeJob =open( "output files\\MyCollege_job.txt","w")
     for job in jobsarr:
         myCollegeJob.write(job[1]+"\n")
         myCollegeJob.write(job[2]+"\n")
@@ -27,12 +24,12 @@ def MyCollegeJobs_WriteOut():
     return 0
 
 def MyCollegeJobs_append(job):
-    myCollegeJob =open("MyCollege_job.txt","a")
+    myCollegeJob =open("output files\\MyCollege_job.txt","a")
+    myCollegeJob.write(job[0]+"\n")
     myCollegeJob.write(job[1]+"\n")
     myCollegeJob.write(job[2]+"\n")
     myCollegeJob.write(job[3]+"\n")
     myCollegeJob.write(job[4]+"\n")
-    myCollegeJob.write(job[5]+"\n")
     myCollegeJob.write("=====\n")
     myCollegeJob.close()
     return 0
@@ -44,7 +41,7 @@ def MyCollegeProfiles_WriteOut():
     c = conn.cursor()    
     query = """SELECT * FROM PersonalProfile"""
     profiles = c.execute(query).fetchall()
-    myCollegeProfile =open( "MyCollege_profiles.txt","w")
+    myCollegeProfile =open( "output files\\MyCollege_profiles.txt","w")
     for profile in profiles:
         myCollegeProfile.write(profile[0]+"\n")
         myCollegeProfile.write(profile[1]+"\n")
@@ -80,14 +77,14 @@ def MyCollegeUsers_WriteOut():
     query = """SELECT * FROM Accounts"""
     accounts = c.execute(query).fetchall()
     conn.close()
-    myCollegeUsers =open( "MyCollege_users.txt","w")
+    myCollegeUsers =open( "output files\\MyCollege_users.txt","w")
     for users in accounts:
         myCollegeUsers.write(users[0]+" "+users[8]+"\n")
     myCollegeUsers.close()
     return 0
 
 def MyCollegeUsers_Append(user,status):
-    myCollegeUsers =open( "MyCollege_users.txt","a")
+    myCollegeUsers =open( "output files\\MyCollege_users.txt","a")
     myCollegeUsers.write(user+" "+status+"\n")
     myCollegeUsers.close()
     return 0
@@ -97,7 +94,7 @@ def MyCollegeTraining_WriteOut():
     c = conn.cursor()    
     query = """SELECT * FROM Training"""
     users = c.execute(query).fetchall()
-    training = open("MyCollege_training.txt","w")
+    training = open("output files\\MyCollege_training.txt","w")
     for user in users:
         training.write(user[0]+"\n")
         if(user[1] == "Complete"):
@@ -121,7 +118,7 @@ def MyCollegeAppliedJobs_WriteOut():
     c = conn.cursor()    
     query = """SELECT * FROM Jobs"""
     jobs = c.execute(query).fetchall()
-    appliedJobs = open("MyCollege_appliedJobs.txt","w")
+    appliedJobs = open("output files\\MyCollege_appliedJobs.txt","w")
     for job in jobs:
         appliedJobs.write(job[1]+"\n")
         query = """SELECT * FROM applications WHERE jobID = ?"""
@@ -142,7 +139,7 @@ def MyCollegeSavedJobs_WriteOut():
     c = conn.cursor()    
     query = """SELECT * FROM Accounts"""
     users = c.execute(query).fetchall()
-    savedJobs = open("MyCollege_savedJobs.txt","w")
+    savedJobs = open("output files\\MyCollege_savedJobs.txt","w")
     for user in users:
         query = """SELECT * FROM SavedJobs WHERE username = ?"""
         
