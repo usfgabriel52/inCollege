@@ -2,6 +2,7 @@ import sqlite3
 from getpass import getpass
 from datetime import datetime
 from OutputApis import *
+from training import addTrainingEntry
 #/////////////////////////////////////////////////////////////////////////     CREATE DB     //////////////////////////////////////////////////////////////////////////////
 
 #table creation for Username table ?
@@ -40,7 +41,9 @@ def create_tables():
     query = """CREATE TABLE IF NOT EXISTS messages(sender, recipient, text)"""
     c.execute(query)
     conn.commit()
-    query = """CREATE TABLE IF NOT EXISTS Training(username TEXT, howTO TEXT, trainTrainer TEXT, gamification TEXT, UADP TEXT, PMS TEXT)"""
+    query = "CREATE TABLE IF NOT EXISTS Training(username TEXT, course_id INTEGER, status TEXT)"
+    c.execute(query)
+    query = "CREATE TABLE IF NOT EXISTS Courses(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)"
     c.execute(query)
     conn.commit()
 
@@ -67,10 +70,11 @@ def data_entry(username, password,firstname,lastname,email,sms,ads,language,memb
     conn.commit()
     
     #Stores the training that has been complete by the student
-    query = """INSERT INTO Training (username, howTo, trainTrainer, gamification, UADP, PMS) VALUES(?, ?, ?, ?, ?, ?);"""
-    data = (username,  "Incomplete", "Incomplete", "Incomplete", "Incomplete", "Incomplete")
-    c.execute(query, data)
-    conn.commit()
+    n_courses = c.execute("SELECT COUNT(*) FROM Courses").fetchone()
+
+    for i in range(0, n_courses[0]):
+        addTrainingEntry(username, i)
+
     conn.close()
     MyCollegeUsers_Append(username, membership)
 #/////////////////////////////////////////////////////////////////////////     LOGIN ATTEMPT    //////////////////////////////////////////////////////////////////////////

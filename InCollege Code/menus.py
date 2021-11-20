@@ -1184,42 +1184,11 @@ def inCollegeLearningMenu():
     while True: 
         printInCollegeLearningMenu(logged_in[0])
         opt = input("Enter command: ")
-        if int(opt) == 1:
-            if(checkTraining(logged_in[0])[1] == "Incomplete"):
-                CompleteTraining(logged_in[0],"howTO")
-                printCompletedTraining()
-            else:
-                printAlreadyTakenTraining()
-                newOpt = input("Enter command: ")
-                if int(newOpt)  == 1:
-                    printCompletedTraining()
-                else:
-                    printCourseCancelled()
-        if int(opt) == 2:
-            if(checkTraining(logged_in[0])[2] == "Incomplete"):
-                CompleteTraining(logged_in[0],"trainTrainer")
-                printCompletedTraining()
-            else:
-                printAlreadyTakenTraining()
-                newOpt = input("Enter command: ")
-                if int(newOpt)  == 1:
-                    printCompletedTraining()
-                else:
-                    printCourseCancelled()
-        if int(opt) == 3:
-            if(checkTraining(logged_in[0])[3] == "Incomplete"):
-                CompleteTraining(logged_in[0],"gamification")
-                printCompletedTraining()
-            else:
-                printAlreadyTakenTraining()
-                newOpt = input("Enter command: ")
-                if int(newOpt)  == 1:
-                    printCompletedTraining()
-                else:
-                    printCourseCancelled()
-        if int(opt) == 4:
-            if(checkTraining(logged_in[0])[4] == "Incomplete"):
-                CompleteTraining(logged_in[0],"UADP")
+
+        if int(opt) != 0:
+            # checks if the selected option is Incomplete or already Completed
+            if(checkTraining(logged_in[0])[int(opt) - 1][1] == "Incomplete"):
+                CompleteTraining(logged_in[0], int(opt)-1)  # update the database
                 printCompletedTraining()
             else:
                 printAlreadyTakenTraining()
@@ -1228,21 +1197,7 @@ def inCollegeLearningMenu():
                     printCompletedTraining()
                 else:
                     printCourseCancelled()
-        if int(opt) == 5:
-            if(checkTraining(logged_in[0])[5] == "Incomplete"):
-                CompleteTraining(logged_in[0],"PMS")
-                printCompletedTraining()
-            else:
-                printAlreadyTakenTraining()
-                newOpt = input("Enter command: ")
-                if int(newOpt)  == 1:
-                    printCompletedTraining()
-                else:
-                    printCourseCancelled()
-        if int(opt) == 0:
+        else:
             break
-    
-    
-    return 0
 
-    
+    return 0

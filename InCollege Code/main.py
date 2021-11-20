@@ -6,10 +6,12 @@ while True:
     # Creates a database for the profiles if one doesnt exist
     create_tables()
 
-    # run API
-    readAccountsFile()
-    readJobsFile()
+    # run input API
     readTrainingFile()
+    readJobsFile()
+    readAccountsFile()
+
+    # run output API
     RunallOutputAPIS()
 
     # run Home Menu

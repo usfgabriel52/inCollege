@@ -1,7 +1,7 @@
 from personalProfile import *
 from friends import findFriends
 from verify_acc import unique_user
-from training import checkTraining
+from training import *
 import verify_acc as acc
 import menus as menu
 
@@ -433,22 +433,14 @@ def printBusinessAnalysisMenu():
 #/////////////////////////////////////////////////////////////////////////     PRINT IN COLLEGE LEARNING MENU    /////////////////////////////////////////////////////////////////////////////
 
 def printInCollegeLearningMenu(username):
-    printStatus = []
-    trainingStatus = checkTraining(username)
-    for i in range(len(trainingStatus)):
-        if trainingStatus[i]== "Incomplete":
-            printStatus.append("")
-        elif trainingStatus[i] == "Complete":
-            printStatus.append("-Completed")
-    
-    print("InCollege Learning Menu\n"
-        "(1) How to use InCollege learning" ,printStatus[0],"\n"
-        "(2) Train the trainer" ,printStatus[1],"\n"
-        "(3) Gamification of learning" ,printStatus[2],"\n"
-        "(4) Understanding the Architectural Design Process" ,printStatus[3],"\n"
-        "(5) Project Management Simplified" ,printStatus[4],"\n"
-        "(0) Exit\n")
-        
+    print("InCollege Learning Menu\n")
+
+    training = checkTraining(username)
+
+    for i in range(0, len(training)):
+        print("(" + str(i + 1) + ") " + training[i][0] + " - " + training[i][1])
+    print("(0) Exit")
+
     return 0
 
 

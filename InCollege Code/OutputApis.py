@@ -66,9 +66,6 @@ def MyCollegeProfiles_WriteOut():
     return 0
 
 
-
-
-
 ###MyCollegeUsers
 
 def MyCollegeUsers_WriteOut():
@@ -91,24 +88,16 @@ def MyCollegeUsers_Append(user,status):
 
 def MyCollegeTraining_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
-    query = """SELECT * FROM Training"""
-    users = c.execute(query).fetchall()
+    c = conn.cursor()
+    users = c.execute("""SELECT username FROM Accounts""").fetchall()
     training = open("output files\\MyCollege_training.txt","w")
     for user in users:
         training.write(user[0]+"\n")
-        if(user[1] == "Complete"):
-            training.write("How to user InCollege Learning\n")
-        if(user[2] == "Complete"):
-            training.write("Train the trainer\n")
-        if(user[3] == "Complete"):
-            training.write("Gamification of learning\n")
-        if(user[4] == "Complete"):
-            training.write("Understanding the Architectural Design Process\n")
-        if(user[5] == "Complete"):
-            training.write("Project Management Simplified\n")
+        query = """SELECT title FROM Training T INNER JOIN Courses C ON T.course_id = C.id WHERE username = ? AND status = 'Complete'"""
+        result = c.execute(query, [user[0]]).fetchall()
+        for t in result:
+            training.write(t[0] + "\n")
         training.write("=====\n")
-        
     training.close()
     conn.close()
     return 0
