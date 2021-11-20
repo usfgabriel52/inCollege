@@ -65,7 +65,11 @@ def readJobsFile():
 
                 title = information[0]
                 for d in range(1, desc_index + 1):
-                    description += information[d] + '\n'
+
+                    if desc_index == 1 or d == desc_index:
+                        description += information[d]
+                    else:
+                        description += information[d] + '\n'
                 poster_first = information[desc_index + 1]
                 poster_last = information[desc_index + 2]
                 employer = information[desc_index + 3]
@@ -82,6 +86,7 @@ def readTrainingFile():
     try:
         trainingFile = open('input files\\newtraining.txt').read()
     except FileNotFoundError:
+        # insert default values into the Courses table in the database
         print("newtraining.txt does not exist.\n")
         if not findCourse("How to use In College learning"):
             addCourse("How to use In College learning")
@@ -95,5 +100,5 @@ def readTrainingFile():
             addCourse("Project Management Simplified")
     else:
         for entry in trainingFile.split("\n"):
-            if not findCourse(entry):
+            if not findCourse(entry):  # check if the Course isn't in the database
                 addCourse(entry)

@@ -8,11 +8,11 @@ import sqlite3
 ### Use if job is removed or on startup if the data in the file doesnt match the SQL database
 def MyCollegeJobs_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
     query = """SELECT * FROM Jobs id WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')"""
     jobsarr = c.execute(query).fetchall()
     conn.close()
-    myCollegeJob =open( "output files\\MyCollege_job.txt","w")
+    myCollegeJob =open("output files\\MyCollege_job.txt","w+")
     for job in jobsarr:
         myCollegeJob.write(job[1]+"\n")
         myCollegeJob.write(job[2]+"\n")
@@ -38,10 +38,10 @@ def MyCollegeJobs_append(job):
 ####MyCollege_Profiles
 def MyCollegeProfiles_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
     query = """SELECT * FROM PersonalProfile"""
     profiles = c.execute(query).fetchall()
-    myCollegeProfile =open( "output files\\MyCollege_profiles.txt","w")
+    myCollegeProfile =open( "output files\\MyCollege_profiles.txt","w+")
     for profile in profiles:
         myCollegeProfile.write(profile[0]+"\n")
         myCollegeProfile.write(profile[1]+"\n")
@@ -59,7 +59,7 @@ def MyCollegeProfiles_WriteOut():
         for exp in expierience:
             for index in range(1,7):
                 myCollegeProfile.write(exp[index]+"\n")
-       
+
         myCollegeProfile.write("=====\n")
     conn.close()
     myCollegeProfile.close()
@@ -70,11 +70,11 @@ def MyCollegeProfiles_WriteOut():
 
 def MyCollegeUsers_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
     query = """SELECT * FROM Accounts"""
     accounts = c.execute(query).fetchall()
     conn.close()
-    myCollegeUsers =open( "output files\\MyCollege_users.txt","w")
+    myCollegeUsers =open( "output files\\MyCollege_users.txt","w+")
     for users in accounts:
         myCollegeUsers.write(users[0]+" "+users[8]+"\n")
     myCollegeUsers.close()
@@ -90,7 +90,7 @@ def MyCollegeTraining_WriteOut():
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
     users = c.execute("""SELECT username FROM Accounts""").fetchall()
-    training = open("output files\\MyCollege_training.txt","w")
+    training = open("output files\\MyCollege_training.txt","w+")
     for user in users:
         training.write(user[0]+"\n")
         query = """SELECT title FROM Training T INNER JOIN Courses C ON T.course_id = C.id WHERE username = ? AND status = 'Complete'"""
@@ -104,10 +104,10 @@ def MyCollegeTraining_WriteOut():
 
 def MyCollegeAppliedJobs_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
     query = """SELECT * FROM Jobs"""
     jobs = c.execute(query).fetchall()
-    appliedJobs = open("output files\\MyCollege_appliedJobs.txt","w")
+    appliedJobs = open("output files\\MyCollege_appliedJobs.txt","w+")
     for job in jobs:
         appliedJobs.write(job[1]+"\n")
         query = """SELECT * FROM applications WHERE jobID = ?"""
@@ -125,13 +125,13 @@ def MyCollegeAppliedJobs_WriteOut():
 
 def MyCollegeSavedJobs_WriteOut():
     conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()    
+    c = conn.cursor()
     query = """SELECT * FROM Accounts"""
     users = c.execute(query).fetchall()
-    savedJobs = open("output files\\MyCollege_savedJobs.txt","w")
+    savedJobs = open("output files\\MyCollege_savedJobs.txt","w+")
     for user in users:
         query = """SELECT * FROM SavedJobs WHERE username = ?"""
-        
+
         jobs = c.execute(query,[user[0]]).fetchall()
         if jobs != []:
             savedJobs.write(user[0]+"\n")
