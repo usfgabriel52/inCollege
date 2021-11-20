@@ -68,7 +68,21 @@ def test_jobs_outAPI():
     with open("output files\\MyCollege_job.txt", 'r') as f:
         print(f.read())
     f.close()
+
+    jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason")
     
+    with open("output files\\MyCollege_job.txt", 'r') as f:
+        print(f.read())
+    f.close()
+    
+    job = jobs.getJobsByPoster("Fake", "Person")  
+    toDelete = 1
+    jobs.deleteJob(job[int(toDelete)-1][0])  
+
+    with open("output files\\MyCollege_job.txt", 'r') as f:
+        print(f.read())
+    f.close()
+            
     return 0
 
 
