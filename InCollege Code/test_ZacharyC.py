@@ -94,19 +94,21 @@ def test_savedJobs_outAPI():
     file_exists = os.path.exists("output files\\MyCollege_savedJobs.txt")
     assert file_exists == True
 
-    jobs.saveJob("zchenoweth", 2)
+    job = jobs.getAllJobTitles() 
+    toView = 1
+    jobs.saveJob("zchenoweth", job[int(toView)-1][0])
 
     with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
         print(f.read())
     f.close()
 
-    jobs.saveJob("kingofpop1", 2)
+    jobs.saveJob("kingofpop1", job[int(toView)-1][0])
 
     with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
         print(f.read())
     f.close()
 
-    jobs.removeFromSavedJobs("zchenoweth", 2)
+    jobs.removeFromSavedJobs("zchenoweth", job[int(toView)-1][0])
 
     with open("output files\\MyCollege_savedJobs.txt", 'r') as f:
         print(f.read())
