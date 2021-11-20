@@ -135,16 +135,8 @@ def test_jobs_outAPI():
         print(f.read())
     f.close()
 
-    job = jobs.getJobsByPoster("Larry", "Mason")
-    toDelete = 1
-    jobs.deleteJob(job[int(toDelete)-1][0]) 
-
-    assert os.path.getsize("output files\\MyCollege_job.txt") == 0
-
     return 0
 
-test_maximum_num_accounts()
-test_jobs_outAPI()
 
 
 def test_savedJobs_outAPI():
