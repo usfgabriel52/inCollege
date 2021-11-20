@@ -7,6 +7,7 @@ import verify_acc
 import jobs 
 import OutputApis
 import os.path
+import input_APIs
 
 #this function tests if you can create up to and no more than 10 accounts
 def test_maximum_num_accounts():
@@ -116,22 +117,6 @@ def test_savedJobs_outAPI():
 
     return 0
 
-
-
-
-def test_appliedJobs_outAPI():
-
-    #Creates a database for the profiles if one doesnt exisit
-    verify_acc.create_tables()
-    OutputApis.MyCollegeJobs_WriteOut()
-    file_exists = os.path.exists("output files\\MyCollege_appliedJobs.txt")
-    assert file_exists == True
-
-    return 0
-
-
-
-
 def test_training_outAPI():
 
     #Creates a database for the profiles if one doesnt exisit
@@ -165,3 +150,19 @@ def test_profiles_outAPI():
     assert file_exists == True
 
     return 0      
+
+
+
+def test_studentAccounts_inAPI():
+
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    input_APIs.readAccountsFile()
+    file_exists = os.path.exists('input files\\studentAccounts.txt')
+    assert file_exists == True
+
+    with open('input files\\studentAccounts.txt', 'r') as f:
+        print(f.read())
+    f.close()
+    
+    return 0  
