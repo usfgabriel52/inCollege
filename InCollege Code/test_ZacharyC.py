@@ -112,23 +112,24 @@ def test_jobs_outAPI():
     OutputApis.MyCollegeJobs_WriteOut()
     file_exists = os.path.exists("output files\\MyCollege_job.txt")
     assert file_exists == True
-    assert os.path.getsize() == 0
+    assert os.path.getsize("output files\\MyCollege_job.txt") == 0
 
     assert jobs.job_data_entry("Software Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Fake", "Person") == 0
-    assert os.path.getsize() != 0
+    assert os.path.getsize("output files\\MyCollege_job.txt") != 0
     with open('MyCollege_job.txt', 'r') as f:
         print(f.read())
     f.close()
 
 
     assert jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason") == 0
-    assert os.path.getsize() != 0
+    assert os.path.getsize("output files\\MyCollege_job.txt") != 0
     with open('MyCollege_job.txt', 'r') as f:
         print(f.read())
     f.close()
 
     return 0
 
+test_jobs_outAPI()
 
 
 def test_savedJobs_outAPI():
