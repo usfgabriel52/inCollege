@@ -72,40 +72,13 @@ def postJob(posterfirst, posterlast):
 
         job_data_entry(title, description, employer, location, salary, posterfirst, posterlast)
 
-        getNewJobTitle(title)
-
         print("Successfully added a job.\n")
     else:
         print("Job limit has been reached please try again later.\n")
     return 0
 
 
-# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-# username shows job selected, or returns "0" to go back
-def list_jobs(username):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    jobs = c.execute("SELECT * FROM jobs").fetchall()
-    store_list = []
-    count = 1
-    print("\n0. Back\n")
-    for i in jobs:
-        # sends title posted
-        store_list.append(i)
-        tmp = check_job_status(username, i[0])
-        print(str(count) + ". " + "Title: " + str(i[1]) + "\n\tEmployer: " + str(i[3]) + "\n\tLocation: " + str(
-            i[4]) + "\n\tSalary: " + str(i[5]) + "\n\tDescription: " + str(i[2]) + "\n\tStatus: " + str(tmp) + "\n")
-        count += 1
-
-    conn.close()
-
-    return None
-
-
-# //////////
-
+# returns the application status of the given jobID and username
 def check_job_status(username, jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
@@ -177,22 +150,6 @@ def apply_job(job, current_user, firstname, lastname):
     return True
 
 
-# checking if a job is deleted
-def job_deleted(username):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    tmp = c.execute("SELECT * FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
-    if str(tmp.fetchone()) == "None":
-        conn.close()
-        return False
-    else:
-        c.execute("DELETE FROM app_status WHERE username = '{}' AND status = 'deleted'".format(username))
-        conn.commit()
-        conn.close()
-    return True
-
-
 # get all the job titles in the database
 def getAllJobTitles():
     return c.execute("SELECT id, title FROM Jobs WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')").fetchall()
@@ -232,17 +189,6 @@ def deleteJob(jobID):
     MyCollegeAppliedJobs_WriteOut()
     MyCollegeSavedJobs_WriteOut()
 
-    return True
-
-
-# look for a job by its title and delete that job
-def deleteJobByTitle(title):
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
-
-    c.execute("DELETE FROM Jobs WHERE title = ?", [title])
-    conn.commit()
-    conn.close()
     return True
 
 
