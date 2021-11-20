@@ -74,26 +74,61 @@ def test_jobs_outAPI():
 
 
 def test_savedJobs_outAPI():
+    
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists("output files\\MyCollege_savedJobs.txt")
+    assert file_exists == True
+
     return 0
 
 
 
 
 def test_appliedJobs_outAPI():
+
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists("output files\\MyCollege_appliedJobs.txt")
+    assert file_exists == True
+
     return 0
 
 
 
 
 def test_training_outAPI():
+
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists("output files\\MyCollege_training.txt")
+    assert file_exists == True
+
     return 0
 
 
 
 def test_users_outAPI():
+
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists("output files\\MyCollege_users.txt")
+    assert file_exists == True
+
     return 0  
 
 
 
 def test_profiles_outAPI():
+
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists("output files\\MyCollege_profiles.txt")
+    assert file_exists == True
+
     return 0      
