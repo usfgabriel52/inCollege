@@ -1187,8 +1187,8 @@ def inCollegeLearningMenu():
 
         if int(opt) != 0:
             # checks if the selected option is Incomplete or already Completed
-            if(checkTraining(logged_in[0])[int(opt) - 1][1] == "Incomplete"):
-                CompleteTraining(logged_in[0], int(opt)-1)  # update the database
+            if(checkTraining(logged_in[0])[int(opt)][1] == "Incomplete"):
+                CompleteTraining(logged_in[0], int(opt))  # update the database
                 printCompletedTraining()
             else:
                 printAlreadyTakenTraining()

@@ -83,6 +83,16 @@ def readTrainingFile():
         trainingFile = open('input files\\newtraining.txt').read()
     except FileNotFoundError:
         print("newtraining.txt does not exist.\n")
+        if not findCourse("How to use In College learning"):
+            addCourse("How to use In College learning")
+        if not findCourse("Train the trainer"):
+            addCourse("Train the trainer")
+        if not findCourse("Gamification of Learning"):
+            addCourse("Gamification of Learning")
+        if not findCourse("Understanding the Architectural Design Process"):
+            addCourse("Understanding the Architectural Design Process")
+        if not findCourse("Project Management Simplified"):
+            addCourse("Project Management Simplified")
     else:
         for entry in trainingFile.split("\n"):
             if not findCourse(entry):
