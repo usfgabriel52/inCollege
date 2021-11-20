@@ -5,7 +5,9 @@ import personalProfile
 import menus
 import verify_acc
 import search
-
+import jobs 
+import OutputApis
+import os.path
 
 #this function tests if you can create up to and no more than 10 accounts
 def test_maximum_num_accounts():
@@ -99,4 +101,31 @@ def test_show_my_network(monkeypatch):
     input = '0\n'
     monkeypatch.setattr('sys.stdin', io.StringIO(input))
     assert menus.friendsMenu() == 1
+    return
+
+
+def test_jobs_outAPI():
+    
+    #Creates a database for the profiles if one doesnt exisit
+    verify_acc.create_tables()
+    OutputApis.MyCollegeJobs_WriteOut()
+    file_exists = os.path.exists('MyCollege_job.txt')
+    assert file_exists == True
+    assert os.path.getsize() == 0
+
+    assert jobs.job_data_entry("Software Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Fake", "Person") == 0
+    assert os.path.getsize() != 0
+    with open('MyCollege_job.txt', 'r') as f:
+        print(f.read())
+    f.close()
+
+
+    assert jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason") == 0
+    assert os.path.getsize() != 0
+    with open('MyCollege_job.txt', 'r') as f:
+        print(f.read())
+    f.close()
+
+    
+
     return
