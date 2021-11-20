@@ -136,21 +136,19 @@ def test_users_outAPI():
     OutputApis.MyCollegeJobs_WriteOut()
     file_exists = os.path.exists("output files\\MyCollege_users.txt")
     assert file_exists == True
+    
+    with open("output files\\MyCollege_users.txt", 'r') as f:
+        print(f.read())
+    f.close()
 
+    if verify_acc.number_rows() < 10:
+        verify_acc.data_entry("Lorna", "Shore123@", "Will", "Ramos", 1, 1, 1, "English","Plus")
+
+    with open("output files\\MyCollege_users.txt", 'r') as f:
+        print(f.read())
+    f.close()
+    
     return 0  
-
-
-
-def test_profiles_outAPI():
-
-    #Creates a database for the profiles if one doesnt exisit
-    verify_acc.create_tables()
-    OutputApis.MyCollegeJobs_WriteOut()
-    file_exists = os.path.exists("output files\\MyCollege_profiles.txt")
-    assert file_exists == True
-
-    return 0      
-
 
 
 def test_studentAccounts_inAPI():
