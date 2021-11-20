@@ -147,8 +147,10 @@ def apply_job(job, current_user, firstname, lastname):
         c.execute(
             "UPDATE app_status SET status = 'applied' WHERE username = '{}' AND jobID = '{}'".format(current_user, job[0])
         )
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied', '{}')".format(current_user, job[0], current_date))
+        conn.commit()
     else:  # applied for a job
-        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied', dateApplied)".format(current_user, job[0], current_date))
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied', '{}')".format(current_user, job[0], current_date))
         conn.commit()
 
     # inputs
