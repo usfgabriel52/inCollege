@@ -114,14 +114,14 @@ def test_jobs_outAPI():
     assert file_exists == True
     assert os.path.getsize("output files\\MyCollege_job.txt") == 0
 
-    assert jobs.job_data_entry("Software Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Fake", "Person") == 0
+    jobs.job_data_entry("Software Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Fake", "Person")
     assert os.path.getsize("output files\\MyCollege_job.txt") != 0
     with open('MyCollege_job.txt', 'r') as f:
         print(f.read())
     f.close()
 
 
-    assert jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason") == 0
+    jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason")
     assert os.path.getsize("output files\\MyCollege_job.txt") != 0
     with open('MyCollege_job.txt', 'r') as f:
         print(f.read())
