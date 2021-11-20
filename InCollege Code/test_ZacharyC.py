@@ -8,6 +8,7 @@ import jobs
 import OutputApis
 import os.path
 import input_APIs
+import training
 
 #this function tests if you can create up to and no more than 10 accounts
 def test_maximum_num_accounts():
@@ -117,6 +118,8 @@ def test_savedJobs_outAPI():
 
     return 0
 
+
+
 def test_training_outAPI():
 
     #Creates a database for the profiles if one doesnt exisit
@@ -124,6 +127,18 @@ def test_training_outAPI():
     OutputApis.MyCollegeJobs_WriteOut()
     file_exists = os.path.exists("output files\\MyCollege_training.txt")
     assert file_exists == True
+
+    training.CompleteTraining("zchenoweth", 1)
+    
+    with open("output files\\MyCollege_training.txt", 'r') as f:
+        print(f.read())
+    f.close()
+
+    training.CompleteTraining("kingofpop1", 1)
+    
+    with open("output files\\MyCollege_training.txt", 'r') as f:
+        print(f.read())
+    f.close()
 
     return 0
 
@@ -149,6 +164,7 @@ def test_users_outAPI():
     f.close()
     
     return 0  
+
 
 
 def test_studentAccounts_inAPI():
