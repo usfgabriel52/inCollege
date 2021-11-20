@@ -104,6 +104,7 @@ def test_show_my_network(monkeypatch):
     return
 
 
+
 def test_jobs_outAPI():
     
     #Creates a database for the profiles if one doesnt exisit
@@ -127,3 +128,30 @@ def test_jobs_outAPI():
     f.close()
 
     return 0
+
+
+
+def test_savedJobs_outAPI():
+    return 0
+
+
+
+
+def test_appliedJobs_outAPI():
+    return 0
+
+
+
+
+def test_training_outAPI():
+    return 0
+
+
+
+def test_users_outAPI():
+    return 0  
+
+
+
+def test_profiles_outAPI():
+    return 0      
