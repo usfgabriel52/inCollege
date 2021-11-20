@@ -129,7 +129,7 @@ def apply_job(job, current_user, firstname, lastname):
         )
     else:  # applied for a job
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'applied', '{}')".format(current_user, job[0],
-                                                                                              current_date))
+                                                                                       current_date))
         conn.commit()
 
     # inputs
@@ -154,7 +154,8 @@ def apply_job(job, current_user, firstname, lastname):
 
 # get all the job titles in the database
 def getAllJobTitles():
-    return c.execute("SELECT id, title FROM Jobs WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')").fetchall()
+    return c.execute(
+        "SELECT id, title FROM Jobs WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')").fetchall()
 
 
 # get the details of the specified job ID
@@ -201,10 +202,13 @@ def saveJob(username, jobID):
     c = conn.cursor()
 
     try:
-        c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
-        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
 
+        c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
         conn.commit()
+
+        c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved', NULL)".format(username, jobID))
+        conn.commit()
+
         conn.close()
 
         # run output APIs
@@ -282,9 +286,11 @@ def checkAppliedJobsDelete(username):
         print(job)
 
 
-#this function is to get the new posted job title
+# this function is to get the new posted job title
 def getNewJobTitleNoti(username):
-    newJobs = c.execute("SELECT title FROM Jobs WHERE datePosted > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
+    newJobs = c.execute(
+        "SELECT title FROM Jobs WHERE datePosted > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)",
+        [username]).fetchall()
 
     for newJob in newJobs:
         print("A new job " + newJob[0] + " has been posted.")
@@ -292,7 +298,9 @@ def getNewJobTitleNoti(username):
 
 # checks if the given username hasn't applied for a job for 7 days
 def moreThan7DaysApply(username):
-    lastTimeApply = c.execute("SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?", [username]).fetchall()
+    lastTimeApply = c.execute(
+        "SELECT * FROM app_status WHERE dateApplied > datetime('now', '-7 days') AND status = 'applied' AND username = ?",
+        [username]).fetchall()
 
     if lastTimeApply == None:
         return True
@@ -302,7 +310,9 @@ def moreThan7DaysApply(username):
 
 # notification for new users in the database
 def getNewUserNoti(username):
-    newUsers = c.execute("SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)", [username]).fetchall()
+    newUsers = c.execute(
+        "SELECT firstname, lastname FROM Accounts WHERE dateCreated > (SELECT DATETIME(lastLogin) FROM Accounts WHERE username = ?)",
+        [username]).fetchall()
 
     for newUser in newUsers:
-        print(newUser[0] +" " +newUser[1] +" has joined inCollege")
+        print(newUser[0] + " " + newUser[1] + " has joined inCollege")

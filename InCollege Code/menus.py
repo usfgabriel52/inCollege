@@ -466,7 +466,7 @@ def createSchoolMenu():
     if degree == '0':
         return 1
     update_school(logged_in[0], "degree", degree)
-    yearsAttended = input("Enter the number of years you attened the school or 0 to quit: ")
+    yearsAttended = input("Enter the number of years you attended the school or 0 to quit: ")
     if yearsAttended == '0':
         return 2
     update_school(logged_in[0], "yearsAttended", int(yearsAttended))
@@ -967,7 +967,7 @@ def jobOptions(user, jobID):
 
     if option == "1":  # user wants to apply for the job
         if apply_job(getJobDetails(jobID), user, logged_in[2], logged_in[3]):
-            print("You have sucessfully submitted your application!\n")
+            print("You have successfully submitted your application!\n")
     elif option == "2":  # user wants to save the job
         if saveJob(user, jobID):
             print("\nSuccessfully saved job!")
