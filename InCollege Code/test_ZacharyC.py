@@ -126,6 +126,4 @@ def test_jobs_outAPI():
         print(f.read())
     f.close()
 
-    
-
-    return
+    return 0
