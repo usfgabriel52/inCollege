@@ -77,7 +77,7 @@ def test_jobs_outAPI():
     
     job = jobs.getJobsByPoster("Fake", "Person")  
     toDelete = 1
-    jobs.deleteJob(jobs[int(toDelete)-1][0])  
+    jobs.deleteJob(job[int(toDelete)-1][0])  
 
     with open("output files\\MyCollege_job.txt", 'r') as f:
         print(f.read())
