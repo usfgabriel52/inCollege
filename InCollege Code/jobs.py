@@ -102,6 +102,7 @@ def check_job_status(username, jobID):
 
 # /////////////
 
+# applying for a job menu
 def apply_job(job, current_user, firstname, lastname):
     print("Apply for Jobs:")
     conn = sqlite3.connect('InCollege.db')
@@ -145,6 +146,7 @@ def apply_job(job, current_user, firstname, lastname):
     # this function updates the date of the last time the user applied for a job
     update_last_applied(current_user)
 
+    # run output APIs
     MyCollegeAppliedJobs_WriteOut()
 
     return True
@@ -185,6 +187,7 @@ def deleteJob(jobID):
     conn.commit()
     conn.close()
 
+    # run output APIs
     MyCollegeJobs_WriteOut()
     MyCollegeAppliedJobs_WriteOut()
     MyCollegeSavedJobs_WriteOut()
@@ -204,6 +207,7 @@ def saveJob(username, jobID):
         conn.commit()
         conn.close()
 
+        # run output APIs
         MyCollegeSavedJobs_WriteOut()
 
         return True
@@ -223,8 +227,17 @@ def removeFromSavedJobs(username, jobID):
     conn.commit()
     conn.close()
 
+    # run output APIs
     MyCollegeSavedJobs_WriteOut()
     return True
+
+
+# gets job details by in the Jobs table associated with the given title
+def getJobDetailsByTitle(title):
+    conn = sqlite3.connect('InCollege.db')
+    c = conn.cursor()
+
+    return c.execute("SELECT * FROM Jobs WHERE title = ?", [title]).fetchall()
 
 
 # get all the rows in SavedJobs associated with the given username
