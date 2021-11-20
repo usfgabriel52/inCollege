@@ -3,6 +3,7 @@ from getpass import getpass
 from sqlite3.dbapi2 import Error
 from datetime import datetime
 from update_acc import update_last_applied
+from OutputApis import *
 
 conn = sqlite3.connect('InCollege.db')
 c = conn.cursor()
@@ -27,6 +28,10 @@ def job_data_entry(title, description, employer, location, salary, posterfirst, 
     data = (title, description, employer, location, salary, posterfirst, posterlast, formatted_date)
     c.execute(query, data)
     conn.commit()
+
+    MyCollegeJobs_append([title, description, employer, location, salary])
+    MyCollegeAppliedJobs_WriteOut()
+
     conn.close()
 
 
@@ -166,6 +171,9 @@ def apply_job(job, current_user, firstname, lastname):
     conn.close()
     # this function updates the date of the last time the user applied for a job
     update_last_applied(current_user)
+
+    MyCollegeAppliedJobs_WriteOut()
+
     return True
 
 
@@ -219,6 +227,11 @@ def deleteJob(jobID):
 
     conn.commit()
     conn.close()
+
+    MyCollegeJobs_WriteOut()
+    MyCollegeAppliedJobs_WriteOut()
+    MyCollegeSavedJobs_WriteOut()
+
     return True
 
 
@@ -241,8 +254,12 @@ def saveJob(username, jobID):
     try:
         c.execute("INSERT INTO SavedJobs VALUES (?,?)", [username, jobID])
         c.execute("INSERT INTO app_status VALUES ('{}', '{}', 'saved')".format(username, jobID))
+
         conn.commit()
         conn.close()
+
+        MyCollegeSavedJobs_WriteOut()
+
         return True
     except:
         conn.close()
@@ -256,8 +273,11 @@ def removeFromSavedJobs(username, jobID):
 
     c.execute("DELETE FROM app_status WHERE username = ? AND jobID = ?", [username, jobID])
     c.execute("DELETE FROM SavedJobs WHERE username = ? AND jobID = ?", [username, jobID])
+
     conn.commit()
     conn.close()
+
+    MyCollegeSavedJobs_WriteOut()
     return True
 
 
