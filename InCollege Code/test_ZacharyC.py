@@ -34,30 +34,6 @@ def test_maximum_num_accounts():
     return
 
 
-# #This function tests if a profile database is created and if a Student can create a profile and add it to the database
-# def test_create_profile():
-
-#     conn = sqlite3.connect('InCollege.db')
-#     c = conn.cursor()
-
-#     #create the database if it doesnt already exist
-#     verify_acc.create_tables()
-#     #creates a new profile and stores it in the database
-#     personalProfile.create_profile("CoolDude123")
-
-#     # display contents of db before signing up
-#     for r in c.execute("SELECT * FROM personalProfile"):
-#         print(r)
-
-#     #creates a new profile and stores it in the database
-#     personalProfile.create_profile("metalhead123")
-#     print("\n")
-#     # display contents of db after signing up
-#     for r in c.execute("SELECT * FROM personalProfile"):
-#         print(r)
-
-#     conn.close()
-#     return
 
 
 
@@ -67,32 +43,6 @@ def test_formatCaps():
     assert personalProfile.formatCaps("hEllO") == "Hello"
     assert personalProfile.formatCaps("This is A test") == "This Is A Test"
     return
-
-
-
-# # this function test the search for a person functionality
-# def test_searchPeople(monkeypatch):
-#     #search by last name
-#     input = 'Chenoweth\n'
-#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-#     assert search.searchPeople("kingofpop1") == True
-
-#     #search by major
-#     input = 'Computer Engineering\n'
-#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-#     assert search.searchPeople("kingofpop1") == True
-
-#     #search by university
-#     input = 'University of South Florida\n'
-#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-#     assert search.searchPeople("kingofpop1") == True
-
-#     #no matching result
-#     input = 'Computer Science\n'
-#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
-#     assert search.searchPeople("kingofpop1") == False
-
-#     return
 
 
 
@@ -118,21 +68,7 @@ def test_jobs_outAPI():
     with open("output files\\MyCollege_job.txt", 'r') as f:
         print(f.read())
     f.close()
-
-    jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason")
-
-    with open("output files\\MyCollege_job.txt", 'r') as f:
-        print(f.read())
-    f.close()
     
-    job = jobs.getJobsByPoster("Fake", "Person")  
-    toDelete = 1
-    jobs.deleteJob(job[int(toDelete)-1][0]) 
-
-    with open("output files\\MyCollege_job.txt", 'r') as f:
-        print(f.read())
-    f.close()
-
     return 0
 
 
