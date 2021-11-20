@@ -34,30 +34,30 @@ def test_maximum_num_accounts():
     return
 
 
-#This function tests if a profile database is created and if a Student can create a profile and add it to the database
-def test_create_profile():
+# #This function tests if a profile database is created and if a Student can create a profile and add it to the database
+# def test_create_profile():
 
-    conn = sqlite3.connect('InCollege.db')
-    c = conn.cursor()
+#     conn = sqlite3.connect('InCollege.db')
+#     c = conn.cursor()
 
-    #create the database if it doesnt already exist
-    verify_acc.create_tables()
-    #creates a new profile and stores it in the database
-    personalProfile.create_profile("CoolDude123")
+#     #create the database if it doesnt already exist
+#     verify_acc.create_tables()
+#     #creates a new profile and stores it in the database
+#     personalProfile.create_profile("CoolDude123")
 
-    # display contents of db before signing up
-    for r in c.execute("SELECT * FROM personalProfile"):
-        print(r)
+#     # display contents of db before signing up
+#     for r in c.execute("SELECT * FROM personalProfile"):
+#         print(r)
 
-    #creates a new profile and stores it in the database
-    personalProfile.create_profile("metalhead123")
-    print("\n")
-    # display contents of db after signing up
-    for r in c.execute("SELECT * FROM personalProfile"):
-        print(r)
+#     #creates a new profile and stores it in the database
+#     personalProfile.create_profile("metalhead123")
+#     print("\n")
+#     # display contents of db after signing up
+#     for r in c.execute("SELECT * FROM personalProfile"):
+#         print(r)
 
-    conn.close()
-    return
+#     conn.close()
+#     return
 
 
 
@@ -70,29 +70,29 @@ def test_formatCaps():
 
 
 
-# this function test the search for a person functionality
-def test_searchPeople(monkeypatch):
-    #search by last name
-    input = 'Chenoweth\n'
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert search.searchPeople("kingofpop1") == True
+# # this function test the search for a person functionality
+# def test_searchPeople(monkeypatch):
+#     #search by last name
+#     input = 'Chenoweth\n'
+#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+#     assert search.searchPeople("kingofpop1") == True
 
-    #search by major
-    input = 'Computer Engineering\n'
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert search.searchPeople("kingofpop1") == True
+#     #search by major
+#     input = 'Computer Engineering\n'
+#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+#     assert search.searchPeople("kingofpop1") == True
 
-    #search by university
-    input = 'University of South Florida\n'
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert search.searchPeople("kingofpop1") == True
+#     #search by university
+#     input = 'University of South Florida\n'
+#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+#     assert search.searchPeople("kingofpop1") == True
 
-    #no matching result
-    input = 'Computer Science\n'
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert search.searchPeople("kingofpop1") == False
+#     #no matching result
+#     input = 'Computer Science\n'
+#     monkeypatch.setattr('sys.stdin', io.StringIO(input))
+#     assert search.searchPeople("kingofpop1") == False
 
-    return
+#     return
 
 
 
