@@ -203,7 +203,7 @@ def deleteJob(jobID):
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()
 
-    c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
+    #c.execute("DELETE FROM Jobs WHERE id = ?", [jobID])
     c.execute("UPDATE app_status SET status = 'deleted' WHERE jobID = ?",[jobID])
     c.execute("DELETE FROM SavedJobs WHERE jobID = ?", [jobID])  # delete rows from SavedJobs table
     conn.commit()

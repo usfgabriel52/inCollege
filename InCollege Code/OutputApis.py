@@ -9,7 +9,7 @@ import sqlite3
 def MyCollegeJobs_WriteOut():
     conn = sqlite3.connect('InCollege.db')
     c = conn.cursor()    
-    query = """SELECT * FROM Jobs"""
+    query = """SELECT * FROM Jobs id WHERE id NOT IN (SELECT jobID FROM app_status WHERE status == 'deleted')"""
     jobsarr = c.execute(query).fetchall()
     conn.close()
     myCollegeJob =open( "output files\\MyCollege_job.txt","w")
