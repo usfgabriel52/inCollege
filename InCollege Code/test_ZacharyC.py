@@ -34,27 +34,6 @@ def test_maximum_num_accounts():
 
     return
 
-
-
-
-
-#This function tests if the format for major and university name meets the specified requirements 
-def test_formatCaps():
-    assert personalProfile.formatCaps("hEllO WoRLD!!!") == "Hello World!!!"
-    assert personalProfile.formatCaps("hEllO") == "Hello"
-    assert personalProfile.formatCaps("This is A test") == "This Is A Test"
-    return
-
-
-
-# this function tests to see if the show my network menu appears properly
-def test_show_my_network(monkeypatch):
-    input = '0\n'
-    monkeypatch.setattr('sys.stdin', io.StringIO(input))
-    assert menus.friendsMenu() == 1
-    return
-
-
 #THis function tests the jobs output API (Call this function to run it)
 def test_jobs_outAPI():
     
@@ -186,7 +165,7 @@ def test_users_outAPI():
         print(f.read())
     f.close()
 
-    #add an account
+    #add an account if number of accounts in database is less than 10
     if verify_acc.number_rows() < 10:
         verify_acc.data_entry("Lorna", "Shore123@", "Will", "Ramos", 1, 1, 1, "English","Plus")
 
@@ -215,3 +194,12 @@ def test_studentAccounts_inAPI():
     f.close()
     
     return 0  
+
+# YOU CAN UNCOMMENT THESE FUNCTION CALLS TO TEST ALL THE FUNCTIONS
+
+# test_maximum_num_accounts()
+# test_jobs_outAPI()
+# test_savedJobs_outAPI()
+# test_training_outAPI()
+# test_users_outAPI()
+# test_studentAccounts_inAPI()
