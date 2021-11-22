@@ -91,28 +91,25 @@ def test_job_inAPI():
 
     return 0
 
-# This function tests the Job output API
-def test_job_outAPI():
+
+# THis function tests the jobs output API to test for applying job
+def test_jobs_outAPI():
     # Creates a database for the profiles if one doesnt exisit
     verify_acc.create_tables()
     # overwrite the output API with the data in the system
     OutputApis.MyCollegeJobs_WriteOut()
     # check if the file exists
-    file_exists = os.path.exists("output files\\MyCollege_appliedJobs.txt")
+    file_exists = os.path.exists("output files\\MyCollege_job.txt")
     assert file_exists == True
 
-    # print the contents of the output API to see it in its original state
-    with open("output files\\MyCollege_appliedJobs.txt", 'r') as f:
-        print(f.read())
-    f.close()
-
-    # add new job to database
-    jobs.job_data_entry("Hardware Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Larry", "Mason")
-    #user apply to new job, check their name will be placed
+    # add new job to the database
+    jobs.job_data_entry("Software Engineer", "You do computer things.", "myStartup", "Tampa,FL", "$1.00 / hr", "Fake",
+                        "Person")
+    #apply new job to check whether user was replaced
     jobs.apply_job("Hardware Engineer", "CoolDude123", "John", "Smith")
 
     # print the contents of the output API to see if the data got changed
-    with open("output files\\MyCollege_appliedJobs.txt", 'r') as f:
+    with open("output files\\MyCollege_job.txt", 'r') as f:
         print(f.read())
     f.close()
 
@@ -129,7 +126,7 @@ def test_usersProfiles_outAPI():
     file_exists = os.path.exists("output files\\MyCollege_users.txt")
     assert file_exists == True
 
-    # print the contents of the output API to see it in its original state
+    # print the contents of the output API to see it in its original state 
     with open("output files\\MyCollege_users.txt", 'r') as f:
         print(f.read())
     f.close()
