@@ -1,4 +1,82 @@
-* f40e7b4 (HEAD -> Requirement-#8, origin/Requirement-#8) Update InCollege.db
+* 0171a0d (HEAD -> main, origin/main, origin/Requirements-#10, origin/HEAD, Requirements-#10) Add files via upload
+* 1898895 Add files via upload
+* 2499797 Update test_ZacharyC.py
+* 4b7630a added comments to test_ZacharyC.py
+* e9f4f9d added test for training output api
+* 2a2cce6 added test for user output api
+* b3db393 added test for student account input API
+* e529152 Update test_ZacharyC.py
+* b1e918f Update test_ZacharyC.py
+* 9fb5939 Update jobs.py
+* cf46a76 Update test_ZacharyC.py
+*   49fb9d6 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+|\  
+| *   4f98b58 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+| |\  
+| * | d106cd8 Update jobs.py
+* | | 35f3fe5 added savedjobs output api test
+| |/  
+|/|   
+* | fcc0aa2 Update test_ZacharyC.py
+* |   5bb99b7 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+|\ \  
+| |/  
+| * 9d3c4b8 Update jobs.py
+| * 3b9616a Update jobs.py
+| * da78077 Update jobs.py
+* | 34b6357 Update test_ZacharyC.py
+|/  
+*   fff3c97 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+|\  
+| * b3ec8cd Update jobs.py
+* | 87ae048 Update test_ZacharyC.py
+|/  
+* 38db657 Update test_ZacharyC.py
+* b411f39 Update test_ZacharyC.py
+* f267b32 Update test_ZacharyC.py
+* 945caf7 Deleted code files outside InCollege/Code folder
+* 9bdfc4a Updated job deletion
+* 01a3c4a Update test_ZacharyC.py
+*   2162458 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+|\  
+| * 990c454 Updated job deletion
+* | 9c9e388 Update test_ZacharyC.py
+|/  
+*   1f15644 Merge branch 'Requirements-#10' of https://github.com/usfgabriel52/inCollege into Requirements-#10
+|\  
+| * b43c16b Update test_ZacharyC.py
+* | 7255904 Fixed formatting for job description reading
+|/  
+* 26ffd3b Update test_ZacharyC.py
+* 14357d7 Update test_ZacharyC.py
+* 51ae17b Update test_ZacharyC.py
+* 154dce1 Fixed job deletion and job file output
+* 2ed2463 Update test_ZacharyC.py
+* 0edd50a Update test_ZacharyC.py
+* 659fc91 Added test function for jobs output api
+* 62cd0b2 Update jobs.py
+* 95edc23 Added default values for Training menu courses
+* 203a341 Fixed training to be dynamic + updated file inputs
+* b3814af Added multiple input functionality
+* 9986682 output APIS moved to after conn.close for safety
+* 477ce74 finished output apis, and they run on startup now
+* 8a8ba06 Added some of the output APIS
+*   1006984 Merge branch 'Requirement-#9'
+|\  
+| * a3519d2 (origin/Requirement-#9) Add files via upload
+| * c74bdd7 Creating the InCollege training option once logged in
+| * fda549a updated messages
+| * 5d8bd7b Fixed some messages for proper spacing
+| * ec8f34b Added Business Analysis and Strategy menu.
+| * 9c6610b Added training menu as well as sub menus
+| * 24eead9 Fixed issue with storing training status
+| * d060c0f Added table to store training status
+* | 50ee445 Update test_Collin.py
+* | 234757e Update test_Collin.py
+* | be41bed Update test_Collin.py
+|/  
+* 529dac2 (origin/Requirement-#8) history added
+* f40e7b4 Update InCollege.db
 * e49e7f0 Updated job deleted notification
 * 3eedafd Update jobs.py
 * 975b679 Update menus.py
@@ -25,7 +103,7 @@
 * cffd4a5 Updated Account tables
 * 6df1718 updated datetime when inserting into jobs table to include hours, minutes, and seconds
 * 0eeb2c2 Added date posted to jobs table
-* 0952659 (origin/main, origin/HEAD, main) Delete history.txt
+* 0952659 Delete history.txt
 * eeaa9d4 Delete Burndown Charts directory
 * ea3d642 Requirement 7 Wednesday Burndown chart
 *   507e264 (origin/Requirement-#7) Merge branch 'main' into Requirement-#7
